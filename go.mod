@@ -6,8 +6,8 @@ require (
 	github.com/buger/goterm v0.0.0-20200322175922-2f3e71b85129
 	github.com/fatih/color v1.10.0
 	github.com/mattn/go-runewidth v0.0.10
-	github.com/spf13/cobra v1.1.1
-	github.com/spiral/endure v1.0.0-RC.1
+	github.com/spf13/cobra v1.1.3
+	github.com/spiral/endure v1.0.0-beta.23
 	github.com/spiral/errors v1.0.9
 	github.com/spiral/goridge/v3 v3.0.1
 	github.com/spiral/roadrunner/v2 v2.0.0-RC.1
