@@ -45,7 +45,6 @@ jobs:
 
   golangci-lint:
     name: Golang-CI (lint)
-    if: ${{ !env.ACT }}
     runs-on: ubuntu-20.04
     steps:
       - name: Check out code
