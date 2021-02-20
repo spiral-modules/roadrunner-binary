@@ -1,33 +1,57 @@
+######################################################################################
+#                       THIS IS SAMPLE OF THE CONFIGURATION                          #
+# IT'S NOT A DEFAULT CONFIGURATION, IT'S JUST A REFERENCE TO ALL OPTIONS AND PLUGINS #
+######################################################################################
 rpc:
   listen: tcp://127.0.0.1:6001
 
 server:
   command: "php tests/psr-worker-bench.php"
+  # optional
   user: ""
+  # optional
   group: ""
   env:
-    "RR_HTTP": "true"
-    "RR_RPC": "tcp://127.0.0.1:6001"
+    - SOME_KEY: "SOME_VALUE"
+    - SOME_KEY2: "SOME_VALUE2"
   relay: "pipes"
   relay_timeout: 20s
 
+
+# optional for development
 logs:
-  mode: development
-  level: error
+  # default
+  mode: debug
+  encoding: json
+  output: stderr
+  err_output: stderr
+  channels:
+    http:
+      mode: development
+      level: panic
+      encoding: console
+      output: stdout
+    server:
+      mode: production
+      level: info
+      encoding: json
+      output: stderr
 
 # Workflow and activity mesh service
 temporal:
   address: localhost:7233
   activities:
     num_workers: 4
-  codec: json
+  codec: proto
   debug_level: 2
 
 http:
   # host and port separated by semicolon
   address: 127.0.0.1:44933
   max_request_size: 1024
+  # middlewares for the http plugin, order matters
   middleware: [ "gzip", "headers" ]
+  # uploads
   uploads:
     forbid: [ ".php", ".exe", ".bat" ]
   trusted_subnets:
@@ -40,6 +64,7 @@ http:
         "fc00::/7",
         "fe80::/10",
     ]
+  # headers
   headers:
     cors:
       allowed_origin: "*"
@@ -52,6 +77,7 @@ http:
       input: "custom-header"
     response:
       output: "output-header"
+  # http static
   static:
     dir: "tests"
     forbid: [ "" ]
@@ -63,12 +89,13 @@ http:
   pool:
     # default - num of logical CPUs
     num_workers: 6
-    # default 0
+    # default 0 - no limit
     max_jobs: 0
     # default 1 minute
     allocate_timeout: 60s
     # default 1 minute
     destroy_timeout: 60s
+    # supervisor used to control http workers
     supervisor:
       # watch_tick defines how often to check the state of the workers (seconds)
       watch_tick: 1s
@@ -94,13 +121,14 @@ http:
     h2c: false
     max_concurrent_streams: 128
 
+# plugin which can be used in other Golang plugins
+# this is not an PHP plugin
 redis:
   # UniversalClient is an abstract client which - based on the provided options -
   # can connect to either clusters, or sentinel-backed failover instances
   # or simple single-instance servers. This can be useful for testing
   # cluster-specific applications locally.
   # if the number of addrs is 1 and master_name is empty, a single-node redis Client will be returned
-
   # if the number of addrs is two or more, a ClusterClient will be returned
   addrs:
     - "localhost:6379"
@@ -135,7 +163,7 @@ boltdb:
   # keys ttl check interval
   TTL: 60 # seconds
 
-  # memcached driver
+# memcached driver
 memcached:
   addr:
     - "localhost:11211"

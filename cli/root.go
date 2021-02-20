@@ -29,6 +29,7 @@ var (
 	// Container is the pointer to the Endure container
 	Container *endure.Endure
 	cfg       *config.Viper
+	override  []string
 	root      = &cobra.Command{
 		Use:           "rr",
 		SilenceErrors: true,
@@ -48,6 +49,15 @@ func init() {
 	root.PersistentFlags().StringVarP(&CfgFile, "config", "c", ".rr.yaml", "config file (default is .rr.yaml)")
 	root.PersistentFlags().StringVarP(&WorkDir, "WorkDir", "w", "", "work directory")
 	root.PersistentFlags().BoolVarP(&Debug, "debug", "d", false, "debug mode")
+
+	root.PersistentFlags().StringArrayVarP(
+		&override,
+		"override",
+		"o",
+		nil,
+		"override config value (dot.notation=value)",
+	)
+
 	cobra.OnInitialize(func() {
 		if CfgFile != "" {
 			if absPath, err := filepath.Abs(CfgFile); err == nil {
@@ -69,6 +79,8 @@ func init() {
 		cfg = &config.Viper{}
 		cfg.Path = CfgFile
 		cfg.Prefix = "rr"
+		// override flags if exist
+		cfg.Flags = override
 
 		// register config
 		err := Container.Register(cfg)
