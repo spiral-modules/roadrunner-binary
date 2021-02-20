@@ -59,8 +59,6 @@ jobs:
             -X github.com/spiral/roadrunner/v2/cli.BuildTime=${{ steps.values.outputs.timestamp }}
         run: |
           go build -trimpath -ldflags "$LDFLAGS" -o "./${{ steps.values.outputs.binary-name }}" main.go
-          mv "${{ steps.values.outputs.binary-name }}" ../
-          cd ..
           stat "./${{ steps.values.outputs.binary-name }}"
 
       - name: Generate distributive directory name
