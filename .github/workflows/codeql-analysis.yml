@@ -17,7 +17,6 @@ on:
 jobs:
   analyze:
     name: Analyze
-    if: ${{ !env.ACT }}
     runs-on: ubuntu-20.04
 
     strategy:
