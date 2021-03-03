@@ -1,13 +1,11 @@
-## [BINARY RELEASES REPOSITORY]
-
 <p align="center">
  <img src="https://user-images.githubusercontent.com/796136/50286124-6f7f3780-046f-11e9-9f45-e8fedd4f786d.png" height="75px" alt="RoadRunner">
 </p>
 <p align="center">
  <a href="https://packagist.org/packages/spiral/roadrunner"><img src="https://poser.pugx.org/spiral/roadrunner/version"></a>
-	<a href="https://pkg.go.dev/github.com/spiral/roadrunner?tab=doc"><img src="https://godoc.org/github.com/spiral/roadrunner?status.svg"></a>
-	<a href="https://github.com/spiral/roadrunner/actions"><img src="https://github.com/spiral/roadrunner/workflows/Tests/badge.svg" alt=""></a>
-	<a href="https://github.com/spiral/roadrunner/actions"><img src="https://github.com/spiral/roadrunner/workflows/Linters/badge.svg" alt=""></a>
+	<a href="https://pkg.go.dev/github.com/spiral/roadrunner-binary/v2?tab=doc"><img src="https://godoc.org/github.com/spiral/roadrunner-binary/v2?status.svg"></a>
+	<a href="https://github.com/spiral/roadrunner-binary/actions"><img src="https://github.com/spiral/roadrunner/workflows/Linux/badge.svg" alt=""></a>
+	<a href="https://github.com/spiral/roadrunner-binary/actions"><img src="https://github.com/spiral/roadrunner/workflows/CodeQL/badge.svg" alt=""></a>
 	<a href="https://goreportcard.com/report/github.com/spiral/roadrunner"><img src="https://goreportcard.com/badge/github.com/spiral/roadrunner"></a>
 	<a href="https://scrutinizer-ci.com/g/spiral/roadrunner/?branch=master"><img src="https://scrutinizer-ci.com/g/spiral/roadrunner/badges/quality-score.png"></a>
 	<a href="https://codecov.io/gh/spiral/roadrunner/"><img src="https://codecov.io/gh/spiral/roadrunner/branch/master/graph/badge.svg"></a>

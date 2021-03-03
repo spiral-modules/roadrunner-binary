@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"fmt"
 	"log"
 	"net/http/pprof"
 	"net/rpc"
@@ -34,7 +35,7 @@ var (
 		Use:           "rr",
 		SilenceErrors: true,
 		SilenceUsage:  true,
-		Version:       Version,
+		Version:       fmt.Sprintf(Version+" Build time: %s", BuildTime),
 	}
 )
 
