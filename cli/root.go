@@ -218,7 +218,7 @@ func initEndureConfig() *EndureConfig {
 	}
 
 	if e.LogLevel == "" {
-		e.LogLevel = "debug"
+		e.LogLevel = "error"
 	}
 
 	if e.GracePeriod == 0 {

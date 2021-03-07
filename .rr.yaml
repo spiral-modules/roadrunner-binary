@@ -217,5 +217,5 @@ endure:
   grace_period: 30s
   # default false, print graph in the graphviz format to the stdout (paste here to visualize https://dreampuf.github.io)
   print_graph: false
-  # default debug, possible values: debug, info, warning, error, panic, fatal
-  log_level: debug
+  # default error, possible values: debug, info, warning, error, panic, fatal
+  log_level: error
