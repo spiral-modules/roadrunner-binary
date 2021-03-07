@@ -40,10 +40,10 @@ const EndureKey string = "endure"
 
 // EndureConfig represents container configuration
 type EndureConfig struct {
-	gracePeriod time.Duration
-	printGraph  bool
-	retryOnFail bool
-	logLevel    string
+	GracePeriod time.Duration `mapstructure:"grace_period"`
+	PrintGraph  bool          `mapstructure:"print_graph"`
+	RetryOnFail bool          `mapstructure:"retry_on_fail"`
+	LogLevel    string        `mapstructure:"log_level"`
 }
 
 var (
@@ -114,9 +114,9 @@ func init() {
 			panic("endure config should not be nil")
 		}
 
-		lvl := endure.DebugLevel
+		var lvl endure.Level
 
-		switch endureCfg.logLevel {
+		switch endureCfg.LogLevel {
 		case "debug":
 			lvl = endure.DebugLevel
 		case "info":
@@ -130,15 +130,14 @@ func init() {
 		case "fatal":
 			lvl = endure.FatalLevel
 		default:
-			fmt.Println(fmt.Sprintf("unknown log level, provided: %s, availabe: debug, info, warning, error, panic, fatal", endureCfg.logLevel))
-			return
+			panic(fmt.Sprintf("unknown log level, provided: %s, availabe: debug, info, warning, error, panic, fatal\n", endureCfg.LogLevel))
 		}
 
 		var err error
-		if endureCfg.printGraph {
-			Container, err = endure.NewContainer(nil, endure.SetLogLevel(lvl), endure.RetryOnFail(endureCfg.retryOnFail), endure.SetStopTimeOut(endureCfg.gracePeriod), endure.Visualize(endure.StdOut, ""))
+		if endureCfg.PrintGraph {
+			Container, err = endure.NewContainer(nil, endure.SetLogLevel(lvl), endure.RetryOnFail(endureCfg.RetryOnFail), endure.SetStopTimeOut(endureCfg.GracePeriod), endure.Visualize(endure.StdOut, ""))
 		} else {
-			Container, err = endure.NewContainer(nil, endure.SetLogLevel(lvl), endure.RetryOnFail(endureCfg.retryOnFail), endure.SetStopTimeOut(endureCfg.gracePeriod))
+			Container, err = endure.NewContainer(nil, endure.SetLogLevel(lvl), endure.RetryOnFail(endureCfg.RetryOnFail), endure.SetStopTimeOut(endureCfg.GracePeriod))
 		}
 
 		if err != nil {
@@ -204,10 +203,10 @@ func initEndureConfig() *EndureConfig {
 	// init default config
 	if !c.Has(EndureKey) {
 		return &EndureConfig{
-			gracePeriod: time.Second * 10,
-			printGraph:  false,
-			retryOnFail: false,
-			logLevel:    "debug",
+			GracePeriod: time.Second * 30,
+			PrintGraph:  false,
+			RetryOnFail: false,
+			LogLevel:    "debug",
 		}
 	}
 
@@ -217,12 +216,12 @@ func initEndureConfig() *EndureConfig {
 		panic(err)
 	}
 
-	if e.logLevel == "" {
-		e.logLevel = "debug"
+	if e.LogLevel == "" {
+		e.LogLevel = "debug"
 	}
 
-	if e.gracePeriod == 0 {
-		e.gracePeriod = time.Second * 10
+	if e.GracePeriod == 0 {
+		e.GracePeriod = time.Second * 30
 	}
 
 	return e

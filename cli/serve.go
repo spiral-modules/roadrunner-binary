@@ -58,7 +58,7 @@ func handler(_ *cobra.Command, _ []string) error {
 		// stop the container after first signal
 		err = Container.Stop()
 		if err != nil {
-			fmt.Println(fmt.Sprintf("error occured during the stopping container: %v", err))
+			fmt.Printf("error occured during the stopping container: %v \n", err)
 		}
 		// if container stopped, normally exit
 		stop <- struct{}{}
