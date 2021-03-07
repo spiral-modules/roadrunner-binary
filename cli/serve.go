@@ -1,7 +1,6 @@
 package cli
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"os/signal"
@@ -53,6 +52,8 @@ func handler(_ *cobra.Command, _ []string) error {
 		// after first hit we are waiting for the second
 		// second catch - exit from the process
 		<-shutdownHandler
+		println("\n")
+		println("exit forced")
 		os.Exit(1)
 	}()
 
@@ -71,10 +72,11 @@ func handler(_ *cobra.Command, _ []string) error {
 			}
 
 		case <-stop:
+			log.Printf("stop signal received, grace timeout is: %d seconds", uint64(GracePeriod.Seconds()))
 			// stop the container after first signal
 			err = Container.Stop()
 			if err != nil {
-				fmt.Printf("error occured during the stopping container: %v \n", err)
+				log.Printf("error occured during the stopping container: %v \n", err)
 			}
 			return nil
 		}

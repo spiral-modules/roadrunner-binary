@@ -56,6 +56,7 @@ var (
 	// Container is the pointer to the Endure container
 	Container   *endure.Endure
 	RetryOnFail bool
+	GracePeriod time.Duration = time.Second * 30
 	cfg         *config.Viper
 	override    []string
 	root        = &cobra.Command{
@@ -225,6 +226,7 @@ func initEndureConfig() *EndureConfig {
 		e.GracePeriod = time.Second * 30
 	}
 
+	GracePeriod = e.GracePeriod
 	RetryOnFail = e.RetryOnFail
 
 	return e
