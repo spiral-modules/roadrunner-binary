@@ -1,6 +1,6 @@
 module github.com/spiral/roadrunner-binary/v2
 
-go 1.15
+go 1.16
 
 require (
 	github.com/buger/goterm v0.0.0-20200322175922-2f3e71b85129
@@ -14,4 +14,8 @@ require (
 	github.com/temporalio/roadrunner-temporal v1.0.0
 	github.com/vbauerster/mpb/v5 v5.4.0
 	go.uber.org/multierr v1.6.0
+)
+
+replace (
+	github.com/spiral/roadrunner/v2 v2.0.0 => ../roadrunner
 )

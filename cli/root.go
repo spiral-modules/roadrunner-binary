@@ -7,10 +7,26 @@ import (
 	"net/rpc"
 	"os"
 	"path/filepath"
+	"time"
 
 	"github.com/spiral/errors"
+
 	goridgeRpc "github.com/spiral/goridge/v3/pkg/rpc"
+	"github.com/spiral/roadrunner/v2/plugins/gzip"
+	"github.com/spiral/roadrunner/v2/plugins/headers"
+	httpPlugin "github.com/spiral/roadrunner/v2/plugins/http"
+	"github.com/spiral/roadrunner/v2/plugins/informer"
+	"github.com/spiral/roadrunner/v2/plugins/logger"
+	"github.com/spiral/roadrunner/v2/plugins/metrics"
+	"github.com/spiral/roadrunner/v2/plugins/reload"
+	"github.com/spiral/roadrunner/v2/plugins/resetter"
 	rpcPlugin "github.com/spiral/roadrunner/v2/plugins/rpc"
+	"github.com/spiral/roadrunner/v2/plugins/server"
+	"github.com/spiral/roadrunner/v2/plugins/static"
+	"github.com/spiral/roadrunner/v2/plugins/status"
+	"github.com/temporalio/roadrunner-temporal/activity"
+	temporalClient "github.com/temporalio/roadrunner-temporal/client"
+	"github.com/temporalio/roadrunner-temporal/workflow"
 
 	"github.com/spiral/roadrunner/v2/plugins/config"
 
@@ -19,6 +35,16 @@ import (
 	"github.com/spf13/cobra"
 	endure "github.com/spiral/endure/pkg/container"
 )
+
+const EndureKey string = "endure"
+
+// EndureConfig represents container configuration
+type EndureConfig struct {
+	gracePeriod time.Duration
+	printGraph  bool
+	retryOnFail bool
+	logLevel    string
+}
 
 var (
 	// WorkDir is working directory
@@ -83,10 +109,79 @@ func init() {
 		// override flags if exist
 		cfg.Flags = override
 
-		// register config
-		err := Container.Register(cfg)
+		endureCfg := initEndureConfig()
+		if endureCfg == nil {
+			panic("endure config should not be nil")
+		}
+
+		lvl := endure.DebugLevel
+
+		switch endureCfg.logLevel {
+		case "debug":
+			lvl = endure.DebugLevel
+		case "info":
+			lvl = endure.InfoLevel
+		case "warning":
+			lvl = endure.WarnLevel
+		case "error":
+			lvl = endure.ErrorLevel
+		case "panic":
+			lvl = endure.PanicLevel
+		case "fatal":
+			lvl = endure.FatalLevel
+		default:
+			fmt.Println(fmt.Sprintf("unknown log level, provided: %s, availabe: debug, info, warning, error, panic, fatal", endureCfg.logLevel))
+			return
+		}
+
+		var err error
+		if endureCfg.printGraph {
+			Container, err = endure.NewContainer(nil, endure.SetLogLevel(lvl), endure.RetryOnFail(endureCfg.retryOnFail), endure.SetStopTimeOut(endureCfg.gracePeriod), endure.Visualize(endure.StdOut, ""))
+		} else {
+			Container, err = endure.NewContainer(nil, endure.SetLogLevel(lvl), endure.RetryOnFail(endureCfg.retryOnFail), endure.SetStopTimeOut(endureCfg.gracePeriod))
+		}
+
 		if err != nil {
-			panic(err)
+			log.Fatal(err)
+		}
+
+		err = Container.RegisterAll(
+			// logger plugin
+			&logger.ZapLogger{},
+			// metrics plugin
+			&metrics.Plugin{},
+			// http server plugin
+			&httpPlugin.Plugin{},
+			// reload plugin
+			&reload.Plugin{},
+			// informer plugin (./rr workers, ./rr workers -i)
+			&informer.Plugin{},
+			// resetter plugin (./rr reset)
+			&resetter.Plugin{},
+			// rpc plugin (workers, reset)
+			&rpcPlugin.Plugin{},
+			// server plugin (NewWorker, NewWorkerPool)
+			&server.Plugin{},
+
+			// static
+			&static.Plugin{},
+			// headers
+			&headers.Plugin{},
+			// checker
+			&status.Plugin{},
+			// gzip
+			&gzip.Plugin{},
+
+			// temporal plugins
+			&activity.Plugin{},
+			&workflow.Plugin{},
+			&temporalClient.Plugin{},
+
+			// register config
+			cfg,
+		)
+		if err != nil {
+			log.Fatal(err)
 		}
 
 		// if debug mode is on - run debug server
@@ -96,20 +191,61 @@ func init() {
 	})
 }
 
+func initEndureConfig() *EndureConfig {
+	c := &config.Viper{
+		Path:   CfgFile,
+		Prefix: "rr",
+	}
+	err := c.Init()
+	if err != nil {
+		panic(err)
+	}
+
+	// init default config
+	if !c.Has(EndureKey) {
+		return &EndureConfig{
+			gracePeriod: time.Second * 10,
+			printGraph:  false,
+			retryOnFail: false,
+			logLevel:    "debug",
+		}
+	}
+
+	e := &EndureConfig{}
+	err = c.UnmarshalKey(EndureKey, e)
+	if err != nil {
+		panic(err)
+	}
+
+	if e.logLevel == "" {
+		e.logLevel = "debug"
+	}
+
+	if e.gracePeriod == 0 {
+		e.gracePeriod = time.Second * 10
+	}
+
+	return e
+}
+
 // RPCClient is using to make a requests to the ./rr reset, ./rr workers
 func RPCClient() (*rpc.Client, error) {
 	rpcConfig := &rpcPlugin.Config{}
 
-	err := cfg.Init()
+	c := &config.Viper{
+		Path:   CfgFile,
+		Prefix: "rr",
+	}
+	err := c.Init()
 	if err != nil {
 		return nil, err
 	}
 
-	if !cfg.Has(rpcPlugin.PluginName) {
+	if !c.Has(rpcPlugin.PluginName) {
 		return nil, errors.E("rpc service disabled")
 	}
 
-	err = cfg.UnmarshalKey(rpcPlugin.PluginName, rpcConfig)
+	err = c.UnmarshalKey(rpcPlugin.PluginName, rpcConfig)
 	if err != nil {
 		return nil, err
 	}
