@@ -42,26 +42,18 @@ func handler(_ *cobra.Command, _ []string) error {
 	shutdownHandler := make(chan os.Signal, 2)
 	signal.Notify(shutdownHandler, os.Interrupt, syscall.SIGTERM, syscall.SIGINT)
 
-	stop := make(chan struct{}, 1)
+	stop := make(chan struct{}, 2)
 
 	go func() {
 		// first catch - stop the container
 		<-shutdownHandler
+		// send signal to stop execution
+		stop <- struct{}{}
 
 		// after first hit we are waiting for the second
-		go func() {
-			// second catch - exit from the process
-			<-shutdownHandler
-			os.Exit(1)
-		}()
-
-		// stop the container after first signal
-		err = Container.Stop()
-		if err != nil {
-			fmt.Printf("error occured during the stopping container: %v \n", err)
-		}
-		// if container stopped, normally exit
-		stop <- struct{}{}
+		// second catch - exit from the process
+		<-shutdownHandler
+		os.Exit(1)
 	}()
 
 	for {
@@ -69,13 +61,21 @@ func handler(_ *cobra.Command, _ []string) error {
 		case e := <-errCh:
 			err = multierr.Append(err, e.Error)
 			log.Printf("error occurred: %v, plugin: %s", e.Error.Error(), e.VertexID)
-			er := Container.Stop()
-			if er != nil {
-				err = multierr.Append(err, er)
+			if !RetryOnFail {
+				er := Container.Stop()
+				if er != nil {
+					err = multierr.Append(err, er)
+					return errors.E(op, err)
+				}
 				return errors.E(op, err)
 			}
-			return errors.E(op, err)
+
 		case <-stop:
+			// stop the container after first signal
+			err = Container.Stop()
+			if err != nil {
+				fmt.Printf("error occured during the stopping container: %v \n", err)
+			}
 			return nil
 		}
 	}

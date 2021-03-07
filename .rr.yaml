@@ -213,11 +213,9 @@ reload:
       dirs: [ "." ]
 
 endure:
-  # default 10s to finish
-  grace_period: 10s
-  # default false
+  # default 30s to finish, possible values 10s,100m,5h
+  grace_period: 30s
+  # default false, print graph in the graphviz format to the stdout (paste here to visualize https://dreampuf.github.io)
   print_graph: false
-  # default false
-  retry_on_fail: false
-  # default debug
+  # default debug, possible values: debug, info, warning, error, panic, fatal
   log_level: debug

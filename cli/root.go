@@ -42,7 +42,7 @@ const EndureKey string = "endure"
 type EndureConfig struct {
 	GracePeriod time.Duration `mapstructure:"grace_period"`
 	PrintGraph  bool          `mapstructure:"print_graph"`
-	RetryOnFail bool          `mapstructure:"retry_on_fail"`
+	RetryOnFail bool          `mapstructure:"retry_on_fail"` //TODO check for races, disabled at the moment
 	LogLevel    string        `mapstructure:"log_level"`
 }
 
@@ -54,10 +54,11 @@ var (
 	// Debug mode
 	Debug bool
 	// Container is the pointer to the Endure container
-	Container *endure.Endure
-	cfg       *config.Viper
-	override  []string
-	root      = &cobra.Command{
+	Container   *endure.Endure
+	RetryOnFail bool
+	cfg         *config.Viper
+	override    []string
+	root        = &cobra.Command{
 		Use:           "rr",
 		SilenceErrors: true,
 		SilenceUsage:  true,
@@ -223,6 +224,8 @@ func initEndureConfig() *EndureConfig {
 	if e.GracePeriod == 0 {
 		e.GracePeriod = time.Second * 30
 	}
+
+	RetryOnFail = e.RetryOnFail
 
 	return e
 }
