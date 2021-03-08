@@ -21,8 +21,9 @@ server:
 # optional for development
 logs:
   # default
-  mode: debug
-  encoding: json
+  mode: development
+  level: debug
+  encoding: console
   output: stderr
   err_output: stderr
   channels:
@@ -34,7 +35,12 @@ logs:
     server:
       mode: production
       level: info
-      encoding: json
+      encoding: console
+      output: stderr
+    rpc:
+      mode: production
+      level: debug
+      encoding: console
       output: stderr
 
 # Workflow and activity mesh service
@@ -99,7 +105,7 @@ http:
     supervisor:
       # watch_tick defines how often to check the state of the workers (seconds)
       watch_tick: 1s
-      # ttl defines maximum time worker is allowed to live (seconds)
+      # ttl defines maximum time worker is allowed to live (seconds) (soft)
       ttl: 0
       # idle_ttl defines maximum duration worker can spend in idle mode after first use. Disabled when 0 (seconds)
       idle_ttl: 10s
@@ -205,3 +211,11 @@ reload:
       # directories to sync. If recursive is set to true,
       # recursive sync will be applied only to the directories in `dirs` section
       dirs: [ "." ]
+
+endure:
+  # default 30s to finish, possible values 10s,100m,5h
+  grace_period: 30s
+  # default false, print graph in the graphviz format to the stdout (paste here to visualize https://dreampuf.github.io)
+  print_graph: false
+  # default error, possible values: debug, info, warning, error, panic, fatal
+  log_level: error
