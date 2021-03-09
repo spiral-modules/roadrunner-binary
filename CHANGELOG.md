@@ -7,6 +7,7 @@ vnext (.2021)
 - 🐛 Fix: ldflags properly inject RR version
 - ⬆️ Update: README, links to the go.pkg from v1 to v2
 - 📦 Bump golang version in the Dockerfile and in the `go.mod` to 1.16
+- 📦 Bump Endure container to v1.0.0.
 
 v2.0.0 (02.03.2021)
 -------------------
