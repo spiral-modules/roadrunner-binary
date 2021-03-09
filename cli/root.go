@@ -124,9 +124,9 @@ func init() {
 
 		var err error
 		if endureCfg.PrintGraph {
-			Container, err = endure.NewContainer(nil, endure.SetLogLevel(lvl), endure.RetryOnFail(endureCfg.RetryOnFail), endure.SetStopTimeOut(endureCfg.GracePeriod), endure.Visualize(endure.StdOut, ""))
+			Container, err = endure.NewContainer(nil, endure.SetLogLevel(lvl), endure.RetryOnFail(endureCfg.RetryOnFail), endure.GracefulShutdownTimeout(endureCfg.GracePeriod), endure.Visualize(endure.StdOut, ""))
 		} else {
-			Container, err = endure.NewContainer(nil, endure.SetLogLevel(lvl), endure.RetryOnFail(endureCfg.RetryOnFail), endure.SetStopTimeOut(endureCfg.GracePeriod))
+			Container, err = endure.NewContainer(nil, endure.SetLogLevel(lvl), endure.RetryOnFail(endureCfg.RetryOnFail), endure.GracefulShutdownTimeout(endureCfg.GracePeriod))
 		}
 
 		if err != nil {
