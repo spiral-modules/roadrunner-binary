@@ -1,12 +1,14 @@
 CHANGELOG
 =========
 
-vnext (.2021)
+v2.0.1 (09.03.2021)
 -------------------
 - 🐛 Fix: incorrect PHP command validation
 - 🐛 Fix: ldflags properly inject RR version
 - ⬆️ Update: README, links to the go.pkg from v1 to v2
 - 📦 Bump golang version in the Dockerfile and in the `go.mod` to 1.16
+- 📦 Bump Endure container to v1.0.0.
+- 📦 Bump Roadrunner-Temporal to v1.0.1 (release: ).
 
 v2.0.0 (02.03.2021)
 -------------------
