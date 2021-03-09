@@ -1,43 +1,90 @@
 ######################################################################################
 #                       THIS IS SAMPLE OF THE CONFIGURATION                          #
 # IT'S NOT A DEFAULT CONFIGURATION, IT'S JUST A REFERENCE TO ALL OPTIONS AND PLUGINS #
+#       MORE DOCS CAN BE FOUND HERE: <https://roadrunner.dev/docs/intro-config>      #
 ######################################################################################
 
-# Remote Procedures Calling (https://roadrunner.dev/docs/beep-beep-rpc)
+# Production usage guide: https://roadrunner.dev/docs/beep-beep-production
+
+# Hint: RR will replace any config options using reference to environment variables,
+# eg.: `option_key: ${ENVIRONMENT_VARIABLE_NAME}`.
+
+# Remote Procedures Calling (docs: https://roadrunner.dev/docs/beep-beep-rpc)
+# Is used for connecting to RoadRunner server from your PHP workers.
 rpc:
-  # TCP address for listening, by default: "tcp://127.0.0.1:6001"
+  # TCP address:port for listening.
+  #
+  # Default: "tcp://127.0.0.1:6001"
   listen: tcp://127.0.0.1:6001
 
-# Application server settings
+# Application server settings (docs: https://roadrunner.dev/docs/php-worker)
 server:
-  # Worker commnand to execution, any string is allowed (required)
-  command: "php tests/psr-worker-bench.php"
-  # User name (not UID) for the worker processed (empty by default)
+  # Worker starting command, with any required arguments.
+  #
+  # This option is required.
+  command: "php psr-worker.php"
+
+  # User name (not UID) for the worker processes. An empty value means to use the RR process user.
+  #
+  # Default: ""
   user: ""
-  # User group (not GUID) for the worker process (empty by default)
+
+  # Group name (not GID) for the worker processes. An empty value means to use the RR process user.
+  #
+  # Default: ""
   group: ""
-  # Environment for the worker process (empty by default)
+
+  # Environment variables for the worker processes.
+  #
+  # Default: <empty map>
   env:
     - SOME_KEY: "SOME_VALUE"
     - SOME_KEY2: "SOME_VALUE2"
-  # Worker relay, can be "pipes", TCP port (eg.: tcp://127.0.0.1:6001), or socket (eg.: unix:///tmp/rpc.sock) ("pipes" by default)
-  relay: "pipes"
-  # Timeout for relay connection establishing (only for socket and TCP port relay, 60s by default)
+
+  # Worker relay can be: "pipes", TCP (eg.: tcp://127.0.0.1:6001), or socket (eg.: unix:///var/run/rr.sock).
+  #
+  # Default: "pipes"
+  relay: pipes
+
+  # Timeout for relay connection establishing (only for socket and TCP port relay).
+  #
+  # Default: 60s
   relay_timeout: 60s
 
-# Logging settings (optional, docs: https://roadrunner.dev/docs/beep-beep-logging)
+# Logging settings (docs: https://roadrunner.dev/docs/beep-beep-logging)
 logs:
-  # Logging mode can be "development" or "production" ("development" by default)
+  # Logging mode can be "development" or "production". Do not forget to change this value for production environment.
+  #
+  # Development mode (which makes DPanicLevel logs panic), uses a console encoder, writes to standard error, and
+  # disables sampling. Stacktraces are automatically included on logs of WarnLevel and above.
+  #
+  # Default: "development"
   mode: development
-  # Loging level can be "panic", "error", "warning", "info", "debug" ("debug" by default)
+
+  # Logging level can be "panic", "error", "warning", "info", "debug".
+  #
+  # Default: "debug"
   level: debug
-  # Encoding format can be "console" or "json" ("console" by default)
+
+  # Encoding format can be "console" or "json" (last is preferred for production usage).
+  #
+  # Default: "console"
   encoding: console
-  # Where logs must be printed - any file (eg.: /var/log/rr_errors.log), "stderr" or "stdout" ("stderr" by default)
+
+  # Output can be file (eg.: "/var/log/rr_errors.log"), "stderr" or "stdout".
+  #
+  # Default: "stderr"
   output: stderr
-  # Output for errors only - any file (eg.: /var/log/rr_errors.log), "stderr" or "stdout" ("stderr" by default)
+
+  # Errors only output can be file (eg.: "/var/log/rr_errors.log"), "stderr" or "stdout".
+  #
+  # Default: "stderr"
   err_output: stderr
-  # Plugins logging routing (key is plugin name, and value is loging options in same format as above)
+
+  # You can configure each plugin log messages individually (key is plugin name, and value is logging options in same
+  # format as above).
+  #
+  # Default: <empty map>
   channels:
     http:
       mode: development
@@ -48,182 +95,369 @@ logs:
     server:
       mode: production
       level: info
-      encoding: console
-      output: stderr
-      err_output: stderr
+      encoding: json
+      output: stdout
+      err_output: stdout
     rpc:
       mode: production
       level: debug
       encoding: console
       output: stderr
-      err_output: stderr
+      err_output: stdout
 
-# Workflow and activity mesh service (Delete this section for disabling)
+# Workflow and activity mesh service.
+#
+# Drop this section for temporal feature disabling.
 temporal:
-  # Adress of temporal server (required)
+  # Address of temporal server.
+  #
+  # Default: "127.0.0.1:7233"
   address: 127.0.0.1:7233
-  # Activities pool settings
+
+  # Activities pool settings.
   activities:
-    # Workers number (zero or undefined is number of logical CPUs)
+    # How many worker processes will be started. Zero (or nothing) means the number of logical CPUs.
+    #
+    # Default: 0
     num_workers: 0
-    # Maximal count of worker execution (zero or undefined is unlimited)
-    max_jobs: 0
-    # Timeout for worker allocation (60s by default)
+
+    # Maximal count of worker executions. Zero (or nothing) means no limit.
+    #
+    # Default: 0
+    max_jobs: 64
+
+    # Timeout for worker allocation. Zero means no limit.
+    #
+    # Default: 60s
     allocate_timeout: 60s
-    # Timeout for worker destroying before process killing (60s by default)
+
+    # Timeout for worker destroying before process killing. Zero means no limit.
+    #
+    # Default: 60s
     destroy_timeout: 60s
-    # Supervisor is used to control http workers (allows to control)
+
+    # Supervisor is used to control http workers (previous name was "limit", docs:
+    # https://roadrunner.dev/docs/php-limit). "Soft" limits will not interrupt current request processing. "Hard"
+    # limit on the contrary - interrupts the execution of the request.
     supervisor:
-      # How often to check the state of the workers (1s by default)
+      # How often to check the state of the workers.
+      #
+      # Default: 1s
       watch_tick: 1s
-      # Maximum time worker is allowed to live, will not inerrupt while it is doing its work (0 by default) (soft)
+
+      # Maximum time worker is allowed to live (soft limit). Zero means no limit.
+      #
+      # Default: 0s
       ttl: 0s
-      # Maximum duration worker can spend in idle mode after first use. Disabled when 0, will not inerrupt while it is doing its work (seconds) (default = 0) (soft)
+
+      # How long worker can spend in IDLE mode after first using (soft limit). Zero means no limit.
+      #
+      # Default: 0s
       idle_ttl: 10s
-      # Maximum lifetime per job, will interupt if worker is busy (seconds) (default = 0) (hard)
-      exec_ttl: 10s
-      # Memory usage per worker, will not inerrupt while it is doing its work (MB) (default = 0) (soft)
-      max_worker_memory: 100
-  # Can by "proto" or "json", internal temporal communication protocol (schema) ("proto" by default)
+
+      # Maximal worker memory usage in megabytes (soft limit). Zero means no limit.
+      #
+      # Default: 0
+      max_worker_memory: 128
+
+      # Maximal job lifetime (hard limit). Zero means no limit.
+      #
+      # Default: 0s
+      exec_ttl: 60s
+
+  # Internal temporal communication protocol, can be "proto" or "json".
+  #
+  # Default: "proto"
   codec: proto
-  # Only for "json" codec - 0 is nothing, 1 for "normal", 2 for messages colorizing
+
+  # Debugging level (only for "json" codec). Set 0 for nothing, 1 for "normal", and 2 for colorized messages.
+  #
+  # Default: ?
   debug_level: 2
 
-# HTTP plugin settings
+# HTTP plugin settings.
 http:
-  # host and port separated by colon (eg.: `127.0.0.1:8080`) (required)
+  # Host and port to listen on (eg.: `127.0.0.1:8080`).
+  #
+  # This option is required.
   address: 127.0.0.1:8080
-  # Max request size (it respects "Content-Length" header value, but do not verifies read content size) in MB (0 by default)
-  max_request_size: 1024
-  # Middlewares for the http plugin, order is important (the is no default value; allowed "upload", "headers", "static", "gzip")
+
+  # Maximal incoming request size in megabytes. Zero means no limit.
+  #
+  # Default: 0
+  max_request_size: 256
+
+  # Middlewares for the http plugin, order is important. Allowed values is: "upload", "headers", "static", "gzip".
+  #
+  # Default value: []
   middleware: ["upload", "headers", "static", "gzip"]
-  # Filter incoming requests by following subnets, docs: https://en.wikipedia.org/wiki/Reserved_IP_addresses (request will be not 
-  # delivered to the worker if incoming request is not included into this subnets). By default is:
-  # "10.0.0.0/8","127.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16",  "::1/128", "fc00::/7", "fe80::/10"
+
+  # Allow incoming requests only from the following subnets (https://en.wikipedia.org/wiki/Reserved_IP_addresses).
+  #
+  # Default: ["10.0.0.0/8", "127.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16",  "::1/128", "fc00::/7", "fe80::/10"]
   trusted_subnets: [
-    "10.0.0.0/8",
-    "127.0.0.0/8",
-    "172.16.0.0/12",
-    "192.168.0.0/16",
-    "::1/128",
-    "fc00::/7",
-    "fe80::/10",
+      "10.0.0.0/8",
+      "127.0.0.0/8",
+      "172.16.0.0/12",
+      "192.168.0.0/16",
+      "::1/128",
+      "fc00::/7",
+      "fe80::/10",
   ]
 
-  # File upload settings
+  # File uploading settings.
   uploads:
-    # Directory for file uploads (by default it uses TEMP_DIR based on your OS)
+    # Directory for file uploads. Empty value means to use $TEMP based on your OS.
+    #
+    # Default: ""
     dir: "/tmp"
-    # Deny files with the following extension to upload (by default [".php", ".exe", ".bat"])
+
+    # Deny files with the following extensions to upload.
+    #
+    # Default: [".php", ".exe", ".bat"]
     forbid: [".php", ".exe", ".bat", ".sh"]
 
-  # Settings for "headers" middleware
+  # Settings for "headers" middleware (docs: https://roadrunner.dev/docs/http-headers).
   headers:
-    # Allows to set headers for all RR responses (Doc: https://roadrunner.dev/docs/http-headers)
-    cors: # Delete this section for CORS disabling
-      #  headers.Add("Vary", "Origin")
-      #  headers.Add("Vary", "Access-Control-Request-Method")
-      #  headers.Add("Vary", "Access-Control-Request-Headers")
-      allowed_origin: "*" # Empty by default
-      allowed_headers: "*" # Empty by default
-      allowed_methods: "GET,POST,PUT,DELETE" # Empty by default
-      allow_credentials: true # Empty by default
-      exposed_headers: "Cache-Control,Content-Language,Content-Type,Expires,Last-Modified,Pragma" # Empty by default
-      max_age: 600 # Empty by default
-    # Allows to attach custom headres for any incoming request (map)
-    request: # Delete this section for request headers disabling
-      input: "custom-header"
-    # Allows to attach custom headres for any outgoing response (map)
-    response: # Delete this section for response headers disabling
-      output: "output-header"
+    # Allows to control CORS headers. Additional headers "Vary: Origin", "Vary: Access-Control-Request-Method",
+    # "Vary: Access-Control-Request-Headers" will be added to the server responses. Drop this section for this
+    # feature disabling.
+    cors:
+      # Controls "Access-Control-Allow-Origin" header value (docs: https://mzl.la/2OgD4Qf).
+      #
+      # Default: ""
+      allowed_origin: "*"
 
-  # Settings for "static" middleware (docs: https://roadrunner.dev/docs/http-static)
-  static:
-    # Directory with the static assets directory (required)
-    dir: "/path/to/directory"
-    forbid: [""] # file extensions to forbid
-    # Allows to attach custom headres for any incoming request (map)
+      # Controls "Access-Control-Allow-Headers" header value (docs: https://mzl.la/2OzDVvk).
+      #
+      # Default: ""
+      allowed_headers: "*"
+
+      # Controls "Access-Control-Allow-Methods" header value (docs: https://mzl.la/3lbwyXf).
+      #
+      # Default: ""
+      allowed_methods: "GET,POST,PUT,DELETE"
+
+      # Controls "Access-Control-Allow-Credentials" header value (docs: https://mzl.la/3ekJGaY).
+      #
+      # Default: false
+      allow_credentials: true
+
+      # Controls "Access-Control-Expose-Headers" header value (docs: https://mzl.la/3qAqgkF).
+      #
+      # Default: ""
+      exposed_headers: "Cache-Control,Content-Language,Content-Type,Expires,Last-Modified,Pragma"
+
+      # Controls "Access-Control-Max-Age" header value in seconds (docs: https://mzl.la/2PCSdvt).
+      #
+      # Default: 0
+      max_age: 600
+
+    # Automatically add headers to every request passed to PHP.
+    #
+    # Default: <empty map>
     request:
       input: "custom-header"
-    # Allows to attach custom headres for any outgoing response (map)
+
+    # Automatically add headers to every response.
+    #
+    # Default: <empty map>
     response:
-      output: "output-header"
+      X-Powered-By: "RoadRunner"
 
+  # Settings for "static" middleware (docs: https://roadrunner.dev/docs/http-static).
+  static:
+    # Path to the directory with static assets.
+    #
+    # This option is required.
+    dir: "/path/to/directory"
+
+    # File extensions to forbid.
+    #
+    # Default: []
+    forbid: [".htaccess"]
+
+    # Automatically add headers to every request.
+    #
+    # Default: <empty map>
+    request:
+      input: "custom-header"
+
+    # Automatically add headers to every response.
+    #
+    # Default: <empty map>
+    response:
+      X-Powered-By: "RoadRunner"
+
+  # Workers pool settings.
   pool:
-    # Workers number (zero or undefined is number of logical CPUs)
+    # How many worker processes will be started. Zero (or nothing) means the number of logical CPUs.
+    #
+    # Default: 0
     num_workers: 0
-    # Maximal count of worker wexecution (zero or undefined is unlimited)
-    max_jobs: 0
-    # Timeout for worker allocation (60s by default)
+
+    # Maximal count of worker executions. Zero (or nothing) means no limit.
+    #
+    # Default: 0
+    max_jobs: 64
+
+    # Timeout for worker allocation. Zero means no limit.
+    #
+    # Default: 60s
     allocate_timeout: 60s
-    # Timeout for worker destroying before process killing (60s by default)
+
+    # Timeout for worker destroying before process killing. Zero means no limit.
+    #
+    # Default: 60s
     destroy_timeout: 60s
-    # Supervisor is used to control http workers (allows to control)
+
+    # Supervisor is used to control http workers (previous name was "limit", docs:
+    # https://roadrunner.dev/docs/php-limit). "Soft" limits will not interrupt current request processing. "Hard"
+    # limit on the contrary - interrupts the execution of the request.
     supervisor:
-      # How often to check the state of the workers (1s by default)
+      # How often to check the state of the workers.
+      #
+      # Default: 1s
       watch_tick: 1s
-      # Maximum time worker is allowed to live, will not inerrupt while it is doing its work (0 by default) (soft)
+
+      # Maximum time worker is allowed to live (soft limit). Zero means no limit.
+      #
+      # Default: 0s
       ttl: 0s
-      # Maximum duration worker can spend in idle mode after first use. Disabled when 0, will not inerrupt while it is doing its work (seconds) (default = 0) (soft)
+
+      # How long worker can spend in IDLE mode after first using (soft limit). Zero means no limit.
+      #
+      # Default: 0s
       idle_ttl: 10s
-      # Maximum lifetime per job, will interupt if worker is busy (seconds) (default = 0) (hard)
-      exec_ttl: 10s
-      # Memory usage per worker, will not inerrupt while it is doing its work (MB) (default = 0) (soft)
-      max_worker_memory: 100
 
+      # Maximal worker memory usage in megabytes (soft limit). Zero means no limit.
+      #
+      # Default: 0
+      max_worker_memory: 128
+
+      # Maximal job lifetime (hard limit). Zero means no limit.
+      #
+      # Default: 0s
+      exec_ttl: 60s
+
+  # SSL (Secure Sockets Layer) settings (docs: https://roadrunner.dev/docs/http-https).
   ssl:
-    # host and port separated by colon (default ":443")
+    # Host and port to listen on (eg.: `127.0.0.1:443`).
+    #
+    # Default: ":443"
     address: "127.0.0.1:443"
-    redirect: false
-    cert: fixtures/server.crt # (required for SSL enabling)
-    key: fixtures/server.key # (required for SSL enabling)
-    root_ca: root.crt # (required for SSL enabling)
-  fcgi: # docs: <https://roadrunner.dev/docs/http-https>
-    address: tcp://0.0.0.0:7921 # Empty (disabled) by default
-  http2:
-    h2c: false # Enable or disable H2C (false by default)
-    max_concurrent_streams: 128 # 128 by default
 
-# Application Metrics, Delete this section for reload disabling (docs: https://roadrunner.dev/docs/beep-beep-metrics)
+    # Automatic redirect from http:// to https:// schema.
+    #
+    # Default: false
+    redirect: true
+
+    # Path to the cert file. This option is required for SSL working.
+    #
+    # This option is required.
+    cert: /ssl/server.crt
+
+    # Path to the cert key file.
+    #
+    # This option is required.
+    key: /ssl/server.key
+
+    # Path to the root certificate authority file.
+    #
+    # This option is required.
+    root_ca: /ssl/root.crt
+
+  # FastCGI frontend support.
+  fcgi:
+    # FastCGI connection DSN. Supported TCP and Unix sockets. An empty value disables this.
+    #
+    # Default: ""
+    address: tcp://0.0.0.0:7921
+
+  # HTTP/2 settings.
+  http2:
+    # HTTP/2 over non-encrypted TCP connection using H2C.
+    #
+    # Default: false
+    h2c: false
+
+    # Maximal concurrent streams count.
+    #
+    # Default: 128
+    max_concurrent_streams: 128
+
+# Application metrics in Prometheus format (docs: https://roadrunner.dev/docs/beep-beep-metrics). Drop this section
+# for this feature disabling.
 metrics:
-  # prometheus client address (path /metrics added automatically) (by default "localhost:2112")
+  # Prometheus client address (path /metrics added automatically).
+  #
+  # Default: "127.0.0.1:2112"
   address: "127.0.0.1:2112"
+
+  # Application-specific metrics (published using an RPC connection to the server).
   collect:
     app_metric:
       type: histogram
       help: "Custom application metric"
       labels: ["type"]
       buckets: [0.1, 0.2, 0.3, 1.0]
-      # objectives defines the quantile rank estimates with their respective
-      #	absolute error [ for summary only ]
+      # Objectives defines the quantile rank estimates with their respective absolute error (for summary only).
       objectives:
         - 1.4: 2.3
         - 2.0: 1.4
 
-# Delete this section for reload disabling (docs: https://roadrunner.dev/docs/beep-beep-reload)
+# Automatically detect PHP file changes and reload connected services (docs:
+# https://roadrunner.dev/docs/beep-beep-reload). Drop this section for this feature disabling.
 reload:
-  # sync interval ("1s" by default)
+  # Sync interval.
+  #
+  # Default: "1s"
   interval: 1s
-  # global patterns to sync (".php" by default)
+
+  # Global patterns to sync.
+  #
+  # Default: [".php"]
   patterns: [".php"]
-  # list of included for sync services (this is a map, ehere key name is plugin name)
-  services: # empty by default
+
+  # List of included for sync services (this is a map, where key name is a plugin name).
+  #
+  # Default: <empty map>
+  services:
     http:
-      # directories to sync. If recursive is set to true,
-      # recursive sync will be applied only to the directories in `dirs` section (`.` is $PWD) (empty by default)
+      # Directories to sync. If recursive is set to true, recursive sync will be applied only to the directories in
+      # "dirs" section. Dot (.) means "current working directory".
+      #
+      # Default: []
       dirs: ["."]
-      # recursive search for file patterns to add (false by default)
+
+      # Recursive search for file patterns to add.
+      #
+      # Default: false
       recursive: true
-      # ignored folders (empty by default)
+
+      # Ignored folders.
+      #
+      # Default: []
       ignore: ["vendor"]
-      # service specific file pattens to sync (empty by default)
+
+      # Service specific file pattens to sync.
+      #
+      # Default: []
       patterns: [".php", ".go", ".md"]
 
-# RoadRunner internal container configuration (docs: https://github.com/spiral/endure) 
+# RoadRunner internal container configuration (docs: https://github.com/spiral/endure).
 endure:
-  # default 30s to finish, possible values 10s,100m,5h (default is 30s)
+  # How long to wait for stopping.
+  #
+  # Default: 30s
   grace_period: 30s
-  # print graph in the graphviz format to the stdout (paste here to visualize https://dreampuf.github.io) (default false)
+
+  # Print graph in the graphviz format to the stdout (paste here to visualize https://dreampuf.github.io)
+  #
+  # Default: false
   print_graph: false
-  # default "error", possible values: debug, info, warning, error, panic, fatal
+
+  # Logging level. Possible values: "debug", "info", "warning", "error", "panic", "fatal".
+  #
+  # Default: "error"
   log_level: error
