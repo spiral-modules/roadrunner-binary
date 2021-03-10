@@ -406,6 +406,17 @@ metrics:
         - 1.4: 2.3
         - 2.0: 1.4
 
+# Health check endpoint (docs: https://roadrunner.dev/docs/beep-beep-health). If response code is 200 - it means at
+# least one worker ready to serve requests. 500 - there are no workers ready to service requests.
+# Drop this section for this feature disabling.
+status:
+  # Host and port to listen on (eg.: `127.0.0.1:2114`). Use the following URL: http://127.0.0.1:2114/health?plugin=http
+  # Multiple plugins must be separated using "&" - http://127.0.0.1:2114/health?plugin=http&plugin=rpc where "http" and
+  # "rpc" are active (connected) plugins.
+  #
+  # This option is required.
+  address: 127.0.0.1:2114
+
 # Automatically detect PHP file changes and reload connected services (docs:
 # https://roadrunner.dev/docs/beep-beep-reload). Drop this section for this feature disabling.
 reload:
