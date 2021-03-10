@@ -187,10 +187,10 @@ http:
   # Default: 0
   max_request_size: 256
 
-  # Middlewares for the http plugin, order is important. Allowed values is: "upload", "headers", "static", "gzip".
+  # Middlewares for the http plugin, order is important. Allowed values is: "headers", "static", "gzip".
   #
   # Default value: []
-  middleware: ["upload", "headers", "static", "gzip"]
+  middleware: ["headers", "static", "gzip"]
 
   # Allow incoming requests only from the following subnets (https://en.wikipedia.org/wiki/Reserved_IP_addresses).
   #
