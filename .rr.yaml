@@ -364,7 +364,7 @@ http:
 
     # Path to the root certificate authority file.
     #
-    # This option is required.
+    # This option is optional.
     root_ca: /ssl/root.crt
 
   # FastCGI frontend support.
