@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+v2.0.2 (23.03.2021)
+-------------------
+- 🐛 Fix: Bug with required Root CA certificate for the SSL, not it's optional.
+- 🆕 New: HTTP/FCGI/HTTPS internal logs instead of going to the raw stdout will be displayed in the RR logger at the `Info` log level.
+- 👷 Rework `ServeHTTP` handler logic. Use `http.Error` instead of writing code directly to the response writer. Other small improvements.
+
 v2.0.1 (09.03.2021)
 -------------------
 - 🐛 Fix: incorrect PHP command validation
