@@ -3,9 +3,9 @@
 </p>
 <p align="center">
  <a href="https://packagist.org/packages/spiral/roadrunner"><img src="https://poser.pugx.org/spiral/roadrunner/version"></a>
-	<a href="https://pkg.go.dev/github.com/spiral/roadrunner-binary/v2?tab=doc"><img src="https://godoc.org/github.com/spiral/roadrunner-binary/v2?status.svg"></a>
-	<a href="https://github.com/spiral/roadrunner-binary/actions"><img src="https://github.com/spiral/roadrunner/workflows/Linux/badge.svg" alt=""></a>
-	<a href="https://github.com/spiral/roadrunner-binary/actions"><img src="https://github.com/spiral/roadrunner/workflows/CodeQL/badge.svg" alt=""></a>
+	<a href="https://pkg.go.dev/github.com/spiral/roadrunner/v2?tab=doc"><img src="https://godoc.org/github.com/spiral/roadrunner/v2?status.svg"></a>
+	<a href="https://github.com/spiral/roadrunner/actions"><img src="https://github.com/spiral/roadrunner/workflows/Tests/badge.svg" alt=""></a>
+	<a href="https://github.com/spiral/roadrunner/actions"><img src="https://github.com/spiral/roadrunner/workflows/Linters/badge.svg" alt=""></a>
 	<a href="https://goreportcard.com/report/github.com/spiral/roadrunner"><img src="https://goreportcard.com/badge/github.com/spiral/roadrunner"></a>
 	<a href="https://scrutinizer-ci.com/g/spiral/roadrunner/?branch=master"><img src="https://scrutinizer-ci.com/g/spiral/roadrunner/badges/quality-score.png"></a>
 	<a href="https://codecov.io/gh/spiral/roadrunner/"><img src="https://codecov.io/gh/spiral/roadrunner/branch/master/graph/badge.svg"></a>
@@ -27,7 +27,6 @@ with much greater performance and flexibility.
 
 Features:
 --------
-
 - Production-ready
 - PCI DSS compliant
 - PSR-7 HTTP server (file uploads, error handling, static files, hot reload, middlewares, event listeners)
@@ -36,22 +35,23 @@ Features:
 - Flexible environment configuration
 - No external PHP dependencies (64bit version required), drop-in (based on [Goridge](https://github.com/spiral/goridge))
 - Load balancer, process manager and task pipeline
-- Frontend agnostic ([Queue](https://github.com/spiral/jobs), PSR-7, [GRPC](https://github.com/spiral/php-grpc), etc)
 - Integrated metrics (Prometheus)
+- [Workflow engine](https://github.com/temporalio/sdk-php) by [Temporal.io](https://temporal.io)  
 - Works over TCP, UNIX sockets and standard pipes
 - Automatic worker replacement and safe PHP process destruction
 - Worker create/allocate/destroy timeouts
 - Max jobs per worker
 - Worker lifecycle management (controller)
-    - maxMemory (graceful stop)
-    - TTL (graceful stop)
-    - idleTTL (graceful stop)
-    - execTTL (brute, max_execution_time)
+  - maxMemory (graceful stop)
+  - TTL (graceful stop)
+  - idleTTL (graceful stop)
+  - execTTL (brute, max_execution_time)
 - Payload context and body
 - Protocol, worker and job level error management (including PHP errors)
-- Development Mode  
+- Development Mode
 - Integrations with Symfony, [Laravel](https://github.com/spiral/roadrunner-laravel), Slim, CakePHP, Zend Expressive
 - Application server for [Spiral](https://github.com/spiral/framework)
+- Included in Laravel Octane
 - Automatic reloading on file changes
 - Works on Windows (Unix sockets (AF_UNIX) supported on Windows 10)
 
@@ -125,4 +125,3 @@ License:
 --------
 The MIT License (MIT). Please see [`LICENSE`](./LICENSE) for more information. Maintained
 by [Spiral Scout](https://spiralscout.com).
-
