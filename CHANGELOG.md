@@ -8,8 +8,6 @@ v2.0.2 (23.03.2021)
 - 🆕 New: HTTP/FCGI/HTTPS internal logs instead of going to the raw stdout will be displayed in the RR logger at
   the `Info` log level.
 - ⚡ New: Builds for the Mac with the M1 processor (arm64).
-- 👷 Rework ServeHTTP handler logic. Use http.Error instead of writing code directly to the response writer. Other small
-  improvements.
 
 v2.0.1 (09.03.2021)
 -------------------
