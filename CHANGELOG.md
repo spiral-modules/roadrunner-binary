@@ -3,12 +3,15 @@ CHANGELOG
 
 v2.0.2 (23.03.2021)
 -------------------
-- 🐛 Fix: Bug with required Root CA certificate for the SSL, not it's optional.
-- 🆕 New: HTTP/FCGI/HTTPS internal logs instead of going to the raw stdout will be displayed in the RR logger at the `Info` log level.
-- 👷 Rework `ServeHTTP` handler logic. Use `http.Error` instead of writing code directly to the response writer. Other small improvements.
+
+- 🐛 Fix: Bug with required Root CA certificate for the SSL, now it's optional.
+- 🆕 New: HTTP/FCGI/HTTPS internal logs instead of going to the raw stdout will be displayed in the RR logger at
+  the `Info` log level.
+- ⚡ New: Builds for the Mac with the M1 processor (arm64).
 
 v2.0.1 (09.03.2021)
 -------------------
+
 - 🐛 Fix: incorrect PHP command validation
 - 🐛 Fix: ldflags properly inject RR version
 - ⬆️ Update: README, links to the go.pkg from v1 to v2
@@ -42,11 +45,14 @@ v2.0.0 (02.03.2021)
 
 v2.0.0-RC.3 (20.02.2021)
 -------------------
+
 - RR-Core update to v2.0.0-RC.3 version (release: [link](https://github.com/spiral/roadrunner/releases/tag/v2.0.0-RC.3))
-- Temporal plugin update to v2.0.0-RC.2 version (release: [link](https://github.com/temporalio/roadrunner-temporal/releases/tag/v1.0.0-RC.2))
+- Temporal plugin update to v2.0.0-RC.2 version (
+  release: [link](https://github.com/temporalio/roadrunner-temporal/releases/tag/v1.0.0-RC.2))
 
 v2.0.0-RC.2 (11.02.2021)
 -------------------
+
 - RR-Core update to v2.0.0-RC.2 version
 - Temporal plugin update to v2.0.0-RC.1 version
 - Goridge update to v3.0.1 version
