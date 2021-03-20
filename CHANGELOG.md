@@ -5,6 +5,7 @@ v2.0.2 (23.03.2021)
 -------------------
 
 - 🐛 Fix: Bug with required Root CA certificate for the SSL, now it's optional.
+- 🐛 Fix: Bug with incorrectly consuming metrics collector from the RPC calls (thanks @dstrop).
 - 🆕 New: HTTP/FCGI/HTTPS internal logs instead of going to the raw stdout will be displayed in the RR logger at
   the `Info` log level.
 - ⚡ New: Builds for the Mac with the M1 processor (arm64).
