@@ -122,6 +122,12 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1 # Action page: <https://github.com/docker/setup-qemu-action>
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1 # Action page: <https://github.com/docker/setup-buildx-action>
+
       - name: Make docker login
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_LOGIN }}" --password-stdin
 
@@ -133,11 +139,11 @@ jobs:
 
       - name: Build image
         run: |
-          docker build \
+          docker buildx build \
+            --platform "linux/amd64,linux/arm64" \
             --tag "spiralscout/roadrunner:${{ steps.values.outputs.version }}" \
             --build-arg "APP_VERSION=${{ steps.values.outputs.version }}" \
             --build-arg "BUILD_TIME=${{ steps.values.outputs.timestamp }}" \
+            --file ./Dockerfile \
+            --push \
             .
-
-      - name: Push image into registry
-        run: docker push "spiralscout/roadrunner:${{ steps.values.outputs.version }}"
