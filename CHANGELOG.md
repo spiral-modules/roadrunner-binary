@@ -4,7 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
-- Added support for `linux/386`, `linux/arm64`, `linux/arm/v6` and `linux/arm/v7` platforms for docker image
+- Added support for `linux/arm64` platform for docker image
 
 v2.0.2 (23.03.2021)
 -------------------
