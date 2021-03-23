@@ -4,13 +4,18 @@ CHANGELOG
 v2.0.2 (23.03.2021)
 -------------------
 
-- 🐛 Fix: Bug with required Root CA certificate for the SSL, now it's optional.
-- 🐛 Fix: Bug with incorrectly consuming metrics collector from the RPC calls (thanks @dstrop).
-- 🆕 New: HTTP/FCGI/HTTPS internal logs instead of going to the raw stdout will be displayed in the RR logger at
-  the `Info` log level.
-- ⚡ New: Builds for the Mac with the M1 processor (arm64).
-- 👷 Rework ServeHTTP handler logic. Use http.Error instead of writing code directly to the response writer. Other small
-  improvements.
+## 🔥 New:
+- 👷 Rework ServeHTTP handler logic. Use `http.Error` instead of writing code directly to the response writer.
+- ⚡ Builds for the Mac with the M1 processor (arm64)
+- ⚡ HTTP/FCGI/HTTPS internal logs instead of going to the raw stdout will be displayed via the RR logger at the `Info` log level.
+
+## 🩹 Fixes:
+- 🐛 Bug with required Root CA certificate for the SSL, now it's optional.
+- 🐛 Bug with incorrect consuming metrics collector from the RPC calls (thanks @dstrop).
+
+## 🧹 Updates:
+- RR2 to version [2.0.2](https://github.com/spiral/roadrunner/releases/tag/v2.0.2)
+- Temporal plugin to version [1.0.2](https://github.com/temporalio/roadrunner-temporal/releases/tag/v1.0.2)
 
 v2.0.1 (09.03.2021)
 -------------------
