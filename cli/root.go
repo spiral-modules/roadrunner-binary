@@ -3,24 +3,21 @@ package cli
 import (
 	"fmt"
 	"log"
+	"net/http"
 	"net/http/pprof"
 	"net/rpc"
 	"os"
 	"path/filepath"
 	"time"
 
+	endure "github.com/spiral/endure/pkg/container"
 	"github.com/spiral/errors"
-
 	goridgeRpc "github.com/spiral/goridge/v3/pkg/rpc"
-
+	"github.com/spiral/roadrunner/v2/plugins/config"
 	rpcPlugin "github.com/spiral/roadrunner/v2/plugins/rpc"
 
-	"github.com/spiral/roadrunner/v2/plugins/config"
-
-	"net/http"
-
+	"github.com/joho/godotenv"
 	"github.com/spf13/cobra"
-	endure "github.com/spiral/endure/pkg/container"
 )
 
 const EndureKey string = "endure"
@@ -61,7 +58,22 @@ func Execute() {
 	}
 }
 
+// loadDotEnv loads environment variables from `.env` (or passed in `DOTENV_PATH` environment variable) file.
+//
+// Important note - that it WILL NOT OVERRIDE an env variable that already exists.
+func loadDotEnv() error {
+	var path = ".env" // default dotenv file name
+
+	if p, ok := os.LookupEnv("DOTENV_PATH"); ok {
+		path = p
+	}
+
+	return godotenv.Load(path)
+}
+
 func init() {
+	_ = loadDotEnv() // error ignored because dotenv is optional feature, and must not breaks application working
+
 	root.PersistentFlags().StringVarP(&CfgFile, "config", "c", ".rr.yaml", "config file (default is .rr.yaml)")
 	root.PersistentFlags().StringVarP(&WorkDir, "WorkDir", "w", "", "work directory")
 	root.PersistentFlags().BoolVarP(&Debug, "debug", "d", false, "debug mode")
