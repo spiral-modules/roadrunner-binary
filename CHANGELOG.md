@@ -5,6 +5,7 @@ UNRELEASED
 ----------
 
 - Add support for `linux/arm64` platform for docker image
+- Add dotenv file support
 
 v2.0.2 (23.03.2021)
 -------------------
