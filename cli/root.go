@@ -59,18 +59,20 @@ func Execute() {
 }
 
 // loadDotEnv loads environment variables from `.env` (or passed in `DOTENV_PATH` environment variable) file.
-func loadDotEnv() {
+//
+// Important note - that it WILL NOT OVERRIDE an env variable that already exists.
+func loadDotEnv() error {
 	var path = ".env" // default dotenv file name
 
 	if p, ok := os.LookupEnv("DOTENV_PATH"); ok {
 		path = p
 	}
 
-	_ = godotenv.Load(path) // error ignored because dotenv is optional feature, and must not breaks application working
+	return godotenv.Load(path)
 }
 
 func init() {
-	loadDotEnv() // load environment variables from dotenv file
+	_ = loadDotEnv() // error ignored because dotenv is optional feature, and must not breaks application working
 
 	root.PersistentFlags().StringVarP(&CfgFile, "config", "c", ".rr.yaml", "config file (default is .rr.yaml)")
 	root.PersistentFlags().StringVarP(&WorkDir, "WorkDir", "w", "", "work directory")
