@@ -6,11 +6,9 @@ FROM --platform=${TARGETPLATFORM:-linux/amd64} golang:1.16.2 as builder
 ARG APP_VERSION="undefined"
 ARG BUILD_TIME="undefined"
 
-RUN mkdir /src
+COPY . /src
 
 WORKDIR /src
-
-COPY . /src
 
 # arguments to pass on each go tool link invocation
 ENV LDFLAGS="-s \
@@ -18,7 +16,9 @@ ENV LDFLAGS="-s \
 -X github.com/spiral/roadrunner-binary/v2/internal/pkg/meta.buildTime=$BUILD_TIME"
 
 # compile binary file
-RUN CGO_ENABLED=0 go build -trimpath -ldflags "$LDFLAGS" -o ./rr ./cmd/rr
+RUN set -x \
+    && CGO_ENABLED=0 go build -trimpath -ldflags "$LDFLAGS" -o ./rr ./cmd/rr \
+    && ./rr -v
 
 # Image page: <https://hub.docker.com/_/alpine>
 FROM --platform=${TARGETPLATFORM:-linux/amd64} alpine:3.13

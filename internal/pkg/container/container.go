@@ -13,10 +13,5 @@ func NewContainer(cfg Config) (*endure.Endure, error) {
 		endureOptions = append(endureOptions, endure.Visualize(endure.StdOut, ""))
 	}
 
-	container, err := endure.NewContainer(nil, endureOptions...)
-	if err != nil {
-		return nil, err
-	}
-
-	return container, nil
+	return endure.NewContainer(nil, endureOptions...)
 }

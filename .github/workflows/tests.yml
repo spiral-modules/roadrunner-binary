@@ -91,6 +91,14 @@ jobs:
       - name: Try to execute
         run: ./rr -v && ./rr -h
 
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: rr-${{ matrix.os }}-go${{ matrix.go }}
+          path: ./rr
+          if-no-files-found: error
+          retention-days: 14
+
   docker-image:
     name: Build docker image
     runs-on: ubuntu-20.04
