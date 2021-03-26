@@ -86,7 +86,10 @@ jobs:
         run: go mod download && go mod verify
 
       - name: Build
-        run: go build ./cmd/rr
+        run: go build -o ./rr ./cmd/rr
+
+      - name: Try to execute
+        run: ./rr -v && ./rr -h
 
   docker-image:
     name: Build docker image

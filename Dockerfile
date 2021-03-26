@@ -24,8 +24,8 @@ RUN CGO_ENABLED=0 go build -trimpath -ldflags "$LDFLAGS" -o ./rr ./cmd/rr
 FROM --platform=${TARGETPLATFORM:-linux/amd64} alpine:3.13
 
 # use same build arguments for image labels
-ARG APP_VERSION
-ARG BUILD_TIME
+ARG APP_VERSION="undefined"
+ARG BUILD_TIME="undefined"
 
 LABEL \
     org.opencontainers.image.title="roadrunner" \

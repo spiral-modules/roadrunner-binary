@@ -62,7 +62,7 @@ jobs:
             -X github.com/spiral/roadrunner-binary/v2/internal/pkg/meta.version=${{ steps.values.outputs.version }}
             -X github.com/spiral/roadrunner-binary/v2/internal/pkg/meta.buildTime=${{ steps.values.outputs.timestamp }}
         run: |
-          go build -trimpath -ldflags "$LDFLAGS" -o "./${{ steps.values.outputs.binary-name }}" main.go
+          go build -trimpath -ldflags "$LDFLAGS" -o "./${{ steps.values.outputs.binary-name }}" ./cmd/rr
           stat "./${{ steps.values.outputs.binary-name }}"
 
       - name: Generate distributive directory name
