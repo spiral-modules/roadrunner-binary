@@ -2,14 +2,22 @@ package meta
 
 import "strings"
 
-// version value will be set during compilation.
+// next variables will be set during compilation (do NOT renaming them).
 var (
 	version   = "local"
-	buildTime = "development"
+	buildTime = "development" //nolint:gochecknoglobals
 )
 
 // Version returns version value (without `v` prefix).
-func Version() string { return strings.TrimLeft(version, "vV ") } // TODO check 2nd char "is numeric?"
+func Version() string {
+	v := strings.TrimSpace(version)
 
-// BuildTime ... // FIXME
-func BuildTime() string { return buildTime } // TODO test me
+	if len(v) > 1 && ((v[0] == 'v' || v[0] == 'V') && (v[1] >= '0' && v[1] <= '9')) {
+		return v[1:]
+	}
+
+	return v
+}
+
+// BuildTime returns application building time.
+func BuildTime() string { return buildTime }

@@ -4,8 +4,9 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/fatih/color"
 	"github.com/spiral/roadrunner-binary/v2/internal/pkg/cli"
+
+	"github.com/fatih/color"
 )
 
 // exitFn is a function for application exiting.

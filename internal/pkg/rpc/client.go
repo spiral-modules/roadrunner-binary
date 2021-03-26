@@ -1,0 +1,30 @@
+package rpc
+
+import (
+	"net/rpc"
+
+	"github.com/spiral/errors"
+	goridgeRpc "github.com/spiral/goridge/v3/pkg/rpc"
+	"github.com/spiral/roadrunner/v2/plugins/config"
+	rpcPlugin "github.com/spiral/roadrunner/v2/plugins/rpc"
+)
+
+func NewClient(cfgPlugin *config.Viper) (*rpc.Client, error) {
+	if !cfgPlugin.Has(rpcPlugin.PluginName) {
+		return nil, errors.E("rpc service disabled")
+	}
+
+	rpcConfig := &rpcPlugin.Config{}
+	if err := cfgPlugin.UnmarshalKey(rpcPlugin.PluginName, rpcConfig); err != nil {
+		return nil, err
+	}
+
+	rpcConfig.InitDefaults()
+
+	conn, err := rpcConfig.Dialer()
+	if err != nil {
+		return nil, err
+	}
+
+	return rpc.NewClientWithCodec(goridgeRpc.NewClientCodec(conn)), nil
+}

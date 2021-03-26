@@ -11,7 +11,7 @@ import (
 type Config struct {
 	GracePeriod time.Duration
 	PrintGraph  bool
-	RetryOnFail bool // TODO check for races, disabled at the moment
+	RetryOnFail bool // TODO check for races, disabled at this moment
 	LogLevel    endure.Level
 }
 
@@ -21,11 +21,14 @@ func NewConfig(configPath string) (*Config, error) {
 		return nil, err
 	}
 
-	const endureKey string = "endure"
+	const (
+		endureKey          = "endure"
+		defaultGracePeriod = time.Second * 30
+	)
 
 	if !rrCfg.Has(endureKey) {
 		return &Config{ // return config with defaults
-			GracePeriod: time.Second * 30,
+			GracePeriod: defaultGracePeriod,
 			PrintGraph:  false,
 			RetryOnFail: false,
 			LogLevel:    endure.DebugLevel,
@@ -44,7 +47,7 @@ func NewConfig(configPath string) (*Config, error) {
 	}
 
 	if rrCfgEndure.GracePeriod == 0 {
-		rrCfgEndure.GracePeriod = time.Second * 30
+		rrCfgEndure.GracePeriod = defaultGracePeriod
 	}
 
 	if rrCfgEndure.LogLevel == "" {
