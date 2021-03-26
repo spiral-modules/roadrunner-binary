@@ -30,10 +30,10 @@ func NewCommand(cmdName string) *cobra.Command {
 		override []string // override config values
 	)
 
-	// next variables will be overwritten later (with configured objects)
+	// next variables will be overwritten on pre run action (with configured objects)
 	var (
-		configPlugin       = &config.Viper{}
-		endureContainer, _ = endure.NewContainer(nil)
+		configPlugin    = &config.Viper{}
+		endureContainer = &endure.Endure{}
 	)
 
 	cmd := &cobra.Command{
@@ -41,7 +41,7 @@ func NewCommand(cmdName string) *cobra.Command {
 		SilenceErrors: true,
 		SilenceUsage:  true,
 		Version:       fmt.Sprintf("%s (build time: %s, %s)", meta.Version(), meta.BuildTime(), runtime.Version()),
-		PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
+		PersistentPreRunE: func(*cobra.Command, []string) error {
 			if cfgFile != "" {
 				if absPath, err := filepath.Abs(cfgFile); err == nil {
 					cfgFile = absPath // switch config path to the absolute
@@ -94,8 +94,8 @@ func NewCommand(cmdName string) *cobra.Command {
 				go func() { _ = srv.Start(":6061") }() // TODO implement graceful server stopping
 			}
 
-			*configPlugin = *cfg  // overwrite
-			*endureContainer = *c // overwrite
+			// overwrite
+			*configPlugin, *endureContainer = *cfg, *c //nolint:govet
 
 			return nil
 		},
