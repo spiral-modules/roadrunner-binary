@@ -15,9 +15,10 @@ import (
 	"github.com/vbauerster/mpb/v5/decor"
 )
 
-var spinnerStyle = []string{"∙∙∙", "●∙∙", "∙●∙", "∙∙●", "∙∙∙"}
+var spinnerStyle = []string{"∙∙∙", "●∙∙", "∙●∙", "∙∙●", "∙∙∙"} //nolint:gochecknoglobals
 
-func NewCommand(cfgPlugin *config.Viper) *cobra.Command {
+// NewCommand creates `reset` command.
+func NewCommand(cfgPlugin *config.Viper) *cobra.Command { //nolint:funlen
 	return &cobra.Command{
 		Use:   "reset",
 		Short: "Reset workers of all or specific RoadRunner service",
@@ -45,7 +46,7 @@ func NewCommand(cfgPlugin *config.Viper) *cobra.Command {
 			var wg sync.WaitGroup
 			wg.Add(len(services))
 
-			pr := mpb.New(mpb.WithWaitGroup(&wg), mpb.WithWidth(6))
+			pr := mpb.New(mpb.WithWaitGroup(&wg), mpb.WithWidth(6)) //nolint:gomnd
 
 			for _, service := range services {
 				var (
@@ -72,6 +73,7 @@ func NewCommand(cfgPlugin *config.Viper) *cobra.Command {
 
 					if err != nil {
 						result <- errors.E(op, err)
+
 						return
 					}
 
@@ -80,6 +82,7 @@ func NewCommand(cfgPlugin *config.Viper) *cobra.Command {
 			}
 
 			pr.Wait()
+
 			return nil
 		},
 	}

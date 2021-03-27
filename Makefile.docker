@@ -14,6 +14,10 @@ help: ## Show this help
 	@printf "\033[33m%s:\033[0m\n" 'Available commands'
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "  \033[32m%-11s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
+image: ## Build docker image with app
+	docker build -f ./Dockerfile -t rr:local .
+	@printf "\n   \e[30;42m %s \033[0m\n\n" 'Now you can use image like `docker run --rm rr:local ...`';
+
 build: ## Build app binary file
 	docker run $(DOCKER_GO_RUN_ARGS) -e "CGO_ENABLED=0" "golang:$(GO_VERSION)-buster" \
 		go build -trimpath -ldflags "-s" -o ./rr ./cmd/rr

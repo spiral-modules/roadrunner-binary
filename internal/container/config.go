@@ -15,18 +15,14 @@ type Config struct {
 	LogLevel    endure.Level
 }
 
-func NewConfig(configPath string) (*Config, error) {
-	rrCfg := &config.Viper{Path: configPath, Prefix: "rr"}
-	if err := rrCfg.Init(); err != nil {
-		return nil, err
-	}
-
+// NewConfig creates endure container configuration.
+func NewConfig(cfgPlugin *config.Viper) (*Config, error) {
 	const (
 		endureKey          = "endure"
 		defaultGracePeriod = time.Second * 30
 	)
 
-	if !rrCfg.Has(endureKey) {
+	if !cfgPlugin.Has(endureKey) {
 		return &Config{ // return config with defaults
 			GracePeriod: defaultGracePeriod,
 			PrintGraph:  false,
@@ -42,7 +38,7 @@ func NewConfig(configPath string) (*Config, error) {
 		LogLevel    string        `mapstructure:"log_level"`
 	}{}
 
-	if err := rrCfg.UnmarshalKey(endureKey, &rrCfgEndure); err != nil {
+	if err := cfgPlugin.UnmarshalKey(endureKey, &rrCfgEndure); err != nil {
 		return nil, err
 	}
 

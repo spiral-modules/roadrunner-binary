@@ -18,7 +18,7 @@ import (
 )
 
 // NewCommand creates root command.
-func NewCommand(cmdName string) *cobra.Command {
+func NewCommand(cmdName string) *cobra.Command { //nolint:funlen
 	const envDotenv = "DOTENV_PATH" // env var name: path to the .env file
 
 	var ( // flag values

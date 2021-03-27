@@ -14,7 +14,8 @@ import (
 	"go.uber.org/multierr"
 )
 
-func NewCommand(cfgPlugin *config.Viper) *cobra.Command {
+// NewCommand creates `serve` command.
+func NewCommand(cfgPlugin *config.Viper) *cobra.Command { //nolint:funlen,gocognit
 	return &cobra.Command{
 		Use:   "serve",
 		Short: "Start RoadRunner server",
@@ -22,7 +23,7 @@ func NewCommand(cfgPlugin *config.Viper) *cobra.Command {
 			const op = errors.Op("handle_serve_command")
 
 			// create endure container config
-			containerCfg, err := container.NewConfig(cfgPlugin.Path)
+			containerCfg, err := container.NewConfig(cfgPlugin)
 			if err != nil {
 				return errors.E(op, err)
 			}
@@ -56,7 +57,7 @@ func NewCommand(cfgPlugin *config.Viper) *cobra.Command {
 				return errors.E(op, err)
 			}
 
-			oss, stop := make(chan os.Signal, 2), make(chan struct{}, 1)
+			oss, stop := make(chan os.Signal, 2), make(chan struct{}, 1) //nolint:gomnd
 			signal.Notify(oss, os.Interrupt, syscall.SIGTERM, syscall.SIGINT)
 
 			go func() {

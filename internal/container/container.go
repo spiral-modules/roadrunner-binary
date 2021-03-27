@@ -1,7 +1,11 @@
 package container
 
-import endure "github.com/spiral/endure/pkg/container"
+import (
+	endure "github.com/spiral/endure/pkg/container"
+)
 
+// NewContainer creates endure container with all required options (based on container Config). Logger is nil by
+// default.
 func NewContainer(cfg Config) (*endure.Endure, error) {
 	endureOptions := []endure.Options{
 		endure.SetLogLevel(cfg.LogLevel),

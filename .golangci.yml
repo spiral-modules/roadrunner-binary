@@ -5,7 +5,6 @@ run:
   skip-dirs:
     - .github
     - .git
-    - cli
   modules-download-mode: readonly
   allow-parallel-runners: true
 

@@ -19,7 +19,8 @@ import (
 	"github.com/spiral/roadrunner/v2/tools"
 )
 
-func NewCommand(cfgPlugin *config.Viper) *cobra.Command {
+// NewCommand creates `workers` command.
+func NewCommand(cfgPlugin *config.Viper) *cobra.Command { //nolint:funlen
 	var ( // flag values
 		interactive bool
 	)
