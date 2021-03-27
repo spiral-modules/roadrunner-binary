@@ -16,9 +16,6 @@
 # Dependency directories (remove the comment below to include it)
 # vendor/
 .idea
-composer.lock
-vendor
-vendor_php
 builds/
 tests/vendor/
 .rr-sample.yaml
@@ -26,4 +23,4 @@ unit_tests
 unit_tests_copied
 dir1
 coverage
-rr
+/rr
