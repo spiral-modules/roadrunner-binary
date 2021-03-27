@@ -8,7 +8,7 @@ import (
 	"syscall"
 	"time"
 
-	internalRpc "github.com/spiral/roadrunner-binary/v2/internal/pkg/rpc"
+	internalRpc "github.com/spiral/roadrunner-binary/v2/internal/rpc"
 
 	tm "github.com/buger/goterm"
 	"github.com/fatih/color"

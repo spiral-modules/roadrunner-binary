@@ -4,7 +4,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/spiral/roadrunner-binary/v2/internal/pkg/cli"
+	"github.com/spiral/roadrunner-binary/v2/internal/cli"
 
 	"github.com/fatih/color"
 )

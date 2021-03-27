@@ -21,7 +21,9 @@ I expected to see this happen: *explanation*
 
 Instead, this happened: *explanation*
 
-The version of RR used: *explanation*
+The **version of RR** used: *explanation*
+
+The **operation system** used: *explanation*
 
 RR configuration file content:
 

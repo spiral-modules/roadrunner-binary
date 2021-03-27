@@ -6,7 +6,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/spiral/roadrunner-binary/v2/internal/pkg/container"
+	"github.com/spiral/roadrunner-binary/v2/internal/container"
 
 	"github.com/spf13/cobra"
 	"github.com/spiral/errors"

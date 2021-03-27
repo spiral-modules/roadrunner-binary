@@ -6,9 +6,9 @@
 	<a href="https://pkg.go.dev/github.com/spiral/roadrunner-binary/v2"><img src="https://godoc.org/github.com/spiral/roadrunner-binary/v2?status.svg"></a>
 	<a href="https://github.com/spiral/roadrunner-binary/actions"><img src="https://github.com/spiral/roadrunner-binary/workflows/tests/badge.svg"></a>
 	<a href="https://goreportcard.com/report/github.com/spiral/roadrunner-binary"><img src="https://goreportcard.com/badge/github.com/spiral/roadrunner-binary"></a>
-	<a href="https://codecov.io/gh/spiral/roadrunner-binary/"><img src="https://codecov.io/gh/spiral/roadrunner-binary/branch/master/graph/badge.svg"></a>
 	<a href="https://lgtm.com/projects/g/spiral/roadrunner-binary/alerts/"><img alt="Total alerts" src="https://img.shields.io/lgtm/alerts/g/spiral/roadrunner-binary.svg?logo=lgtm&logoWidth=18"/></a>
 	<a href="https://discord.gg/TFeEmCs"><img src="https://img.shields.io/badge/discord-chat-magenta.svg"></a>
+    <img alt="All releases" src="https://img.shields.io/github/downloads/spiral/roadrunner-binary/total">
 </p>
 
 RoadRunner is an open-source (MIT licensed) high-performance PHP application server, load balancer, and process manager.

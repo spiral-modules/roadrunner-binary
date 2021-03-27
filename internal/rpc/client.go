@@ -1,3 +1,4 @@
+// Package rpc is only internal story.
 package rpc
 
 import (
@@ -9,6 +10,7 @@ import (
 	rpcPlugin "github.com/spiral/roadrunner/v2/plugins/rpc"
 )
 
+// NewClient creates client ONLY for internal usage (communication between our application with RR side).
 func NewClient(cfgPlugin *config.Viper) (*rpc.Client, error) {
 	if !cfgPlugin.Has(rpcPlugin.PluginName) {
 		return nil, errors.E("rpc service disabled")

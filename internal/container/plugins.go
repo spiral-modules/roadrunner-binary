@@ -18,6 +18,7 @@ import (
 	"github.com/temporalio/roadrunner-temporal/workflow"
 )
 
+// Plugins returns active plugins for the endure container. Feel free to add or remove any plugins.
 func Plugins() []interface{} {
 	return []interface{}{
 		// logger plugin
