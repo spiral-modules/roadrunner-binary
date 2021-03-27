@@ -5,7 +5,7 @@ UNRELEASED
 ----------
 
 - Add support for `linux/arm64` platform for docker image
-- Add dotenv file support
+- Add dotenv file support (`.env` in working directory by default; file location can be changed using CLI flag `--dotenv` or `DOTENV_PATH` environment variable)
 
 v2.0.2 (23.03.2021)
 -------------------

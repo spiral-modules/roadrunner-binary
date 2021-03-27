@@ -6,37 +6,26 @@ FROM --platform=${TARGETPLATFORM:-linux/amd64} golang:1.16.2 as builder
 ARG APP_VERSION="undefined"
 ARG BUILD_TIME="undefined"
 
-# arguments to pass on each go tool link invocation
-ENV LDFLAGS="-s \
--X github.com/spiral/roadrunner-binary/v2/cli.Version=$APP_VERSION \
--X github.com/spiral/roadrunner-binary/v2/cli.BuildTime=$BUILD_TIME"
-
-RUN mkdir /src
+COPY . /src
 
 WORKDIR /src
-RUN mkdir -p /src/cli
 
-COPY go.mod ./
-COPY go.sum ./
-COPY main.go ./
-COPY cli/* /src/cli/
-COPY .rr.yaml ./
-
-# Burn modules cache
-RUN set -x \
-    && go version \
-    && go mod download \
-    && go mod verify
+# arguments to pass on each go tool link invocation
+ENV LDFLAGS="-s \
+-X github.com/spiral/roadrunner-binary/v2/internal/meta.version=$APP_VERSION \
+-X github.com/spiral/roadrunner-binary/v2/internal/meta.buildTime=$BUILD_TIME"
 
 # compile binary file
-RUN CGO_ENABLED=0 go build -trimpath -ldflags "$LDFLAGS" -o rr main.go
+RUN set -x \
+    && CGO_ENABLED=0 go build -trimpath -ldflags "$LDFLAGS" -o ./rr ./cmd/rr \
+    && ./rr -v
 
 # Image page: <https://hub.docker.com/_/alpine>
 FROM --platform=${TARGETPLATFORM:-linux/amd64} alpine:3.13
 
 # use same build arguments for image labels
-ARG APP_VERSION
-ARG BUILD_TIME
+ARG APP_VERSION="undefined"
+ARG BUILD_TIME="undefined"
 
 LABEL \
     org.opencontainers.image.title="roadrunner" \
