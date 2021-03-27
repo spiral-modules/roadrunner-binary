@@ -33,6 +33,7 @@ func NewCommand(cmdName string) *cobra.Command { //nolint:funlen
 
 	cmd := &cobra.Command{
 		Use:           cmdName,
+		Short:         "High-performance PHP application server, load-balancer and process manager",
 		SilenceErrors: true,
 		SilenceUsage:  true,
 		Version:       fmt.Sprintf("%s (build time: %s, %s)", meta.Version(), meta.BuildTime(), runtime.Version()),
