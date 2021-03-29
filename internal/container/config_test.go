@@ -42,7 +42,7 @@ func TestNewConfig_WithoutEndureKey(t *testing.T) {
 	assert.Equal(t, time.Second*30, c.GracePeriod)
 	assert.False(t, c.PrintGraph)
 	assert.False(t, c.RetryOnFail)
-	assert.Equal(t, endure.DebugLevel, c.LogLevel)
+	assert.Equal(t, endure.ErrorLevel, c.LogLevel)
 }
 
 func TestNewConfig_LoggingLevels(t *testing.T) {
