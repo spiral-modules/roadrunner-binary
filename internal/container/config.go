@@ -27,7 +27,7 @@ func NewConfig(cfgPlugin *config.Viper) (*Config, error) {
 			GracePeriod: defaultGracePeriod,
 			PrintGraph:  false,
 			RetryOnFail: false,
-			LogLevel:    endure.DebugLevel,
+			LogLevel:    endure.ErrorLevel,
 		}, nil
 	}
 
