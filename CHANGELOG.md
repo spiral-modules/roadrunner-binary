@@ -1,11 +1,18 @@
 CHANGELOG
 =========
 
-UNRELEASED
+v2.1.0 (06.04.2021)
 ----------
 
-- ⚡ Add support for `linux/arm64` platform for docker image
-- ⚡ Add dotenv file support (`.env` in working directory by default; file location can be changed using CLI flag `--dotenv` or `DOTENV_PATH` environment variable)
+## 🔥 New:
+
+- ✏️ Add support for `linux/arm64` platform for docker image (thanks @tarampampam)
+- ✏️ Add dotenv file support (`.env` in working directory by default; file location can be changed using CLI
+  flag `--dotenv` or `DOTENV_PATH` environment variable) (thanks @tarampampam)
+
+## 🩹 Fixes:
+
+- 🐛 Fix: bug with the temporal worker which does not follow general graceful shutdown period -> [RR](https://github.com/spiral/roadrunner/releases/tag/v2.1.0-beta.1).
 
 v2.0.2 (23.03.2021)
 -------------------
