@@ -22,7 +22,8 @@ RUN set -x \
 
 # Image page: <https://hub.docker.com/_/alpine>
 # https://alpinelinux.org/posts/Alpine-3.13.4-released.html
-FROM --platform=${TARGETPLATFORM:-linux/amd64} alpine:3.13.4
+# Critical issue with 3.13.3 https://nvd.nist.gov/vuln/detail/CVE-2021-28831
+FROM --platform=${TARGETPLATFORM:-linux/amd64} alpine:3
 
 # use same build arguments for image labels
 ARG APP_VERSION="undefined"
