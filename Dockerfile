@@ -21,7 +21,7 @@ RUN set -x \
     && ./rr -v
 
 # Image page: <https://hub.docker.com/_/alpine>
-FROM --platform=${TARGETPLATFORM:-linux/amd64} alpine:3.13
+FROM --platform=${TARGETPLATFORM:-linux/amd64} alpine:3.13.4
 
 # use same build arguments for image labels
 ARG APP_VERSION="undefined"
