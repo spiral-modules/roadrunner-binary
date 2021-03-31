@@ -1,5 +1,5 @@
 # Image page: <https://hub.docker.com/_/golang>
-FROM --platform=${TARGETPLATFORM:-linux/amd64} golang:1.16.2 as builder
+FROM --platform=${TARGETPLATFORM:-linux/amd64} golang:alpine as builder
 
 # app version and build date must be passed during image building (version without any prefix).
 # e.g.: `docker build --build-arg "APP_VERSION=1.2.3" --build-arg "BUILD_TIME=$(date +%FT%T%z)" .`
@@ -21,7 +21,9 @@ RUN set -x \
     && ./rr -v
 
 # Image page: <https://hub.docker.com/_/alpine>
-FROM --platform=${TARGETPLATFORM:-linux/amd64} alpine:3.13
+# https://alpinelinux.org/posts/Alpine-3.13.4-released.html
+# Critical issue with 3.13.3 https://nvd.nist.gov/vuln/detail/CVE-2021-28831
+FROM --platform=${TARGETPLATFORM:-linux/amd64} alpine:3
 
 # use same build arguments for image labels
 ARG APP_VERSION="undefined"
