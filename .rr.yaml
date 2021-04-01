@@ -12,7 +12,7 @@
 # Remote Procedures Calling (docs: https://roadrunner.dev/docs/beep-beep-rpc)
 # Is used for connecting to RoadRunner server from your PHP workers.
 rpc:
-  # TCP address:port for listening.
+  # TCP address:port for listening. Must NOT be same as relay TCP port (if TCP relay is used).
   #
   # Default: "tcp://127.0.0.1:6001"
   listen: tcp://127.0.0.1:6001
