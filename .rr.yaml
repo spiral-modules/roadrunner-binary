@@ -9,10 +9,12 @@
 # Hint: RR will replace any config options using reference to environment variables,
 # eg.: `option_key: ${ENVIRONMENT_VARIABLE_NAME}`.
 
+# Important: TCP port numbers for each plugin (rpc, http, etc) must be unique!
+
 # Remote Procedures Calling (docs: https://roadrunner.dev/docs/beep-beep-rpc)
 # Is used for connecting to RoadRunner server from your PHP workers.
 rpc:
-  # TCP address:port for listening. Must NOT be same as relay TCP port (if TCP relay is used).
+  # TCP address:port for listening.
   #
   # Default: "tcp://127.0.0.1:6001"
   listen: tcp://127.0.0.1:6001
