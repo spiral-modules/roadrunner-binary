@@ -9,7 +9,7 @@ require (
 	github.com/kami-zh/go-capturer v0.0.0-20171211120116-e492ea43421d
 	github.com/mattn/go-runewidth v0.0.12
 	github.com/spf13/cobra v1.1.3
-	github.com/spiral/endure v1.0.0
+	github.com/spiral/endure v1.0.1
 	github.com/spiral/errors v1.0.9
 	github.com/spiral/goridge/v3 v3.0.1
 	github.com/spiral/roadrunner/v2 v2.1.0-beta.1
