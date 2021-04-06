@@ -14,7 +14,15 @@ v2.0.4 (06.04.2021)
 
 ## 🩹 Fixes:
 
-- 🐛 Fix: bug with the temporal worker which does not follow general graceful shutdown period -> [RR](https://github.com/spiral/roadrunner/releases/tag/v2.1.0-beta.1).
+- 🐛 Fix: bug with the temporal worker which does not follow general graceful shutdown period
+  -> [RR](https://github.com/spiral/roadrunner/releases/tag/v2.1.0-beta.1).
+
+v2.0.3 (29.03.2021)
+-------------------
+
+## 🩹 Fixes:
+
+- 🐛 Bug with slow last response when reached `max_jobs` limit.
 
 v2.0.2 (23.03.2021)
 -------------------
