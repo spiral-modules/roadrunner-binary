@@ -419,6 +419,12 @@ status:
   # This option is required.
   address: 127.0.0.1:2114
 
+  # Response status code if a requested plugin not ready to handle requests
+  # Valid for both /health and /ready endpoints
+  #
+  # Default: 503
+  unavailable_status_code: 503
+
 # Automatically detect PHP file changes and reload connected services (docs:
 # https://roadrunner.dev/docs/beep-beep-reload). Drop this section for this feature disabling.
 reload:
