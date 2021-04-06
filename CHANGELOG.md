@@ -12,6 +12,7 @@ v2.0.4 (06.04.2021)
   severity level should be at least `INFO`).
 - 🆕 Add Readiness probe check. The `status` plugin provides `/ready` endpoint which return the `204` HTTP code if there
   are no workers in the `Ready` state and `200 OK` status if there are at least 1 worker in the `Ready` state.
+- 🆕 New option `unavailable_status_code` for the `status` plugin.
 
 ## 🩹 Fixes:
 
