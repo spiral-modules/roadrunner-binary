@@ -1,18 +1,34 @@
 CHANGELOG
 =========
+v2.0.4 (06.04.2021)
+-------------------
 
-v2.1.0 (06.04.2021)
-----------
+## 👀 New:
 
-## 🔥 New:
-
-- ✏️ Add support for `linux/arm64` platform for docker image (thanks @tarampampam)
+- ✏️ Add support for `linux/arm64` platform for docker image (thanks @tarampampam).
 - ✏️ Add dotenv file support (`.env` in working directory by default; file location can be changed using CLI
-  flag `--dotenv` or `DOTENV_PATH` environment variable) (thanks @tarampampam)
+  flag `--dotenv` or `DOTENV_PATH` environment variable) (thanks @tarampampam).
+- 📜 Add a new `raw` mode for the `logger` plugin to keep the stderr log message of the worker unmodified (logger
+  severity level should be at least `INFO`).
+- 🆕 Add Readiness probe check. The `status` plugin provides `/ready` endpoint which return the `204` HTTP code if there
+  are no workers in the `Ready` state and `200 OK` status if there are at least 1 worker in the `Ready` state.
 
 ## 🩹 Fixes:
 
-- 🐛 Fix: bug with the temporal worker which does not follow general graceful shutdown period -> [RR](https://github.com/spiral/roadrunner/releases/tag/v2.1.0-beta.1).
+- 🐛 Fix: bug with the temporal worker which does not follow general graceful shutdown period.
+
+## 📦 Updates:
+
+- RR v2.0.4 - [Release](https://github.com/spiral/roadrunner/releases/tag/v2.0.4)
+- RR-Temporal plugin v1.0.3 [Release](https://github.com/temporalio/roadrunner-temporal/releases/tag/v1.0.3)
+- Endure v1.0.1 [Release](https://github.com/spiral/endure/releases/tag/v1.0.1)
+
+v2.0.3 (29.03.2021)
+-------------------
+
+## 🩹 Fixes:
+
+- 🐛 Fix: slow last response when reached `max_jobs` limit.
 
 v2.0.2 (23.03.2021)
 -------------------
