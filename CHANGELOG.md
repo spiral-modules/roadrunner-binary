@@ -10,6 +10,8 @@ v2.1.0 (06.04.2021)
 - ✏️ Add dotenv file support (`.env` in working directory by default; file location can be changed using CLI
   flag `--dotenv` or `DOTENV_PATH` environment variable) (thanks @tarampampam)
 
+- New option `unavailable_status_code` for the `status` plugin.
+
 ## 🩹 Fixes:
 
 - 🐛 Fix: bug with the temporal worker which does not follow general graceful shutdown period -> [RR](https://github.com/spiral/roadrunner/releases/tag/v2.1.0-beta.1).
