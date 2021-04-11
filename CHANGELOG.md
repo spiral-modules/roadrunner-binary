@@ -1,6 +1,19 @@
 CHANGELOG
 =========
-v2.0.4 (06.04.2021)
+
+v2.0.5 (27.04.2021)
+-------------------
+
+## 👀 New:
+
+- ✏️ Add support for `linux/arm64` platform for binaries in the RR releases.
+
+## 🩹 Fixes:
+
+
+## 📦 Updates:
+
+
 -------------------
 
 ## 👀 New:
