@@ -20,6 +20,10 @@ jobs:
             compiler: gcc
             archiver: tar
             arch: amd64
+          - os: linux
+            compiler: gcc
+            archiver: tar
+            arch: arm64
           - os: darwin
             compiler: gcc
             archiver: tar
