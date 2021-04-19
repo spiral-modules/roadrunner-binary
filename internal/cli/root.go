@@ -84,7 +84,7 @@ func NewCommand(cmdName string) *cobra.Command { //nolint:funlen
 
 	f.StringVarP(&cfgFile, "config", "c", ".rr.yaml", "config file")
 	f.StringVarP(&workDir, "WorkDir", "w", "", "working directory") // TODO change to `workDir`?
-	f.StringVarP(&dotenv, "dotenv", "", ".env", fmt.Sprintf("dotenv file [$%s]", envDotenv))
+	f.StringVarP(&dotenv, "dotenv", "", "", fmt.Sprintf("dotenv file [$%s]", envDotenv))
 	f.BoolVarP(&debug, "debug", "d", false, "debug mode")
 	f.StringArrayVarP(&override, "override", "o", nil, "override config value (dot.notation=value)")
 
