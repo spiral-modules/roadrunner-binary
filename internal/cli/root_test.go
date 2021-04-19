@@ -46,7 +46,7 @@ func TestCommandFlags(t *testing.T) {
 	}{
 		{giveName: "config", wantShorthand: "c", wantDefault: ".rr.yaml"},
 		{giveName: "WorkDir", wantShorthand: "w", wantDefault: ""},
-		{giveName: "dotenv", wantShorthand: "", wantDefault: ".env"},
+		{giveName: "dotenv", wantShorthand: "", wantDefault: ""},
 		{giveName: "debug", wantShorthand: "d", wantDefault: "false"},
 		{giveName: "override", wantShorthand: "o", wantDefault: "[]"},
 	}
