@@ -1,18 +1,20 @@
 CHANGELOG
 =========
 
-v2.0.5 (27.04.2021)
+v2.1.0 (27.04.2021)
 -------------------
 
 ## 👀 New:
 
 - ✏️ Add support for `linux/arm64` platform for binaries in the RR releases.
+- ✏️ New `service` plugin. Docs: [link](https://roadrunner.dev/docs/beep-beep-service)
 
 ## 🩹 Fixes:
 
+- 🐛 Fix: Logger didn't provide an anonymous log instance to a plugins w/o `Named` interface implemented.
+- 🐛 Fix: http handler was without log listener after `rr reset`.
 
 ## 📦 Updates:
-
 
 -------------------
 

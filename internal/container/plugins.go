@@ -11,6 +11,7 @@ import (
 	"github.com/spiral/roadrunner/v2/plugins/resetter"
 	rpcPlugin "github.com/spiral/roadrunner/v2/plugins/rpc"
 	"github.com/spiral/roadrunner/v2/plugins/server"
+	"github.com/spiral/roadrunner/v2/plugins/service"
 	"github.com/spiral/roadrunner/v2/plugins/static"
 	"github.com/spiral/roadrunner/v2/plugins/status"
 	"github.com/temporalio/roadrunner-temporal/activity"
@@ -37,6 +38,8 @@ func Plugins() []interface{} {
 		&rpcPlugin.Plugin{},
 		// server plugin (NewWorker, NewWorkerPool)
 		&server.Plugin{},
+		// service plugin
+		&service.Plugin{},
 
 		// static
 		&static.Plugin{},
