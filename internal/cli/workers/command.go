@@ -90,8 +90,9 @@ func NewCommand(cfgPlugin *config.Viper) *cobra.Command { //nolint:funlen
 
 func showWorkers(plugins []string, client *rpc.Client) error {
 	const (
-		op              = errors.Op("show_workers")
-		informerWorkers = "informer.Workers"
+		op                = errors.Op("show_workers")
+		informerWorkers   = "informer.Workers"
+		servicePluginName = "service"
 	)
 
 	for _, plugin := range plugins {
@@ -101,7 +102,15 @@ func showWorkers(plugins []string, client *rpc.Client) error {
 			return errors.E(op, err)
 		}
 
+		if plugin == servicePluginName {
+			fmt.Printf("Workers of [%s]:\n", color.HiYellowString(plugin))
+			tools.ServiceWorkerTable(os.Stdout, list.Workers).Render()
+
+			continue
+		}
+
 		fmt.Printf("Workers of [%s]:\n", color.HiYellowString(plugin))
+
 		tools.WorkerTable(os.Stdout, list.Workers).Render()
 	}
 
