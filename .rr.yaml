@@ -174,8 +174,160 @@ temporal:
 
   # Debugging level (only for "json" codec). Set 0 for nothing, 1 for "normal", and 2 for colorized messages.
   #
-  # Default: ?
+  # Default: 1
   debug_level: 2
+
+# KV plugin settings. Available drivers: boltdb, redis, memcached, memory.
+# Any number of sections can be defined here.
+kv:
+  # User defined name of the section
+  #
+  # Default: none
+  boltdb-south:
+    # Driver which should be used for the storage
+    #
+    # This option is required.
+    driver: boltdb
+    # Driver specific options. Dir - directory where to store db file.
+    #
+    # Default: "."
+    dir: "tests/rr-bolt"
+    # File name for the DB
+    #
+    # Default: "rr.db"
+    file: "rr.db"
+    # BoltDB bucket name
+    #
+    # Default: "rr"
+    bucket: "rr"
+    # Access permission for the DB file.
+    #
+    # Default: "0777"
+    permissions: 0666
+    # TTL keys check interval in seconds. It's safe to use 1 second here, but can be a little costly to performance.
+    #
+    # Default: "60" seconds
+    interval: 40
+
+  # User defined name of the section
+  #
+  # Default: none
+  us-central-kv:
+    # Driver which should be used for the storage
+    #
+    # Default: none
+    driver: memcached
+    # Driver specific section. Address of the memcached node.
+    #
+    # Default: "localhost:11211"
+    addr: [ "localhost:11211" ]
+
+  # User defined name of the section
+  #
+  # Default: none
+  fast-kv-fr:
+    # Driver which should be used for the storage.
+    #
+    # Default: none
+    driver: redis
+    # Redis specific section. If one address provided - single node client will be used.
+    #
+    #
+    # UniversalClient is an abstract client which - based on the provided options -
+    # can connect to either clusters, or sentinel-backed failover instances
+    # or simple single-instance servers. This can be useful for testing
+    # cluster-specific applications locally.
+    # if the number of addrs is 1 and master_name is empty, a single-node redis Client will be returned
+    # if the number of addrs is two or more, a ClusterClient will be returned
+    addrs:
+      - "localhost:6379"
+      # if a MasterName is passed a sentinel-backed FailoverClient will be returned
+    master_name: ""
+    username: ""
+    password: ""
+    db: 0
+    sentinel_password: ""
+    route_by_latency: false
+    route_randomly: false
+    dial_timeout: 0 # accepted values [1s, 5m, 3h]
+    max_retries: 1
+    min_retry_backoff: 0 # accepted values [1s, 5m, 3h]
+    max_retry_backoff: 0 # accepted values [1s, 5m, 3h]
+    pool_size: 0
+    min_idle_conns: 0
+    max_conn_age: 0 # accepted values [1s, 5m, 3h]
+    read_timeout: 0 # accepted values [1s, 5m, 3h]
+    write_timeout: 0 # accepted values [1s, 5m, 3h]
+    pool_timeout: 0 # accepted values [1s, 5m, 3h]
+    idle_timeout: 0 # accepted values [1s, 5m, 3h]
+    idle_check_freq: 0 # accepted values [1s, 5m, 3h]
+    read_only: false
+
+
+  # User defined name of the section
+  #
+  # Default: none
+  local-memory:
+    # In memory driver specific section
+    #
+    # Default: none
+    driver: memory
+    # TTL check interval in seconds
+    #
+    # Default: 60 seconds
+    interval: 1
+
+# Service plugin settings
+service:
+  # User defined service name
+  #
+  # Default: none, required
+  some_service_1:
+    # Command to execute. Can be any command here which can be executed.
+    #
+    # Default: none, required.
+    command: php tests/plugins/service/test_files/loop.php
+    # Number of copies (processes) to start per command.
+    #
+    # Default: 1
+    process_num: 1
+    # Allowed execute timeout.
+    #
+    # Default: 0 (infinity), can be 1s, 2m, 2h (seconds, minutes, hours)
+    exec_timeout: 0
+    # Remain process after exit. In other words, restart process after exit with any exit code.
+    #
+    # Default: "false"
+    remain_after_exit: true
+    # Number of seconds to wait before process restart.
+    #
+    # Default: 30
+    restart_sec: 1
+
+  # User defined service name
+  #
+  # Default: none, required
+  some_service_2:
+    # Command to execute. Can be any command here which can be executed.
+    #
+    # Default: none, required.
+    command: "binary"
+    # Number of copies (processes) to start per command.
+    #
+    # Default: 1
+    process_num: 1
+    # Allowed execute timeout.
+    #
+    # Default: 0 (infinity), can be 1s, 2m, 2h (seconds, minutes, hours)
+    exec_timeout: 0
+    # Remain process after exit. In other words, restart process after exit with any exit code.
+    #
+    # Default: "false"
+    remain_after_exit: true
+    # Number of seconds to wait before process restart.
+    #
+    # Default: 30
+    restart_sec: 1
 
 # HTTP plugin settings.
 http:
@@ -192,7 +344,7 @@ http:
   # Middlewares for the http plugin, order is important. Allowed values is: "headers", "static", "gzip".
   #
   # Default value: []
-  middleware: ["headers", "static", "gzip"]
+  middleware: [ "headers", "static", "gzip" ]
 
   # Allow incoming requests only from the following subnets (https://en.wikipedia.org/wiki/Reserved_IP_addresses).
   #
@@ -217,7 +369,7 @@ http:
     # Deny files with the following extensions to upload.
     #
     # Default: [".php", ".exe", ".bat"]
-    forbid: [".php", ".exe", ".bat", ".sh"]
+    forbid: [ ".php", ".exe", ".bat", ".sh" ]
 
   # Settings for "headers" middleware (docs: https://roadrunner.dev/docs/http-headers).
   headers:
@@ -277,7 +429,7 @@ http:
     # File extensions to forbid.
     #
     # Default: []
-    forbid: [".htaccess"]
+    forbid: [ ".htaccess" ]
 
     # Automatically add headers to every request.
     #
@@ -401,8 +553,8 @@ metrics:
     app_metric:
       type: histogram
       help: "Custom application metric"
-      labels: ["type"]
-      buckets: [0.1, 0.2, 0.3, 1.0]
+      labels: [ "type" ]
+      buckets: [ 0.1, 0.2, 0.3, 1.0 ]
       # Objectives defines the quantile rank estimates with their respective absolute error (for summary only).
       objectives:
         - 1.4: 2.3
@@ -436,7 +588,7 @@ reload:
   # Global patterns to sync.
   #
   # Default: [".php"]
-  patterns: [".php"]
+  patterns: [ ".php" ]
 
   # List of included for sync services (this is a map, where key name is a plugin name).
   #
@@ -447,7 +599,7 @@ reload:
       # "dirs" section. Dot (.) means "current working directory".
       #
       # Default: []
-      dirs: ["."]
+      dirs: [ "." ]
 
       # Recursive search for file patterns to add.
       #
@@ -457,12 +609,12 @@ reload:
       # Ignored folders.
       #
       # Default: []
-      ignore: ["vendor"]
+      ignore: [ "vendor" ]
 
       # Service specific file pattens to sync.
       #
       # Default: []
-      patterns: [".php", ".go", ".md"]
+      patterns: [ ".php", ".go", ".md" ]
 
 # RoadRunner internal container configuration (docs: https://github.com/spiral/endure).
 endure:
