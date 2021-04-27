@@ -13,8 +13,8 @@ require (
 	github.com/spiral/endure v1.0.1
 	github.com/spiral/errors v1.0.9
 	github.com/spiral/goridge/v3 v3.0.1
-	github.com/spiral/roadrunner/v2 v2.1.0-beta.3
-	github.com/temporalio/roadrunner-temporal v1.0.4-beta.1
+	github.com/spiral/roadrunner/v2 v2.1.0
+	github.com/temporalio/roadrunner-temporal v1.0.4
 	// ---------------------
 	github.com/stretchr/testify v1.7.0
 	github.com/vbauerster/mpb/v5 v5.4.0
