@@ -1,6 +1,13 @@
 CHANGELOG
 =========
 
+v2.1.1 (29.04.2021)
+-------------------
+
+## 🩹 Fixes:
+
+- 🐛 Fix: issue with endure provided wrong logger interface implementation.
+
 v2.1.0 (27.04.2021)
 -------------------
 
@@ -14,8 +21,7 @@ v2.1.0 (27.04.2021)
 - 🐛 Fix: Logger didn't provide an anonymous log instance to a plugins w/o `Named` interface implemented.
 - 🐛 Fix: http handler was without log listener after `rr reset`.
 
-## 📦 Updates:
-
+v2.0.4 (06.04.2021)
 -------------------
 
 ## 👀 New:
