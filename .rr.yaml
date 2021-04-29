@@ -55,7 +55,7 @@ server:
 
 # Logging settings (docs: https://roadrunner.dev/docs/beep-beep-logging)
 logs:
-  # Logging mode can be "development" or "production". Do not forget to change this value for production environment.
+  # Logging mode can be "development", "production" or "raw". Do not forget to change this value for production environment.
   #
   # Development mode (which makes DPanicLevel logs panic), uses a console encoder, writes to standard error, and
   # disables sampling. Stacktraces are automatically included on logs of WarnLevel and above.
@@ -101,7 +101,7 @@ logs:
       output: stdout
       err_output: stdout
     rpc:
-      mode: production
+      mode: raw
       level: debug
       encoding: console
       output: stderr
