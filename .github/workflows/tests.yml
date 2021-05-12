@@ -25,6 +25,7 @@ jobs:
         with:
           version: v1.38 # without patch version
           only-new-issues: false # show only new issues if it's a pull request
+          args: --timeout=10m
 
   go-test:
     name: Unit tests
@@ -33,7 +34,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.16
+          go-version: 1.16.4
 
       - name: Check out code
         uses: actions/checkout@v2
@@ -71,7 +72,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v2 # action page: <https://github.com/actions/setup-go>
         with:
-          go-version: 1.16
+          go-version: 1.16.4
 
       - name: Check out code
         uses: actions/checkout@v2
