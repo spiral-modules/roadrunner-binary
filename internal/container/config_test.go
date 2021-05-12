@@ -54,6 +54,7 @@ func TestNewConfig_LoggingLevels(t *testing.T) {
 		{giveLevel: "debug", wantLevel: endure.DebugLevel},
 		{giveLevel: "info", wantLevel: endure.InfoLevel},
 		{giveLevel: "warn", wantLevel: endure.WarnLevel},
+		{giveLevel: "warning", wantLevel: endure.WarnLevel},
 		{giveLevel: "error", wantLevel: endure.ErrorLevel},
 		{giveLevel: "panic", wantLevel: endure.PanicLevel},
 		{giveLevel: "fatal", wantLevel: endure.FatalLevel},

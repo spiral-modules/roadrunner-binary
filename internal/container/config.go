@@ -71,6 +71,8 @@ func parseLogLevel(s string) (endure.Level, error) {
 		return endure.InfoLevel, nil
 	case "warn":
 		return endure.WarnLevel, nil
+	case "warning":
+		return endure.WarnLevel, nil
 	case "error":
 		return endure.ErrorLevel, nil
 	case "panic":
