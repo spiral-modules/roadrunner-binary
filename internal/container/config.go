@@ -69,7 +69,7 @@ func parseLogLevel(s string) (endure.Level, error) {
 		return endure.DebugLevel, nil
 	case "info":
 		return endure.InfoLevel, nil
-	case "warning":
+	case "warn":
 		return endure.WarnLevel, nil
 	case "error":
 		return endure.ErrorLevel, nil
@@ -79,5 +79,5 @@ func parseLogLevel(s string) (endure.Level, error) {
 		return endure.FatalLevel, nil
 	}
 
-	return endure.DebugLevel, fmt.Errorf(`unknown log level "%s" (allowed: debug, info, warning, error, panic, fatal)`, s)
+	return endure.DebugLevel, fmt.Errorf(`unknown log level "%s" (allowed: debug, info, warn, error, panic, fatal)`, s)
 }

@@ -12,7 +12,6 @@ import (
 	rpcPlugin "github.com/spiral/roadrunner/v2/plugins/rpc"
 	"github.com/spiral/roadrunner/v2/plugins/server"
 	"github.com/spiral/roadrunner/v2/plugins/service"
-	"github.com/spiral/roadrunner/v2/plugins/static"
 	"github.com/spiral/roadrunner/v2/plugins/status"
 	"github.com/temporalio/roadrunner-temporal/activity"
 	temporalClient "github.com/temporalio/roadrunner-temporal/client"
@@ -41,8 +40,6 @@ func Plugins() []interface{} {
 		// service plugin
 		&service.Plugin{},
 
-		// static
-		&static.Plugin{},
 		// headers
 		&headers.Plugin{},
 		// checker

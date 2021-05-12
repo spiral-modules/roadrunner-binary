@@ -17,7 +17,7 @@ endure:
   grace_period: 10s
   print_graph: true
   retry_on_fail: true
-  log_level: warning
+  log_level: warn
 `)}
 	assert.NoError(t, cfgPlugin.Init())
 
@@ -53,7 +53,7 @@ func TestNewConfig_LoggingLevels(t *testing.T) {
 	}{
 		{giveLevel: "debug", wantLevel: endure.DebugLevel},
 		{giveLevel: "info", wantLevel: endure.InfoLevel},
-		{giveLevel: "warning", wantLevel: endure.WarnLevel},
+		{giveLevel: "warn", wantLevel: endure.WarnLevel},
 		{giveLevel: "error", wantLevel: endure.ErrorLevel},
 		{giveLevel: "panic", wantLevel: endure.PanicLevel},
 		{giveLevel: "fatal", wantLevel: endure.FatalLevel},
