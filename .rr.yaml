@@ -420,28 +420,15 @@
 #      X-Powered-By: "RoadRunner"
 #
 #  # Settings for "static" middleware (docs: https://roadrunner.dev/docs/http-static).
-#  static:
-#    # Path to the directory with static assets.
-#    #
-#    # This option is required.
-#    dir: "/path/to/directory"
-#
-#    # File extensions to forbid.
-#    #
-#    # Default: []
-#    forbid: [ ".htaccess" ]
-#
-#    # Automatically add headers to every request.
-#    #
-#    # Default: <empty map>
-#    request:
-#      input: "custom-header"
-#
-#    # Automatically add headers to every response.
-#    #
-#    # Default: <empty map>
-#    response:
-#      X-Powered-By: "RoadRunner"
+#    static:
+#      dir: "."
+#      pattern: "/tests/"
+#      forbid: [""]
+#      allow: [".txt", ".php"]
+#      request:
+#        input: "custom-header"
+#      response:
+#        output: "output-header"
 #
 #  # Workers pool settings.
 #  pool:
