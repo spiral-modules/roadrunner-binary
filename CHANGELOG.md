@@ -1,6 +1,29 @@
 CHANGELOG
 =========
 
+v2.2.0 (11.05.2021)
+-------------------
+
+## 👀 New:
+
+- ✏️ Reworked `static` plugin. Now, it does not affect the performance of the main route and persist on the separate
+  file server (within the `http` plugin). Looong awaited feature: `Etag` (+ weak Etags) as well with the `If-Mach`
+  , `If-None-Match`, `If-Range`, `Last-Modified`
+  and `If-Modified-Since` tags supported. Static plugin has a bunch of new options such as: `allow`, `calculate_etag`
+  , `weak` and `pattern`.
+  ### Option `always` was deleted from the plugin.
+
+
+- ✏️ Update `informer.List` implementation. Now it returns a list with the all available plugins in the runtime.
+
+## 🩹 Fixes:
+
+- 🐛 Fix: issue with wrong ordered middlewares (reverse). Now the order is correct.
+- 🐛 Fix: issue when RR fails if a user sets `debug` mode with the `exec_ttl` supervisor option.
+- 🐛 Fix: uniform log levels. Use everywhere the same levels (warn, error, debug, info, panic).
+
+---
+
 v2.1.1 (29.04.2021)
 -------------------
 
@@ -18,7 +41,7 @@ v2.1.0 (27.04.2021)
 
 ## 🩹 Fixes:
 
-- 🐛 Fix: Logger didn't provide an anonymous log instance to a plugins w/o `Named` interface implemented.
+- 🐛 Fix: logger didn't provide an anonymous log instance to a plugins w/o `Named` interface implemented.
 - 🐛 Fix: http handler was without log listener after `rr reset`.
 
 v2.0.4 (06.04.2021)
