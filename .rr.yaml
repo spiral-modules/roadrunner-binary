@@ -420,15 +420,15 @@ http:
       X-Powered-By: "RoadRunner"
 
   # Settings for "static" middleware (docs: https://roadrunner.dev/docs/http-static).
-    static:
-      dir: "."
-      pattern: "/tests/"
-      forbid: [""]
-      allow: [".txt", ".php"]
-      request:
-        input: "custom-header"
-      response:
-        output: "output-header"
+  static:
+    dir: "."
+    pattern: "/tests/"
+    forbid: [""]
+    allow: [".txt", ".php"]
+    request:
+      input: "custom-header"
+    response:
+      output: "output-header"
 
   # Workers pool settings.
   pool:
