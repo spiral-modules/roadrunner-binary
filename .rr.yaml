@@ -422,7 +422,6 @@ http:
   # Settings for "static" middleware (docs: https://roadrunner.dev/docs/http-static).
   static:
     dir: "."
-    pattern: "/tests/"
     forbid: [""]
     allow: [".txt", ".php"]
     request:
