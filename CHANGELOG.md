@@ -1,6 +1,16 @@
 CHANGELOG
 =========
 
+v2.2.1 (13.05.2021)
+-------------------
+
+## 🩹 Fixes:
+
+- 🐛 Fix: revert static plugin. It stays as a separate plugin on the main route (`/`) and supports all the previously announced features.
+- 🐛 Fix: remove `build` and other old targets from the Makefile.
+
+---
+
 v2.2.0 (11.05.2021)
 -------------------
 

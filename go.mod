@@ -20,3 +20,7 @@ require (
 	github.com/vbauerster/mpb/v5 v5.4.0
 	go.uber.org/multierr v1.7.0
 )
+
+replace (
+	github.com/spiral/roadrunner/v2 => ../roadrunner
+)
