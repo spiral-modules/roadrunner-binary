@@ -41,6 +41,7 @@ func Plugins() []interface{} {
 		// service plugin
 		&service.Plugin{},
 
+		// plugin to serve static files
 		&static.Plugin{},
 		// headers
 		&headers.Plugin{},
