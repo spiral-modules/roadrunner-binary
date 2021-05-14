@@ -15,6 +15,36 @@ on:
       - '**.md'
 
 jobs:
+  gitleaks:
+    name: Gitleaks
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Check for GitLeaks
+        uses: zricethezav/gitleaks-action@v1.6.0 # Action page: <https://github.com/zricethezav/gitleaks-action>
+
+  lint-config-file:
+    name: Lint config file
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Setup nodejs
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install linter
+        run: npm install -g ajv-cli # Package page: <https://www.npmjs.com/package/ajv-cli>
+
+      - name: Run linter
+        run: ajv validate --all-errors --verbose -s ./schemas/config/2.0.schema.json -d ./.rr*.y*ml
+
   golangci-lint:
     name: Golang-CI (lint)
     runs-on: ubuntu-20.04
