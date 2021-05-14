@@ -64,7 +64,7 @@ $ ./vendor/bin/rr get-binary
 > For getting roadrunner binary file you can use our docker image: `spiralscout/roadrunner:X.X.X` (more information about
 > image and tags can be found [here](https://hub.docker.com/r/spiralscout/roadrunner/)).
 >
-> Important notice: we strongly recommend using a versioned tag (like `1.2.3`) instead `latest.
+> Important notice: we strongly recommend using a versioned tag (like `1.2.3`) instead `latest`.
 
 Configuration can be located in `.rr.yaml`
 file ([full sample](https://github.com/spiral/roadrunner/blob/master/.rr.yaml)):
