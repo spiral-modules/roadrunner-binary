@@ -15,18 +15,6 @@ on:
       - '**.md'
 
 jobs:
-  gitleaks:
-    name: Gitleaks
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-
-      - name: Check for GitLeaks
-        uses: zricethezav/gitleaks-action@v1.6.0 # Action page: <https://github.com/zricethezav/gitleaks-action>
-
   lint-config-file:
     name: Lint config file
     runs-on: ubuntu-20.04

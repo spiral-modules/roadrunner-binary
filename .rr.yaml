@@ -17,7 +17,7 @@ rpc:
   # TCP address:port for listening.
   #
   # Default: "tcp://127.0.0.1:6001"
-  listen: 1
+  listen: tcp://127.0.0.1:6001
 
 # Application server settings (docs: https://roadrunner.dev/docs/php-worker)
 server:

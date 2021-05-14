@@ -4,7 +4,7 @@ These schemas describe RoadRunner configuration file and used by:
 
 - <https://github.com/SchemaStore/schemastore>
 
-Naming format: `<version_major>.<version_minor>.schema.json`.
+Schemas naming agreement: `<version_major>.<version_minor>.schema.json`.
 
 ## Contributing guide
 
