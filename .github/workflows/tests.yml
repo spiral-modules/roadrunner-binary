@@ -15,8 +15,8 @@ on:
       - '**.md'
 
 jobs:
-  lint-config-file:
-    name: Lint config file
+  validate-config-file:
+    name: Validate config file
     runs-on: ubuntu-20.04
     steps:
       - name: Check out code

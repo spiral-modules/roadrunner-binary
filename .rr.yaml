@@ -43,7 +43,7 @@ server:
     - SOME_KEY: "SOME_VALUE"
     - SOME_KEY2: "SOME_VALUE2"
 
-  # Worker relay can be: "pipes", TCP (eg.: tcp://127.0.0.1:6001), or socket (eg.: unix:///var/run/rr.sock).
+  # Worker relay can be: "pipes", TCP (eg.: tcp://127.0.0.1:6002), or socket (eg.: unix:///var/run/rr.sock).
   #
   # Default: "pipes"
   relay: pipes
