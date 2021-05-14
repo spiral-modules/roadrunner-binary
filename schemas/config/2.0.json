@@ -2,7 +2,6 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "title": "Spiral Roadrunner config file schema version 2",
   "description": "Spiral Roadrunner config file schema version 2.",
-  "id": "https://raw.githubusercontent.com/schemastore/schemastore/master/src/schemas/json/roadrunner-v2.json",
   "type": "object",
   "additionalProperties": true,
   "properties": {
