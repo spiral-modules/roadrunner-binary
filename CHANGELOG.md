@@ -7,7 +7,7 @@ UNRELEASED
 ## 👀 New:
 
 - ✏️ Json-schemas for the config file v2.0 (it also registered in [schemastore.org](https://github.com/SchemaStore/schemastore/pull/1614))
-- ✏️ `latest` docker image tag is supported now (but we strongly recommend to use versioned tag (like `1.2.3`) instead)
+- ✏️ `latest` docker image tag is supported now (but we strongly recommend using a versioned tag (like `1.2.3`) instead)
 
 v2.2.1 (13.05.2021)
 -------------------
