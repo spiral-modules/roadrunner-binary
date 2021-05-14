@@ -1,0 +1,638 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Spiral Roadrunner config file schema version 2",
+  "description": "Spiral Roadrunner config file schema version 2.",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "rpc": {
+      "type": "object",
+      "properties": {
+        "listen": {
+          "description": "TCP address:port for listening",
+          "type": "string",
+          "default": "tcp://127.0.0.1:6001",
+          "examples": [
+            "tcp://127.0.0.1:6001"
+          ],
+          "pattern": "^tcp:\/\/[0-9a-zA-Z_.-]+:[0-9]{1,5}$"
+        }
+      }
+    },
+    "server": {
+      "type": "object",
+      "properties": {
+        "command": {
+          "description": "Worker starting command, with any required arguments",
+          "type": "string",
+          "examples": [
+            "php psr-worker.php"
+          ]
+        },
+        "user": {
+          "description": "User name (not UID) for the worker processes. An empty value means to use the RR process user",
+          "type": "string",
+          "default": "",
+          "examples": [
+            "www-data"
+          ]
+        },
+        "group": {
+          "description": "Group name (not GID) for the worker processes. An empty value means to use the RR process user",
+          "type": "string",
+          "default": "",
+          "examples": [
+            "www-data"
+          ]
+        },
+        "env": {
+          "description": "Environment variables for the worker processes",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "patternProperties": {
+              "^[a-zA-Z0-9._-]+$": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "relay": {
+          "description": "Worker relay can be: 'pipes', TCP (eg.: tcp://127.0.0.1:6002), or socket (eg.: unix:///var/run/rr.sock)",
+          "type": "string",
+          "default": "pipes",
+          "examples": [
+            "pipes",
+            "tcp://127.0.0.1:6002",
+            "unix:///var/run/rr.sock"
+          ]
+        },
+        "relay_timeout": {
+          "description": "Timeout for relay connection establishing (only for socket and TCP port relay)",
+          "$ref": "#/definitions/Duration",
+          "default": "60s"
+        }
+      },
+      "required": [
+        "command"
+      ]
+    },
+    "logs": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "$ref": "#/definitions/LogMode",
+          "default": "development"
+        },
+        "level": {
+          "$ref": "#/definitions/LogLevel",
+          "default": "debug"
+        },
+        "encoding": {
+          "$ref": "#/definitions/LogEncoding",
+          "default": "console"
+        },
+        "output": {
+          "description": "Output",
+          "$ref": "#/definitions/LogOutput",
+          "default": "stderr"
+        },
+        "err_output": {
+          "description": "Errors only output",
+          "$ref": "#/definitions/LogOutput",
+          "default": "stderr"
+        },
+        "channels": {
+          "description": "You can configure each plugin log messages individually",
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "mode": {
+                "$ref": "#/definitions/LogMode"
+              },
+              "level": {
+                "$ref": "#/definitions/LogLevel"
+              },
+              "encoding": {
+                "$ref": "#/definitions/LogEncoding"
+              },
+              "output": {
+                "$ref": "#/definitions/LogOutput"
+              },
+              "err_output": {
+                "$ref": "#/definitions/LogOutput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "http": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "description": "Host and port to listen on",
+          "$ref": "#/definitions/HostAndPort",
+          "examples": [
+            "127.0.0.1:8080",
+            ":8080"
+          ]
+        },
+        "max_request_size": {
+          "description": "Maximal incoming request size in megabytes. Zero means no limit",
+          "type": "integer",
+          "minimum": 0,
+          "default": 0
+        },
+        "middleware": {
+          "description": "Middlewares for the http plugin, order is important",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "examples": [
+              "headers",
+              "gzip"
+            ],
+            "pattern": "^[0-9a-zA-Z_]+$"
+          }
+        },
+        "trusted_subnets": {
+          "description": "Allow incoming requests only from the following subnets",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "examples": [
+              "10.0.0.0/8",
+              "127.0.0.0/8"
+            ]
+          },
+          "default": [
+            "10.0.0.0/8",
+            "127.0.0.0/8",
+            "172.16.0.0/12",
+            "192.168.0.0/16",
+            "::1/128",
+            "fc00::/7",
+            "fe80::/10"
+          ]
+        },
+        "uploads": {
+          "type": "object",
+          "properties": {
+            "dir": {
+              "description": "Directory for file uploads. Empty value means to use $TEMP based on your OS",
+              "type": "string",
+              "examples": [
+                "/tmp"
+              ],
+              "default": ""
+            },
+            "forbid": {
+              "description": "Deny files with the following extensions to upload",
+              "type": "array",
+              "items": {
+                "type": "string",
+                "examples": [
+                  ".php",
+                  ".exe"
+                ]
+              },
+              "default": [
+                ".php",
+                ".exe",
+                ".bat"
+              ]
+            }
+          }
+        },
+        "headers": {
+          "type": "object",
+          "properties": {
+            "cors": {
+              "description": "Allows to control CORS headers",
+              "type": "object",
+              "properties": {
+                "allowed_origin": {
+                  "description": "Controls 'Access-Control-Allow-Origin' header value",
+                  "type": "string",
+                  "examples": [
+                    "*"
+                  ],
+                  "default": ""
+                },
+                "allowed_headers": {
+                  "description": "Controls 'Access-Control-Allow-Headers' header value",
+                  "type": "string",
+                  "examples": [
+                    "*"
+                  ],
+                  "default": ""
+                },
+                "allowed_methods": {
+                  "description": "Controls 'Access-Control-Allow-Methods' header value",
+                  "type": "string",
+                  "examples": [
+                    "GET,POST,PUT,DELETE"
+                  ],
+                  "default": ""
+                },
+                "allow_credentials": {
+                  "description": "Controls 'Access-Control-Allow-Credentials' header value",
+                  "type": "boolean",
+                  "default": false
+                },
+                "exposed_headers": {
+                  "description": "Controls 'Access-Control-Expose-Headers' header value",
+                  "type": "string",
+                  "examples": [
+                    "Cache-Control,Content-Language,Content-Type,Expires,Last-Modified,Pragma"
+                  ],
+                  "default": ""
+                },
+                "max_age": {
+                  "description": "Controls 'Access-Control-Max-Age' header value (in seconds)",
+                  "type": "integer",
+                  "examples": [
+                    600
+                  ],
+                  "default": 0
+                }
+              }
+            },
+            "request": {
+              "description": "Automatically add headers to every request passed to PHP",
+              "$ref": "#/definitions/HttpHeadersMap"
+            },
+            "response": {
+              "description": "Automatically add headers to every response",
+              "$ref": "#/definitions/HttpHeadersMap"
+            }
+          }
+        },
+        "static": {
+          "description": "Static assets serving settings",
+          "type": "object",
+          "properties": {
+            "dir": {
+              "description": "Path to the directory with static assets",
+              "type": "string",
+              "examples": [
+                ".",
+                "/var/www/html"
+              ]
+            },
+            "forbid": {
+              "description": "File extensions that should not be served",
+              "type": "array",
+              "items": {
+                "type": "string",
+                "examples": [
+                  ".php",
+                  ".htaccess"
+                ]
+              }
+            },
+            "allow": {
+              "description": "File extensions which should be served",
+              "type": "array",
+              "items": {
+                "type": "string",
+                "examples": [
+                  ".php",
+                  ".htaccess"
+                ]
+              }
+            },
+            "calculate_etag": {
+              "description": "Turn on etag computation for the static file",
+              "type": "boolean"
+            },
+            "weak": {
+              "description": "Use a weak generator (/W), it uses only filename to generate a CRC32 sum",
+              "type": "boolean"
+            },
+            "response": {
+              "description": "Custom headers for the static files",
+              "$ref": "#/definitions/HttpHeadersMap"
+            }
+          },
+          "required": [
+            "dir"
+          ]
+        },
+        "pool": {
+          "description": "Workers pool settings",
+          "type": "object",
+          "properties": {
+            "num_workers": {
+              "description": "How many worker processes will be started. Zero (or nothing) means the number of logical CPUs",
+              "type": "integer",
+              "minimum": 0,
+              "default": 0
+            },
+            "max_jobs": {
+              "description": "Maximal count of worker executions. Zero (or nothing) means no limit",
+              "type": "integer",
+              "minimum": 0,
+              "default": 0
+            },
+            "allocate_timeout": {
+              "description": "Timeout for worker allocation. Zero means no limit",
+              "$ref": "#/definitions/Duration",
+              "default": "60s"
+            },
+            "destroy_timeout": {
+              "description": "Timeout for worker destroying before process killing. Zero means no limit",
+              "$ref": "#/definitions/Duration",
+              "default": "60s"
+            },
+            "supervisor": {
+              "description": "Supervisor is used to control http workers",
+              "type": "object",
+              "properties": {
+                "watch_tick": {
+                  "description": "How often to check the state of the workers",
+                  "$ref": "#/definitions/Duration",
+                  "default": "1s"
+                },
+                "ttl": {
+                  "description": "Maximum time worker is allowed to live (soft limit). Zero means no limit",
+                  "$ref": "#/definitions/Duration",
+                  "default": "0s"
+                },
+                "idle_ttl": {
+                  "description": "How long worker can spend in IDLE mode after first using (soft limit). Zero means no limit",
+                  "$ref": "#/definitions/Duration",
+                  "default": "0s"
+                },
+                "max_worker_memory": {
+                  "description": "Maximal worker memory usage in megabytes (soft limit). Zero means no limit",
+                  "type": "integer",
+                  "minimum": 0,
+                  "default": 0
+                },
+                "exec_ttl": {
+                  "description": "Maximal job lifetime (hard limit). Zero means no limit",
+                  "$ref": "#/definitions/Duration",
+                  "default": "0s"
+                }
+              }
+            }
+          }
+        },
+        "ssl": {
+          "description": "SSL (Secure Sockets Layer) settings",
+          "type": "object",
+          "properties": {
+            "address": {
+              "description": "Host and port to listen on",
+              "$ref": "#/definitions/HostAndPort",
+              "examples": [
+                "127.0.0.1:443",
+                ":8443"
+              ]
+            },
+            "redirect": {
+              "description": "Automatic redirect from http to https schema",
+              "type": "boolean",
+              "default": false
+            },
+            "cert": {
+              "description": "Path to the cert file",
+              "type": "string",
+              "minLength": 1,
+              "examples": [
+                "/ssl/server.crt"
+              ]
+            },
+            "key": {
+              "description": "Path to the cert key file",
+              "type": "string",
+              "minLength": 1,
+              "examples": [
+                "/ssl/server.key"
+              ]
+            },
+            "root_ca": {
+              "description": "Path to the root certificate authority file",
+              "type": "string",
+              "minLength": 1,
+              "examples": [
+                "/ssl/root.crt"
+              ]
+            }
+          },
+          "required": [
+            "address",
+            "cert",
+            "key"
+          ]
+        },
+        "fcgi": {
+          "description": "FastCGI frontend support",
+          "type": "object",
+          "properties": {
+            "address": {
+              "description": "FastCGI connection DSN. Supported TCP and Unix sockets. An empty value disables this",
+              "type": "string",
+              "examples": [
+                "tcp://0.0.0.0:7921"
+              ]
+            }
+          },
+          "required": [
+            "address"
+          ]
+        },
+        "http2": {
+          "description": "HTTP/2 settings",
+          "type": "object",
+          "properties": {
+            "h2c": {
+              "description": "HTTP/2 over non-encrypted TCP connection using H2C",
+              "type": "boolean",
+              "default": false
+            },
+            "max_concurrent_streams": {
+              "description": "Maximal concurrent streams count",
+              "type": "integer",
+              "default": 128,
+              "minimum": 0
+            }
+          }
+        }
+      },
+      "required": [
+        "address"
+      ]
+    },
+    "reload": {
+      "description": "Automatically detect PHP file changes and reload connected services",
+      "type": "object",
+      "properties": {
+        "interval": {
+          "description": "Sync interval",
+          "$ref": "#/definitions/Duration",
+          "default": "1s"
+        },
+        "patterns": {
+          "description": "Global patterns to sync",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "examples": [
+              ".php",
+              ".json"
+            ]
+          },
+          "default": [
+            ".php"
+          ]
+        },
+        "services": {
+          "description": "List of included for sync services (this is a map, where key name is a plugin name)",
+          "type": "object",
+          "patternProperties": {
+            "^[a-zA-Z0-9._-]+$": {
+              "type": "object",
+              "properties": {
+                "dirs": {
+                  "description": "Directories to sync. If recursive is set to true, recursive sync will be applied only to the directories in 'dirs' section. Dot (.) means 'current working directory'",
+                  "type": "array",
+                  "default": [],
+                  "items": {
+                    "type": "string",
+                    "examples": [
+                      ".",
+                      "/app/src"
+                    ],
+                    "minLength": 1
+                  }
+                },
+                "recursive": {
+                  "description": "Recursive search for file patterns to add",
+                  "type": "boolean",
+                  "default": false
+                },
+                "ignore": {
+                  "description": "Ignored folders",
+                  "type": "array",
+                  "default": [],
+                  "items": {
+                    "type": "string",
+                    "examples": [
+                      "vendor",
+                      "/app/logs"
+                    ],
+                    "minLength": 1
+                  }
+                },
+                "patterns": {
+                  "description": "Service specific file pattens to sync",
+                  "type": "array",
+                  "default": [],
+                  "items": {
+                    "type": "string",
+                    "examples": [
+                      ".php",
+                      ".go",
+                      ".md"
+                    ],
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Duration": {
+      "description": "Time duration",
+      "anyOf": [
+        {
+          "description": "Duration as a string. Valid time units are 'ns', 'us' (or 'µs'), 'ms', 's', 'm', 'h'",
+          "type": "string",
+          "examples": [
+            "10h",
+            "1m",
+            "1h10m10s",
+            "30s",
+            "300ms",
+            "1µs",
+            "1us"
+          ],
+          "minLength": 2
+        },
+        {
+          "description": "Duration in nanoseconds",
+          "type": "integer",
+          "minimum": 0
+        }
+      ]
+    },
+    "HostAndPort": {
+      "description": "Host and port",
+      "type": "string",
+      "pattern": "^([0-9a-zA-Z_.-]+|):[0-9]{1,5}$",
+      "examples": [
+        "127.0.0.1:443",
+        ":8080"
+      ]
+    },
+    "LogMode": {
+      "description": "Logging mode",
+      "type": "string",
+      "enum": [
+        "development",
+        "production",
+        "raw"
+      ]
+    },
+    "LogLevel": {
+      "description": "Logging level",
+      "type": "string",
+      "enum": [
+        "debug",
+        "info",
+        "warn",
+        "error",
+        "panic"
+      ]
+    },
+    "LogEncoding": {
+      "description": "Encoding format",
+      "type": "string",
+      "enum": [
+        "console",
+        "json"
+      ]
+    },
+    "LogOutput": {
+      "type": "string",
+      "examples": [
+        "stdout",
+        "stderr",
+        "/var/log/rr_errors.log"
+      ]
+    },
+    "HttpHeadersMap": {
+      "description": "HTTP headers map",
+      "type": "object",
+      "patternProperties": {
+        "^[a-zA-Z0-9._-]+$": {
+          "type": "string",
+          "examples": [
+            "Any header value"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
