@@ -15,6 +15,24 @@ on:
       - '**.md'
 
 jobs:
+  validate-config-file:
+    name: Validate config file
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Setup nodejs
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install linter
+        run: npm install -g ajv-cli # Package page: <https://www.npmjs.com/package/ajv-cli>
+
+      - name: Run linter
+        run: ajv validate --all-errors --verbose -s ./schemas/config/2.0.schema.json -d ./.rr*.y*ml
+
   golangci-lint:
     name: Golang-CI (lint)
     runs-on: ubuntu-20.04

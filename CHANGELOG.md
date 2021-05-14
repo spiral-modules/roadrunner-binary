@@ -1,6 +1,13 @@
 CHANGELOG
 =========
 
+UNRELEASED
+----------
+
+## 👀 New:
+
+- ✏️ Json-schemas for the config file v2.0 (it also registered in [schemastore.org](https://github.com/SchemaStore/schemastore/pull/1614))
+
 v2.2.1 (13.05.2021)
 -------------------
 

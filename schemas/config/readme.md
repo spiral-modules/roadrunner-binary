@@ -3,9 +3,8 @@
 These schemas describe RoadRunner configuration file and used by:
 
 - <https://github.com/SchemaStore/schemastore>
-- _TODO: config file unit tests_
 
-Naming format: `<version_major>.<version_minor>.json`.
+Schemas naming agreement: `<version_major>.<version_minor>.schema.json`.
 
 ## Contributing guide
 
