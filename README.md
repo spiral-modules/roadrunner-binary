@@ -18,7 +18,7 @@ RoadRunner includes PSR-7/PSR-17 compatible HTTP and HTTP/2 server and can be us
 with much greater performance and flexibility.
 
 <p align="center">
-	<a href="https://roadrunner.dev/"><b>Official Website</b></a> | 
+	<a href="https://roadrunner.dev/"><b>Official Website</b></a> |
 	<a href="https://roadrunner.dev/docs"><b>Documentation</b></a> |
     <a href="https://github.com/orgs/spiral/projects/2"><b>Release schedule</b></a>
 </p>
@@ -62,7 +62,9 @@ $ ./vendor/bin/rr get-binary
 ```
 
 > For getting roadrunner binary file you can use our docker image: `spiralscout/roadrunner:X.X.X` (more information about
-> image and tags can be found [here](https://hub.docker.com/r/spiralscout/roadrunner/))
+> image and tags can be found [here](https://hub.docker.com/r/spiralscout/roadrunner/)).
+>
+> Important notice: do **not** use the `latest` application tag (this is bad practice). Use versioned tag (like `1.2.3`) instead.
 
 Configuration can be located in `.rr.yaml`
 file ([full sample](https://github.com/spiral/roadrunner/blob/master/.rr.yaml)):
