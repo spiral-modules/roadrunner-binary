@@ -4,7 +4,7 @@ go 1.16
 
 require (
 	github.com/buger/goterm v0.0.0-20200322175922-2f3e71b85129
-	github.com/fatih/color v1.10.0
+	github.com/fatih/color v1.11.0
 	github.com/joho/godotenv v1.3.0
 	github.com/kami-zh/go-capturer v0.0.0-20171211120116-e492ea43421d
 	github.com/mattn/go-runewidth v0.0.12
