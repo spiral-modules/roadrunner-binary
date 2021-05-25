@@ -7,7 +7,7 @@ require (
 	github.com/fatih/color v1.11.0
 	github.com/joho/godotenv v1.3.0
 	github.com/kami-zh/go-capturer v0.0.0-20171211120116-e492ea43421d
-	github.com/mattn/go-runewidth v0.0.12
+	github.com/mattn/go-runewidth v0.0.13
 	github.com/spf13/cobra v1.1.3
 	// SPIRAL ------------
 	github.com/spiral/endure v1.0.1
