@@ -102,6 +102,10 @@ func showWorkers(plugins []string, client *rpc.Client) error {
 			return errors.E(op, err)
 		}
 
+		if len(list.Workers) == 0 {
+			continue
+		}
+
 		if plugin == servicePluginName {
 			fmt.Printf("Workers of [%s]:\n", color.HiYellowString(plugin))
 			tools.ServiceWorkerTable(os.Stdout, list.Workers).Render()

@@ -1,20 +1,34 @@
 CHANGELOG
 =========
 
-UNRELEASED
-----------
+v2.3.0 (08.06.2021)
+-------------------
 
 ## 👀 New:
 
-- ✏️ Json-schemas for the config file v2.0 (it also registered in [schemastore.org](https://github.com/SchemaStore/schemastore/pull/1614))
-- ✏️ `latest` docker image tag is supported now (but we strongly recommend to use a versioned tag (like `1.2.3`) instead)
+- ✏️ Brand new `broadcast` plugin now have a new name - `websockets` with broadcast capabilities. It can handle hundreds
+  of thousands of WebSocket connections very efficiently (~300k messages per second with 1k connected clients, an
+  in-memory bus on 2CPU cores, and 1GB of RAM). With only 1GB of RAM, you can handle more than 30k (up to 50k) WebSocket
+  connections.
+
+- ✏️ Flatbuffers binary messages for the `websockets` RPC calls under the hood.
+- ✏️ Json-schemas for the config file v1.0 (it also registered
+  in [schemastore.org](https://github.com/SchemaStore/schemastore/pull/1614))
+- ✏️ `latest` docker image tag supported now (but we strongly recommend using a versioned tag (like `0.2.3`) instead)
+
+## 🩹 Fixes:
+
+- 🐛 Fix: Bug with `informer.Workers` worked incorrectly: [Bug](https://github.com/spiral/roadrunner/issues/686)
+
+---
 
 v2.2.1 (13.05.2021)
 -------------------
 
 ## 🩹 Fixes:
 
-- 🐛 Fix: revert static plugin. It stays as a separate plugin on the main route (`/`) and supports all the previously announced features.
+- 🐛 Fix: revert static plugin. It stays as a separate plugin on the main route (`/`) and supports all the previously
+  announced features.
 - 🐛 Fix: remove `build` and other old targets from the Makefile.
 
 ---
@@ -35,6 +49,7 @@ v2.2.0 (11.05.2021)
 - ✏️ Update `informer.List` implementation. Now it returns a list with the all available plugins in the runtime.
 
 ## 🩹 Fixes:
+
 - 🐛 Fix: issue with wrong ordered middlewares (reverse). Now the order is correct.
 - 🐛 Fix: issue when RR fails if a user sets `debug` mode with the `exec_ttl` supervisor option.
 - 🐛 Fix: uniform log levels. Use everywhere the same levels (warn, error, debug, info, panic).
