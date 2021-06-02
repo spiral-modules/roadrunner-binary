@@ -21,7 +21,7 @@ import (
 
 // NewCommand creates `workers` command.
 func NewCommand(cfgPlugin *config.Viper) *cobra.Command { //nolint:funlen
-	var ( // flag values
+	var (                                                 // flag values
 		interactive bool
 	)
 
@@ -100,6 +100,10 @@ func showWorkers(plugins []string, client *rpc.Client) error {
 
 		if err := client.Call(informerWorkers, plugin, &list); err != nil {
 			return errors.E(op, err)
+		}
+
+		if len(list.Workers) == 0 {
+			continue
 		}
 
 		if plugin == servicePluginName {
