@@ -421,11 +421,41 @@ http:
 
   # Settings for "static" middleware (docs: https://roadrunner.dev/docs/http-static).
   static:
+
+    # Path to the directory to serve
+    #
+    # Default: "." (current)
     dir: "."
-    forbid: [""]
-    allow: [".txt", ".php"]
+
+    # File patterns to forbid
+    #
+    # Default: empty
+    forbid: [ "" ]
+
+    # Etag calculation (base on the body CRC32)
+    #
+    # Default: false
+    calculate_etag: false
+
+    # Weak etag calculation (based only on the content-length CRC32)
+    #
+    # Default: false
+    weak: false
+
+    # Patterns to allow
+    #
+    # Default: empty
+    allow: [ ".txt", ".php" ]
+
+    # Request headers
+    #
+    # Default: empty
     request:
       input: "custom-header"
+
+    # Response headers
+    #
+    # Default: empty
     response:
       output: "output-header"
 
@@ -525,6 +555,51 @@ http:
     #
     # Default: 128
     max_concurrent_streams: 128
+
+
+# Redis section. Should be defined to use as a broadcast driver for the websockets (with no limitation to use in other plugins)
+redis:
+  # UniversalClient is an abstract client which - based on the provided options -
+  # can connect to either clusters, or sentinel-backed failover instances
+  # or simple single-instance servers. This can be useful for testing
+  # cluster-specific applications locally.
+  # if the number of addrs is 1 and master_name is empty, a single-node redis Client will be returned
+  # if the number of addrs is two or more, a ClusterClient will be returned
+  addrs:
+    - "localhost:6379"
+    # if a MasterName is passed a sentinel-backed FailoverClient will be returned
+  master_name: ""
+  username: ""
+  password: ""
+  db: 0
+  sentinel_password: ""
+  route_by_latency: false
+  route_randomly: false
+  dial_timeout: 0 # accepted values [1s, 5m, 3h]
+  max_retries: 1
+  min_retry_backoff: 0 # accepted values [1s, 5m, 3h]
+  max_retry_backoff: 0 # accepted values [1s, 5m, 3h]
+  pool_size: 0
+  min_idle_conns: 0
+  max_conn_age: 0 # accepted values [1s, 5m, 3h]
+  read_timeout: 0 # accepted values [1s, 5m, 3h]
+  write_timeout: 0 # accepted values [1s, 5m, 3h]
+  pool_timeout: 0 # accepted values [1s, 5m, 3h]
+  idle_timeout: 0 # accepted values [1s, 5m, 3h]
+  idle_check_freq: 0 # accepted values [1s, 5m, 3h]
+  read_only: false
+
+# Websockets plugin
+websockets:
+  # PubSub providers to use. Drivers available: redis, memory. Clients subscribed to the memory don't share its state with other pubsub drivers
+  #
+  # Default: memory
+  pubsubs: [ "redis", "memory" ]
+
+  # http path where to handle websockets connections
+  #
+  # Default: /ws
+  path: "/ws"
 
 # Application metrics in Prometheus format (docs: https://roadrunner.dev/docs/beep-beep-metrics). Drop this section
 # for this feature disabling.
