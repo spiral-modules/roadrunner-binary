@@ -16,12 +16,11 @@ import (
 	"github.com/spiral/errors"
 	"github.com/spiral/roadrunner/v2/plugins/config"
 	"github.com/spiral/roadrunner/v2/plugins/informer"
-	"github.com/spiral/roadrunner/v2/tools"
 )
 
 // NewCommand creates `workers` command.
 func NewCommand(cfgPlugin *config.Viper) *cobra.Command { //nolint:funlen
-	var ( // flag values
+	var (                                                 // flag values
 		interactive bool
 	)
 
@@ -108,14 +107,14 @@ func showWorkers(plugins []string, client *rpc.Client) error {
 
 		if plugin == servicePluginName {
 			fmt.Printf("Workers of [%s]:\n", color.HiYellowString(plugin))
-			tools.ServiceWorkerTable(os.Stdout, list.Workers).Render()
+			ServiceWorkerTable(os.Stdout, list.Workers).Render()
 
 			continue
 		}
 
 		fmt.Printf("Workers of [%s]:\n", color.HiYellowString(plugin))
 
-		tools.WorkerTable(os.Stdout, list.Workers).Render()
+		WorkerTable(os.Stdout, list.Workers).Render()
 	}
 
 	return nil
