@@ -78,8 +78,9 @@ func renderStatus(status string) string {
 		return color.RedString("stopped")
 	case "errored":
 		return color.RedString("errored")
+	default:
+		return status
 	}
-	return status
 }
 
 func renderJobs(number uint64) string {

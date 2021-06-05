@@ -20,7 +20,7 @@ import (
 
 // NewCommand creates `workers` command.
 func NewCommand(cfgPlugin *config.Viper) *cobra.Command { //nolint:funlen
-	var (                                                 // flag values
+	var ( // flag values
 		interactive bool
 	)
 
