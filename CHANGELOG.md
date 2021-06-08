@@ -6,19 +6,21 @@ v2.3.0 (08.06.2021)
 
 ## 👀 New:
 
-- ✏️ Brand new `broadcast` plugin now have a new name - `websockets` with broadcast capabilities. It can handle hundreds
-  of thousands of WebSocket connections very efficiently (~300k messages per second with 1k connected clients, an
-  in-memory bus on 2CPU cores, and 1GB of RAM). With only 1GB of RAM, you can handle more than 30k (up to 50k) WebSocket
-  connections.
+## 👀 New:
 
-- ✏️ Flatbuffers binary messages for the `websockets` RPC calls under the hood.
-- ✏️ Json-schemas for the config file v1.0 (it also registered
-  in [schemastore.org](https://github.com/SchemaStore/schemastore/pull/1614))
+- ✏️ Brand new `broadcast` plugin now has the name - `websockets` with broadcast capabilities. It can handle hundreds of thousands of WebSocket connections very efficiently (~300k messages per second with 1k connected clients, in-memory bus on 2CPU cores and 1GB of RAM)
+- ✏️ Protobuf binary messages for the `websockets` and `kv` RPC calls under the hood. Support schema versions.
+- ✏️ Json-schemas for the config file v1.0 (it also registered in [schemastore.org](https://github.com/SchemaStore/schemastore/pull/1614))
 - ✏️ `latest` docker image tag supported now (but we strongly recommend using a versioned tag (like `0.2.3`) instead)
+- ✏️ Add new option to the `http` config section: `internal_error_code` to override default (500) internal error code.
+- ✏️ Expose HTTP plugin metrics (workers memory, requests count, requests duration).
 
 ## 🩹 Fixes:
 
 - 🐛 Fix: Bug with `informer.Workers` worked incorrectly: [Bug](https://github.com/spiral/roadrunner/issues/686)
+- 🐛 Fix: Internal error messages will not be shown to the user (except HTTP status code). Error message will be in logs: [Bug](https://github.com/spiral/roadrunner/issues/659)
+- 🐛 Fix: Error message will be properly shown in the log in case of `SoftJob` error:  [Bug](https://github.com/spiral/roadrunner/issues/691)
+- 🐛 Fix: Wrong applied middlewares for the `fcgi` server leads to the NPE: [Bug](https://github.com/spiral/roadrunner/issues/701)
 
 ---
 
