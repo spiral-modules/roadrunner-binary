@@ -5,8 +5,11 @@ import (
 	"github.com/spiral/roadrunner/v2/plugins/headers"
 	httpPlugin "github.com/spiral/roadrunner/v2/plugins/http"
 	"github.com/spiral/roadrunner/v2/plugins/informer"
+	"github.com/spiral/roadrunner/v2/plugins/kv"
+	"github.com/spiral/roadrunner/v2/plugins/kv/drivers/boltdb"
+	"github.com/spiral/roadrunner/v2/plugins/kv/drivers/memcached"
+	"github.com/spiral/roadrunner/v2/plugins/kv/drivers/memory"
 	"github.com/spiral/roadrunner/v2/plugins/logger"
-	"github.com/spiral/roadrunner/v2/plugins/memory"
 	"github.com/spiral/roadrunner/v2/plugins/metrics"
 	"github.com/spiral/roadrunner/v2/plugins/redis"
 	"github.com/spiral/roadrunner/v2/plugins/reload"
@@ -44,11 +47,17 @@ func Plugins() []interface{} {
 		// service plugin
 		&service.Plugin{},
 
-		// websockets broadcast bundle
+		// ======== websockets broadcast bundle
 		&websockets.Plugin{},
 		&redis.Plugin{},
-		&memory.Plugin{},
 		// =========
+
+		// ============== KV
+		&kv.Plugin{},
+		&memory.Plugin{},
+		&memcached.Plugin{},
+		&boltdb.Plugin{},
+		// ==============
 
 		// plugin to serve static files
 		&static.Plugin{},
