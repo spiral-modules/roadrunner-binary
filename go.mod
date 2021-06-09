@@ -13,9 +13,9 @@ require (
 	github.com/spf13/cobra v1.1.3
 	// SPIRAL ------------
 	github.com/spiral/endure v1.0.1
-	github.com/spiral/errors v1.0.10
-	github.com/spiral/goridge/v3 v3.0.1
-	github.com/spiral/roadrunner/v2 v2.3.0-beta.2
+	github.com/spiral/errors v1.0.11
+	github.com/spiral/goridge/v3 v3.1.0
+	github.com/spiral/roadrunner/v2 v2.3.0-beta.3
 	// ---------------------
 	github.com/stretchr/testify v1.7.0
 	github.com/temporalio/roadrunner-temporal v1.0.6
