@@ -18,7 +18,7 @@ require (
 	github.com/spiral/roadrunner/v2 v2.3.0
 	// ---------------------
 	github.com/stretchr/testify v1.7.0
-	github.com/temporalio/roadrunner-temporal v1.0.6
+	github.com/temporalio/roadrunner-temporal v1.0.7
 	github.com/vbauerster/mpb/v5 v5.4.0
 	go.uber.org/multierr v1.7.0
 )
