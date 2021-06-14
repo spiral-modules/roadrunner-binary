@@ -188,22 +188,14 @@ kv:
     #
     # This option is required.
     driver: boltdb
-    # Driver specific options. Dir - directory where to store db file.
-    #
-    # Default: "."
-    dir: "tests/rr-bolt"
     # File name for the DB
     #
     # Default: "rr.db"
     file: "rr.db"
-    # BoltDB bucket name
-    #
-    # Default: "rr"
-    bucket: "rr"
     # Access permission for the DB file.
     #
     # Default: "0777"
-    permissions: 0666
+    permissions: 0777
     # TTL keys check interval in seconds. It's safe to use 1 second here, but can be a little costly to performance.
     #
     # Default: "60" seconds
@@ -595,6 +587,13 @@ websockets:
   #
   # Default: memory
   pubsubs: [ "redis", "memory" ]
+
+  # Redis configuration section with all options which available for the root configuration
+  #
+  # If redis pubsub driver specified, websockets plugins should have local redis configuration or global (priority local -> global)
+  redis:
+    addrs:
+     - "localhost:6379"
 
   # http path where to handle websockets connections
   #
