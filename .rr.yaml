@@ -333,7 +333,7 @@ http:
   # Default: 0
   max_request_size: 256
 
-  # Middlewares for the http plugin, order is important. Allowed values is: "headers", "gzip".
+  # Middlewares for the http plugin, order is important. Allowed values is: "headers", "gzip", "websockets"
   #
   # Default value: []
   middleware: [ "headers", "gzip" ]
@@ -582,11 +582,18 @@ redis:
   read_only: false
 
 # Websockets plugin
+#
+# Should be attached as a middleware to the http plugin middlewares
 websockets:
   # PubSub providers to use. Drivers available: redis, memory. Clients subscribed to the memory don't share its state with other pubsub drivers
   #
   # Default: memory
   pubsubs: [ "redis", "memory" ]
+
+  # Allowed request origin (single value). This option is optional (allowed all by default)
+  #
+  # Default: "*". Samples: "https://*.my.site", "http//*.com", "10.1.1.1", etc
+  allowed_origin: "*"
 
   # Redis configuration section with all options which available for the root configuration
   #
