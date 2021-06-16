@@ -1,6 +1,21 @@
 CHANGELOG
 =========
 
+v2.3.1 (_.06.2021)
+-------------------
+
+## 🩹 Fixes:
+
+- 🐛 Fix: Bugs with `boltdb` storage: [Boom](https://github.com/spiral/roadrunner/issues/717)
+  , [Boom](https://github.com/spiral/roadrunner/issues/718), [Boom](https://github.com/spiral/roadrunner/issues/719)
+- 🐛 Fix: Bug with incorrect redis initialization and usage [Bug](https://github.com/spiral/roadrunner/issues/720)
+- 🐛 Fix: Bug, Goridge duplicate error messages [Bug](https://github.com/spiral/goridge/issues/128)
+- 🐛 Fix: Bug, incorrect request `origin` check [Bug](https://github.com/spiral/roadrunner/issues/727)
+
+## 📦 Packages:
+
+- 📦 Update goridge to `v3.1.4`
+
 v2.3.0 (08.06.2021)
 -------------------
 
@@ -9,24 +24,33 @@ v2.3.0 (08.06.2021)
 - ✏️ Brand new `broadcast` plugin now has the name - `websockets` with broadcast capabilities. It can handle hundreds of
   thousands websocket connections very efficiently (~300k messages per second with 1k connected clients, in-memory bus
   on 2CPU cores and 1GB of RAM) [Issue](https://github.com/spiral/roadrunner/issues/513)
-- ✏️ Protobuf binary messages for the `websockets` and `kv` RPC calls under the hood. [Issue](https://github.com/spiral/roadrunner/issues/711)
-- ✏️ Json-schemas for the config file v1.0 (it also registered in [schemastore.org](https://github.com/SchemaStore/schemastore/pull/1614))
+- ✏️ Protobuf binary messages for the `websockets` and `kv` RPC calls under the
+  hood. [Issue](https://github.com/spiral/roadrunner/issues/711)
+- ✏️ Json-schemas for the config file v1.0 (it also registered
+  in [schemastore.org](https://github.com/SchemaStore/schemastore/pull/1614))
 - ✏️ `latest` docker image tag supported now (but we strongly recommend using a versioned tag (like `0.2.3`) instead)
-- ✏️ Add new option to the `http` config section: `internal_error_code` to override default (500) internal error code. [Issue](https://github.com/spiral/roadrunner/issues/659)
-- ✏️ Expose HTTP plugin metrics (workers memory, requests count, requests duration). [Issue](https://github.com/spiral/roadrunner/issues/489)
-- ✏️ Scan `server.command` and find errors related to the wrong path to a `PHP` file, or `.ph`, `.sh` scripts. [Issue](https://github.com/spiral/roadrunner/issues/658)
-- ✏️ Support file logger with log rotation [Wiki](https://en.wikipedia.org/wiki/Log_rotation), [Issue](https://github.com/spiral/roadrunner/issues/545)
+- ✏️ Add new option to the `http` config section: `internal_error_code` to override default (500) internal error
+  code. [Issue](https://github.com/spiral/roadrunner/issues/659)
+- ✏️ Expose HTTP plugin metrics (workers memory, requests count, requests duration)
+  . [Issue](https://github.com/spiral/roadrunner/issues/489)
+- ✏️ Scan `server.command` and find errors related to the wrong path to a `PHP` file, or `.ph`, `.sh`
+  scripts. [Issue](https://github.com/spiral/roadrunner/issues/658)
+- ✏️ Support file logger with log rotation [Wiki](https://en.wikipedia.org/wiki/Log_rotation)
+  , [Issue](https://github.com/spiral/roadrunner/issues/545)
 
 ## 🩹 Fixes:
 
 - 🐛 Fix: Bug with `informer.Workers` worked incorrectly: [Bug](https://github.com/spiral/roadrunner/issues/686)
-- 🐛 Fix: Internal error messages will not be shown to the user (except HTTP status code). Error message will be in logs: [Bug](https://github.com/spiral/roadrunner/issues/659)
-- 🐛 Fix: Error message will be properly shown in the log in case of `SoftJob` error:  [Bug](https://github.com/spiral/roadrunner/issues/691)
-- 🐛 Fix: Wrong applied middlewares for the `fcgi` server leads to the NPE: [Bug](https://github.com/spiral/roadrunner/issues/701)
+- 🐛 Fix: Internal error messages will not be shown to the user (except HTTP status code). Error message will be in
+  logs: [Bug](https://github.com/spiral/roadrunner/issues/659)
+- 🐛 Fix: Error message will be properly shown in the log in case of `SoftJob`
+  error:  [Bug](https://github.com/spiral/roadrunner/issues/691)
+- 🐛 Fix: Wrong applied middlewares for the `fcgi` server leads to the
+  NPE: [Bug](https://github.com/spiral/roadrunner/issues/701)
 
 ## 📦 Packages:
-- 📦 Update goridge to `v3.1.0`
 
+- 📦 Update goridge to `v3.1.0`
 
 v2.2.1 (13.05.2021)
 -------------------
