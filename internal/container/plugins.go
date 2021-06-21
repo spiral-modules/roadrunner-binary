@@ -1,6 +1,7 @@
 package container
 
 import (
+	"github.com/spiral/roadrunner/v2/plugins/broadcast"
 	"github.com/spiral/roadrunner/v2/plugins/gzip"
 	"github.com/spiral/roadrunner/v2/plugins/headers"
 	httpPlugin "github.com/spiral/roadrunner/v2/plugins/http"
@@ -49,6 +50,10 @@ func Plugins() []interface{} {
 
 		// kv + ws plugin
 		&memory.Plugin{},
+
+		// broadcast via memory or redis
+		// used in conjunction with Websockets, memory and redis plugins
+		&broadcast.Plugin{},
 
 		// ======== websockets broadcast bundle
 		&websockets.Plugin{},

@@ -585,27 +585,51 @@ redis:
 #
 # Should be attached as a middleware to the http plugin middlewares
 websockets:
-  # PubSub providers to use. Drivers available: redis, memory. Clients subscribed to the memory don't share its state with other pubsub drivers
+  # Broker to use. Brokers can be set in the broadcast plugin. For example, if you use broker: default here, broadcast plugin should have default broker in its config.
   #
-  # Default: memory
-  pubsubs: [ "redis", "memory" ]
+  # This option is required.
+  broker: default-redis
 
   # Allowed request origin (single value). This option is optional (allowed all by default)
   #
   # Default: "*". Samples: "https://*.my.site", "http//*.com", "10.1.1.1", etc
   allowed_origin: "*"
 
-  # Redis configuration section with all options which available for the root configuration
-  #
-  # If redis pubsub driver specified, websockets plugins should have local redis configuration or global (priority local -> global)
-  redis:
-    addrs:
-     - "localhost:6379"
-
   # http path where to handle websockets connections
   #
   # Default: /ws
   path: "/ws"
+
+# Broadcast plugin. It main purpose is to broadcast published messages via all brokers
+#
+# Used in conjunction with the websockets, memory and redis plugins.
+# LIMITATION: DO NOT use the same redis connection within different sections or messages will be duplicated.
+# There is no limitation to use different redis connection (ie localhost:6379, localhost:6378, etc) in different sections.
+broadcast:
+  # Section name.
+  #
+  # This option is required and should match with other plugins broker section.
+  default:
+    # Driver to use. Available drivers: redis, memory. In-memory driver does not require any configuration.
+    #
+    # This option is required.
+    driver: memory
+
+  # Section name.
+  #
+  # This option is required and should match with other plugins broker section.
+  default-redis:
+    # Driver to use. Available drivers: redis, memory. Redis driver require configuration (if empty - localhost:6379 one-node client will be used, see redis plugin config).
+    #
+    # This option is required.
+    driver: redis
+    # Redis configuration. This configuration related to the default-redis section. Broadcast plugin will use this configuration first.
+    # If section configuration doesn't exists, second priority - global redis configuration.
+    # If there are no configurations provided, default will be used.
+    #
+    # Default: localhost:6379
+    addrs:
+      - "localhost:6379"
 
 # Application metrics in Prometheus format (docs: https://roadrunner.dev/docs/beep-beep-metrics). Drop this section
 # for this feature disabling.
