@@ -18,6 +18,7 @@ v2.3.1 (_.06.2021)
 ## 📦 Packages:
 
 - 📦 Update goridge to `v3.1.4`
+- 📦 Update temporal to `v1.0.8`
 
 v2.3.0 (08.06.2021)
 -------------------
