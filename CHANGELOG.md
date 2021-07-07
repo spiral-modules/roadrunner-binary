@@ -1,7 +1,14 @@
 CHANGELOG
 =========
+v2.4.0 (_.07.2021)
+-------------------
 
-v2.3.1 (_.06.2021)
+## 🩹 Fixes:
+
+- 🐛 Fix: Do not call the container's Stop method after the container stopped by an error.
+
+
+v2.3.1 (30.06.2021)
 -------------------
 
 - ✏️ Rework `broadcast` plugin. Add architecture diagrams to the `doc` folder. [PR](https://github.com/spiral/roadrunner/pull/732)
