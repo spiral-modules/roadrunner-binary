@@ -11,11 +11,10 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spiral/errors"
 	"github.com/spiral/roadrunner/v2/plugins/config"
-	"go.uber.org/multierr"
 )
 
 // NewCommand creates `serve` command.
-func NewCommand(cfgPlugin *config.Viper) *cobra.Command { //nolint:funlen,gocognit
+func NewCommand(cfgPlugin *config.Viper) *cobra.Command { //nolint:funlen
 	return &cobra.Command{
 		Use:   "serve",
 		Short: "Start RoadRunner server",
@@ -81,11 +80,8 @@ func NewCommand(cfgPlugin *config.Viper) *cobra.Command { //nolint:funlen,gocogn
 				case e := <-errCh:
 					fmt.Printf("error occurred: %v, plugin: %s\n", e.Error, e.VertexID)
 
+					// return error, container already stopped internally
 					if !containerCfg.RetryOnFail {
-						if er := endureContainer.Stop(); er != nil {
-							return errors.E(op, multierr.Append(e.Error, er))
-						}
-
 						return errors.E(op, e.Error)
 					}
 
