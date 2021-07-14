@@ -20,4 +20,5 @@ require (
 	github.com/stretchr/testify v1.7.0
 	github.com/temporalio/roadrunner-temporal v1.0.8
 	github.com/vbauerster/mpb/v5 v5.4.0
+	go.uber.org/multierr v1.7.0
 )
