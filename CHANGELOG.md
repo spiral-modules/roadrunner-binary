@@ -5,7 +5,8 @@ v2.4.0 (-.08.2021)
 
 ## 🩹 Fixes:
 
-- 🐛 Fix: add `debug` pool config key to the `.rr.yaml` configuration reference.
+- 🐛 Fix: add `debug` pool config key to the `.rr.yaml`
+  configuration [reference](https://github.com/spiral/roadrunner-binary/issues/79).
 
 ## 📈 Summary:
 
