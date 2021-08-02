@@ -10,24 +10,24 @@ updates:
     schedule:
       interval: daily
     reviewers:
-      - "48d90782"
+      - "rustatian"
     assignees:
-      - "48d90782"
+      - "rustatian"
 
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: weekly
     reviewers:
-      - "48d90782"
+      - "rustatian"
     assignees:
-      - "48d90782"
+      - "rustatian"
 
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
       interval: daily
     reviewers:
-      - "48d90782"
+      - "rustatian"
     assignees:
-      - "48d90782"
+      - "rustatian"

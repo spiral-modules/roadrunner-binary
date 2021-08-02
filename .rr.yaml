@@ -26,7 +26,7 @@ server:
   # This option is required.
   command: "php psr-worker.php"
 
-  # User name (not UID) for the worker processes. An empty value means to use the RR process user.
+  # Username (not UID) for the worker processes. An empty value means to use the RR process user.
   #
   # Default: ""
   user: ""

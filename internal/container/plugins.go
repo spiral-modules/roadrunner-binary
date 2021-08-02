@@ -6,6 +6,11 @@ import (
 	"github.com/spiral/roadrunner/v2/plugins/headers"
 	httpPlugin "github.com/spiral/roadrunner/v2/plugins/http"
 	"github.com/spiral/roadrunner/v2/plugins/informer"
+	"github.com/spiral/roadrunner/v2/plugins/jobs"
+	"github.com/spiral/roadrunner/v2/plugins/jobs/drivers/amqp"
+	"github.com/spiral/roadrunner/v2/plugins/jobs/drivers/beanstalk"
+	"github.com/spiral/roadrunner/v2/plugins/jobs/drivers/ephemeral"
+	"github.com/spiral/roadrunner/v2/plugins/jobs/drivers/sqs"
 	"github.com/spiral/roadrunner/v2/plugins/kv"
 	"github.com/spiral/roadrunner/v2/plugins/kv/drivers/boltdb"
 	"github.com/spiral/roadrunner/v2/plugins/kv/drivers/memcached"
@@ -47,6 +52,14 @@ func Plugins() []interface{} {
 		&server.Plugin{},
 		// service plugin
 		&service.Plugin{},
+
+		// ========= JOBS bundle
+		&jobs.Plugin{},
+		&amqp.Plugin{},
+		&sqs.Plugin{},
+		&beanstalk.Plugin{},
+		&ephemeral.Plugin{},
+		// =========
 
 		// kv + ws plugin
 		&memory.Plugin{},

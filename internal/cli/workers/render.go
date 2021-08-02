@@ -12,7 +12,7 @@ import (
 )
 
 // WorkerTable renders table with information about rr server workers.
-func WorkerTable(writer io.Writer, workers []process.State) *tablewriter.Table {
+func WorkerTable(writer io.Writer, workers []*process.State) *tablewriter.Table {
 	tw := tablewriter.NewWriter(writer)
 	tw.SetHeader([]string{"PID", "Status", "Execs", "Memory", "CPU%", "Created"})
 	tw.SetColMinWidth(0, 7)
@@ -37,7 +37,7 @@ func WorkerTable(writer io.Writer, workers []process.State) *tablewriter.Table {
 }
 
 // ServiceWorkerTable renders table with information about rr server workers.
-func ServiceWorkerTable(writer io.Writer, workers []process.State) *tablewriter.Table {
+func ServiceWorkerTable(writer io.Writer, workers []*process.State) *tablewriter.Table {
 	tw := tablewriter.NewWriter(writer)
 	tw.SetAutoWrapText(false)
 	tw.SetHeader([]string{"PID", "Memory", "CPU%", "Command"})
