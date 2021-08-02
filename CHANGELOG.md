@@ -1,5 +1,16 @@
 CHANGELOG
 =========
+v2.4.0 (-.08.2021)
+-------------------
+
+## 🩹 Fixes:
+
+- 🐛 Fix: add `debug` pool config key to the `.rr.yaml` configuration reference.
+
+## 📈 Summary:
+
+- RR Milestone [2.4.0](https://github.com/spiral/roadrunner/milestones/2.4.0)
+
 v2.3.2 (14.07.2021)
 -------------------
 
