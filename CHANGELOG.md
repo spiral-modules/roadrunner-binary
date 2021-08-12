@@ -1,12 +1,30 @@
 CHANGELOG
 =========
+
 v2.4.0 (-.08.2021)
 -------------------
+
+## 💔 Internal BC:
+
+- 🔨 Pool, worker interfaces: payload now passed and returned by pointer.
+
+## 👀 New:
+
+- ✏️ Long awaited, reworked `Jobs` plugin with pluggable drivers. Now you can allocate/destroy pipelines in the runtime.
+  Drivers included in the initial release: `RabbitMQ (0-9-1)`, `SQS v2`, `beanstalk`, `ephemeral`
+  . [PR](https://github.com/spiral/roadrunner/pull/726)
 
 ## 🩹 Fixes:
 
 - 🐛 Fix: add `debug` pool config key to the `.rr.yaml`
   configuration [reference](https://github.com/spiral/roadrunner-binary/issues/79).
+- 🐛 Fix: fixed bug with waiting goroutines on the internal worker's container channel.
+
+## 📦 Packages:
+
+- 📦 Update goridge to `v3.2.0`
+- 📦 Update temporal to `v1.0.9`
+- 📦 Update RR to `v2.4.0`
 
 ## 📈 Summary:
 

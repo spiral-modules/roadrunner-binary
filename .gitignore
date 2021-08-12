@@ -25,3 +25,4 @@ dir1
 coverage
 /rr
 rr.exe
+.rr-sample-bench.yaml
