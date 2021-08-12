@@ -118,6 +118,11 @@ temporal:
 
   # Activities pool settings.
   activities:
+    # Debug mode for the pool. In this mode, pool will not pre-allocate the worker. Worker (only 1, num_workers ignored) will be allocated right after the request arrived.
+    #
+    # Default: false
+    debug: false
+
     # How many worker processes will be started. Zero (or nothing) means the number of logical CPUs.
     #
     # Default: 0
@@ -453,6 +458,11 @@ http:
 
   # Workers pool settings.
   pool:
+    # Debug mode for the pool. In this mode, pool will not pre-allocate the worker. Worker (only 1, num_workers ignored) will be allocated right after the request arrived.
+    #
+    # Default: false
+    debug: false
+
     # How many worker processes will be started. Zero (or nothing) means the number of logical CPUs.
     #
     # Default: 0
