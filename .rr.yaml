@@ -707,6 +707,208 @@ reload:
       # Default: []
       patterns: [ ".php", ".go", ".md" ]
 
+# AMQP jobs driver
+#
+# This option is required to use AMQP driver
+amqp:
+  # AMQP Uri to connect to the rabbitmq server https://www.rabbitmq.com/uri-spec.html
+  #
+  # This option is required for the production. Default: amqp://guest:guest@127.0.0.1:5672
+  addr: amqp://guest:guest@127.0.0.1:5672/
+
+# Beanstalk jobs driver
+#
+# This option is required to use Beanstalk driver
+beanstalk:
+  # Beanstalk address
+  #
+  # This option is required for the production. Default: tcp://127.0.0.1:11300
+  addr: tcp://127.0.0.1:11300
+
+  # Beanstalk connect timeout.
+  #
+  # Default: 30s
+  timeout: 10s
+
+# SQS jobs driver (https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html)
+#
+# This option is required to use SQS driver
+sqs:
+  # AccessKey ID
+  #
+  # This option is required for the production. Default: empty
+  key: api-key
+
+  # Secret access key
+  #
+  # This option is required for the production. Default: empty
+  secret: api-secret
+
+  # AWS region
+  #
+  # This option is required for the production. Default: empty
+  region: us-west-1
+
+  # AWS session token
+  #
+  # This option is required for the production. Default: empty
+  session_token: test
+
+  # AWS SQS endpoint to connect
+  #
+  # This option is required for the production. Default: http://127.0.0.1:9324
+  endpoint: http://127.0.0.1:9324
+
+jobs:
+  # Number of threads which will try to obtain the job from the priority queue
+  #
+  # Default: number of the logical CPU cores
+  num_pollers: 32
+
+  # Size of the internal priority queue
+  #
+  # Default: 1_000_000
+  pipeline_size: 100000
+
+  # worker pool configuration
+  pool:
+    num_workers: 10
+    max_jobs: 0
+    allocate_timeout: 60s
+    destroy_timeout: 60s
+
+  # List of broker pipelines associated with the drivers.
+  #
+  # This option is not required since you can declare pipelines in the runtime. Pipeline driver should exist.
+  pipelines:
+    # Pipeline name
+    #
+    # This option is required when defining pipelines via configuration.
+    test-local:
+      # Driver associated with the pipeline
+      #
+      # This option is required. Possible values: amqp, ephemeral, sqs, beanstalk
+      driver: ephemeral
+      # Pipeline priority
+      #
+      # If the job has priority set to 0, it will inherit the pipeline's priority. Default: 10.
+      priority: 10
+      # Number of job to prefetch from the driver.
+      #
+      # Default: 100_000.
+      prefetch: 10000
+
+    test-local-2:
+      # Driver name
+      #
+      # This option is required.
+      driver: amqp
+      # QoS - prefetch.
+      #
+      # Default: 10
+      prefetch: 10
+      # Queue name
+      #
+      # Default: default
+      queue: test-1-queue
+      # Pipeline jobs priority, 1 - highest
+      #
+      # Default: 10
+      priority: 1
+      # Exchange name
+      #
+      # Default: amqp.default
+      exchange: default
+      # Exchange type
+      #
+      # Default: direct.
+      exchange_type: direct
+      # Routing key for the queue
+      #
+      # Default: empty.
+      routing_key: test
+      # Declare a queue exclusive at the exchange
+      #
+      # Default: false
+      exclusive: false
+      # When multiple is true, this delivery and all prior unacknowledged deliveries
+      # on the same channel will be acknowledged.  This is useful for batch processing
+      # of deliveries
+      #
+      # Default:false
+      multiple_ack: false
+      # When multiple is true, this delivery and all prior unacknowledged deliveries
+      # on the same channel will be acknowledged.  This is useful for batch processing
+      # of deliveries
+      #
+      # Default: false
+      requeue_on_fail: false
+
+
+    test-local-3:
+      # Driver name
+      #
+      # This option is required.
+      driver: beanstalk
+      # Pipeline jobs priority, 1 - highest
+      #
+      # Default: 10
+      priority: 11
+      # Beanstalk internal tube priority
+      #
+      # Default: 1
+      tube_priority: 1
+      # Tube name
+      #
+      # Default: default
+      tube: default-1
+      # If no job is available before this timeout has passed, Reserve returns a ConnError recording ErrTimeout.
+      #
+      # Default: 5s
+      reserve_timeout: 10s
+
+    test-local-4:
+      # Driver name
+      #
+      # This option is required.
+      driver: sqs
+      # Number of jobs to prefetch from the SQS. mazon SQS never returns more messages than this value
+      # (however, fewer messages might be returned). Valid values: 1 to 10.
+      #
+      # Default: 10
+      prefetch: 10
+      # The duration (in seconds) that the received messages are hidden from subsequent
+      #	retrieve requests after being retrieved by a ReceiveMessage request
+      #
+      # Default: 0
+      visibility_timeout: 0
+      # The duration (in seconds) for which the call waits for a message to arrive
+      #	in the queue before returning. If a message is available, the call returns
+      #	sooner than WaitTimeSeconds. If no messages are available and the wait time
+      #	expires, the call returns successfully with an empty list of messages.
+      #
+      # Default: 0
+      wait_time_seconds: 0
+      # Queue name.
+      #
+      # Default: default
+      queue: default
+      # List of the AWS SQS attributes https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SetQueueAttributes.html.
+      attributes:
+        DelaySeconds: 0
+        MaximumMessageSize: 262144
+        MessageRetentionPeriod: 345600
+        ReceiveMessageWaitTimeSeconds: 0
+        VisibilityTimeout: 30
+      # Tags don't have any semantic meaning. Amazon SQS interprets tags as character
+      #	strings.
+      tags:
+        test: "tag"
+
+
+  # list of pipelines to be consumed by the server, keep empty if you want to start consuming manually
+  consume: [ "test-local", "test-local-2", "test-local-3", "test-local-4" ]
+
 ## RoadRunner internal container configuration (docs: https://github.com/spiral/endure).
 endure:
   # How long to wait for stopping.
