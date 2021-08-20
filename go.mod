@@ -23,6 +23,7 @@ require (
 )
 
 require (
+	github.com/Shopify/toxiproxy v2.1.4+incompatible
 	github.com/StackExchange/wmi v1.2.1 // indirect
 	github.com/VividCortex/ewma v1.2.0 // indirect
 	github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d // indirect
