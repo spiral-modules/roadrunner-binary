@@ -18,7 +18,6 @@
 .idea
 builds/
 tests/vendor/
-.rr-sample.yaml
 unit_tests
 unit_tests_copied
 dir1
@@ -26,3 +25,5 @@ coverage
 /rr
 rr.exe
 .rr-sample-bench.yaml
+.rr-with-temporal.yaml
+.rr-sample.yaml

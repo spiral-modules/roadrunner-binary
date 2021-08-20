@@ -116,6 +116,33 @@ temporal:
   # Default: "127.0.0.1:7233"
   address: 127.0.0.1:7233
 
+  # Sticky cache size. Sticky workflow execution is the affinity
+  # between workflow tasks of a specific workflow execution to a specific worker. The benefit of sticky execution is that
+  # the workflow does not have to reconstruct state by replaying history from the beginning. The cache is shared between
+  # workers running within same process. This must be called before any worker is started. If not called, the default
+  # size of 10K (which may change) will be used.
+  #
+  # Default: 10_000
+  cache_size: 10000
+
+  # Temporal metrics
+  #
+  # Optional section
+  metrics:
+    # Server metrics address
+    #
+    # Required for the production. Default: 127.0.0.1:9091, for the metrics 127.0.0.1:9091/metrics
+    address: 127.0.0.1:9091
+    # Metrics type
+    #
+    # Default: "summary". Supported values: summary, histogram
+    type: "summary"
+
+    # Temporal metrics prefix
+    #
+    # Default: (empty)
+    prefix: "foobar"
+
   # Activities pool settings.
   activities:
     # Debug mode for the pool. In this mode, pool will not pre-allocate the worker. Worker (only 1, num_workers ignored) will be allocated right after the request arrived.
@@ -179,7 +206,7 @@ temporal:
 
   # Debugging level (only for "json" codec). Set 0 for nothing, 1 for "normal", and 2 for colorized messages.
   #
-  # Default: 1
+  # Default: 0
   debug_level: 2
 
 # KV plugin settings. Available drivers: boltdb, redis, memcached, memory.

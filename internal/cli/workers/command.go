@@ -9,6 +9,7 @@ import (
 	"time"
 
 	internalRpc "github.com/spiral/roadrunner-binary/v2/internal/rpc"
+	"github.com/spiral/roadrunner/v2/pkg/state/job"
 
 	tm "github.com/buger/goterm"
 	"github.com/fatih/color"
@@ -90,8 +91,12 @@ func NewCommand(cfgPlugin *config.Viper) *cobra.Command { //nolint:funlen
 
 func showWorkers(plugins []string, client *rpc.Client) error {
 	const (
-		op                = errors.Op("show_workers")
-		informerWorkers   = "informer.Workers"
+		op              = errors.Op("show_workers")
+		informerWorkers = "informer.Workers"
+		informerJobs    = "informer.Jobs"
+		// this is only one exception to Render the workers, service plugin has the same workers as other plugins,
+		// but they are RAW processes and needs to be handled in a different way. We don't need a special RPC call, but
+		// need a special render method.
 		servicePluginName = "service"
 	)
 
@@ -116,6 +121,22 @@ func showWorkers(plugins []string, client *rpc.Client) error {
 		fmt.Printf("Workers of [%s]:\n", color.HiYellowString(plugin))
 
 		WorkerTable(os.Stdout, list.Workers).Render()
+	}
+
+	for _, plugin := range plugins {
+		var jst []*job.State
+
+		if err := client.Call(informerJobs, plugin, &jst); err != nil {
+			return errors.E(op, err)
+		}
+
+		// eq to nil
+		if len(jst) == 0 {
+			continue
+		}
+
+		fmt.Printf("Jobs of [%s]:\n", color.HiYellowString(plugin))
+		JobsTable(os.Stdout, jst).Render()
 	}
 
 	return nil
