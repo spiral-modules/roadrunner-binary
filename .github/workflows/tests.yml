@@ -83,7 +83,7 @@ jobs:
   build:
     name: Build for ${{ matrix.os }}
     runs-on: ubuntu-20.04
-    needs: [ golangci-lint, go-test ]
+    needs: [ go-test ]
     strategy:
       fail-fast: false
       matrix:
@@ -138,7 +138,7 @@ jobs:
   docker-image:
     name: Build docker image
     runs-on: ubuntu-20.04
-    needs: [ golangci-lint, go-test ]
+    needs: [ go-test ]
     steps:
       - name: Check out code
         uses: actions/checkout@v2
