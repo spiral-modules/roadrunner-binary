@@ -64,11 +64,13 @@ func ServiceWorkerTable(writer io.Writer, workers []*process.State) *tablewriter
 func JobsTable(writer io.Writer, jobs []*job.State) *tablewriter.Table {
 	tw := tablewriter.NewWriter(writer)
 	tw.SetAutoWrapText(false)
-	tw.SetHeader([]string{"Pipeline", "Driver", "Queue", "Active"})
+	tw.SetHeader([]string{"Pipeline", "Driver", "Queue", "Active", "Delayed", "Reserved"})
 	tw.SetColMinWidth(0, 10)
 	tw.SetColMinWidth(1, 7)
 	tw.SetColMinWidth(2, 15)
 	tw.SetColMinWidth(3, 10)
+	tw.SetColMinWidth(4, 10)
+	tw.SetColMinWidth(5, 10)
 	tw.SetAlignment(tablewriter.ALIGN_LEFT)
 
 	for i := 0; i < len(jobs); i++ {
@@ -77,6 +79,8 @@ func JobsTable(writer io.Writer, jobs []*job.State) *tablewriter.Table {
 			jobs[i].Driver,
 			jobs[i].Queue,
 			strconv.Itoa(int(jobs[i].Active)),
+			strconv.Itoa(int(jobs[i].Delayed)),
+			strconv.Itoa(int(jobs[i].Reserved)),
 		})
 	}
 
