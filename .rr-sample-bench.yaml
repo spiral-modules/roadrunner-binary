@@ -12,7 +12,7 @@ http:
   middleware: [ ]
   trusted_subnets: [ "10.0.0.0/8", "127.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16", "::1/128", "fc00::/7", "fe80::/10" ]
   pool:
-    num_workers: 10
+    num_workers: 64
     max_jobs: 0
     allocate_timeout: 60s
     destroy_timeout: 60s

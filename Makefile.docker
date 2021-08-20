@@ -3,7 +3,7 @@
 # Makefile manual (en): <https://www.gnu.org/software/make/manual/html_node/index.html#SEC_Contents>
 
 SHELL = /bin/sh
-GO_VERSION = 1.16.2
+GO_VERSION = 1.17
 DOCKER_GO_RUN_ARGS = --rm -v "$(shell pwd):/src" -w "/src" -u "$(shell id -u):$(shell id -g)" -e "GOPATH=/tmp" -e "HOME=/tmp"
 
 .PHONY : help build fmt lint gotest test
