@@ -155,8 +155,8 @@ jobs:
         run: |
           docker buildx build \
             --platform "linux/amd64,linux/arm64" \
-            --tag "spiral/roadrunner:latest" \
-            --tag "spiral/roadrunner:${{ steps.values.outputs.version }}" \
+            --tag "spiralscout/roadrunner:latest" \
+            --tag "spiralscout/roadrunner:${{ steps.values.outputs.version }}" \
             --tag "ghcr.io/spiral/roadrunner-binary:latest" \
             --tag "ghcr.io/spiral/roadrunner-binary:${{ steps.values.outputs.version }}" \
             --build-arg "APP_VERSION=${{ steps.values.outputs.version }}" \
