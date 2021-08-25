@@ -32,8 +32,8 @@ ARG BUILD_TIME="undefined"
 LABEL \
     org.opencontainers.image.title="roadrunner" \
     org.opencontainers.image.description="High-performance PHP application server, load-balancer and process manager" \
-    org.opencontainers.image.url="https://github.com/spiral/roadrunner" \
-    org.opencontainers.image.source="https://github.com/spiral/roadrunner" \
+    org.opencontainers.image.url="https://github.com/spiral/roadrunner-binary" \
+    org.opencontainers.image.source="https://github.com/spiral/roadrunner-binary" \
     org.opencontainers.image.vendor="SpiralScout" \
     org.opencontainers.image.version="$APP_VERSION" \
     org.opencontainers.image.created="$BUILD_TIME" \
