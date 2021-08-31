@@ -3,7 +3,7 @@ module github.com/spiral/roadrunner-binary/v2
 go 1.17
 
 require (
-	github.com/buger/goterm v1.0.2
+	github.com/buger/goterm v1.0.1
 	github.com/dustin/go-humanize v1.0.0
 	github.com/fatih/color v1.12.0
 	github.com/joho/godotenv v1.3.0
