@@ -1,20 +1,19 @@
 package container
 
 import (
+	"github.com/spiral/roadrunner/v2/plugins/amqp"
+	"github.com/spiral/roadrunner/v2/plugins/beanstalk"
+	"github.com/spiral/roadrunner/v2/plugins/boltdb"
 	"github.com/spiral/roadrunner/v2/plugins/broadcast"
+	"github.com/spiral/roadrunner/v2/plugins/ephemeral"
 	"github.com/spiral/roadrunner/v2/plugins/gzip"
 	"github.com/spiral/roadrunner/v2/plugins/headers"
 	httpPlugin "github.com/spiral/roadrunner/v2/plugins/http"
 	"github.com/spiral/roadrunner/v2/plugins/informer"
 	"github.com/spiral/roadrunner/v2/plugins/jobs"
-	"github.com/spiral/roadrunner/v2/plugins/jobs/drivers/amqp"
-	"github.com/spiral/roadrunner/v2/plugins/jobs/drivers/beanstalk"
-	"github.com/spiral/roadrunner/v2/plugins/jobs/drivers/ephemeral"
-	"github.com/spiral/roadrunner/v2/plugins/jobs/drivers/sqs"
 	"github.com/spiral/roadrunner/v2/plugins/kv"
-	"github.com/spiral/roadrunner/v2/plugins/kv/drivers/boltdb"
-	"github.com/spiral/roadrunner/v2/plugins/kv/drivers/memcached"
 	"github.com/spiral/roadrunner/v2/plugins/logger"
+	"github.com/spiral/roadrunner/v2/plugins/memcached"
 	"github.com/spiral/roadrunner/v2/plugins/memory"
 	"github.com/spiral/roadrunner/v2/plugins/metrics"
 	"github.com/spiral/roadrunner/v2/plugins/redis"
@@ -23,6 +22,7 @@ import (
 	rpcPlugin "github.com/spiral/roadrunner/v2/plugins/rpc"
 	"github.com/spiral/roadrunner/v2/plugins/server"
 	"github.com/spiral/roadrunner/v2/plugins/service"
+	"github.com/spiral/roadrunner/v2/plugins/sqs"
 	"github.com/spiral/roadrunner/v2/plugins/static"
 	"github.com/spiral/roadrunner/v2/plugins/status"
 	"github.com/spiral/roadrunner/v2/plugins/websockets"
@@ -32,7 +32,7 @@ import (
 )
 
 // Plugins returns active plugins for the endure container. Feel free to add or remove any plugins.
-func Plugins() []interface{} {
+func Plugins() []interface{} { //nolint:funlen
 	return []interface{}{
 		// logger plugin
 		&logger.ZapLogger{},
@@ -64,6 +64,9 @@ func Plugins() []interface{} {
 		// kv + ws plugin
 		&memory.Plugin{},
 
+		// KV + Jobs
+		&boltdb.Plugin{},
+
 		// broadcast via memory or redis
 		// used in conjunction with Websockets, memory and redis plugins
 		&broadcast.Plugin{},
@@ -76,7 +79,6 @@ func Plugins() []interface{} {
 		// ============== KV
 		&kv.Plugin{},
 		&memcached.Plugin{},
-		&boltdb.Plugin{},
 		// ==============
 
 		// plugin to serve static files

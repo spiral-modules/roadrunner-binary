@@ -12,6 +12,11 @@ import (
 	"github.com/spiral/roadrunner/v2/pkg/state/process"
 )
 
+const (
+	Ready  string = "READY"
+	Paused string = "PAUSED/STOPPED"
+)
+
 // WorkerTable renders table with information about rr server workers.
 func WorkerTable(writer io.Writer, workers []*process.State) *tablewriter.Table {
 	tw := tablewriter.NewWriter(writer)
@@ -90,10 +95,11 @@ func JobsTable(writer io.Writer, jobs []*job.State) *tablewriter.Table {
 }
 
 func renderReady(ready bool) string {
-	if ready == true {
-		return "READY"
+	if ready {
+		return Ready
 	}
-	return "PAUSED/STOPPED"
+
+	return Paused
 }
 
 //go:inline
