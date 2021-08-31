@@ -32,7 +32,7 @@ import (
 )
 
 // Plugins returns active plugins for the endure container. Feel free to add or remove any plugins.
-func Plugins() []interface{} {
+func Plugins() []interface{} { //nolint:funlen
 	return []interface{}{
 		// logger plugin
 		&logger.ZapLogger{},
