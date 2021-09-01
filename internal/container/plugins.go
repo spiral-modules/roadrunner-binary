@@ -5,7 +5,6 @@ import (
 	"github.com/spiral/roadrunner/v2/plugins/beanstalk"
 	"github.com/spiral/roadrunner/v2/plugins/boltdb"
 	"github.com/spiral/roadrunner/v2/plugins/broadcast"
-	"github.com/spiral/roadrunner/v2/plugins/ephemeral"
 	"github.com/spiral/roadrunner/v2/plugins/gzip"
 	"github.com/spiral/roadrunner/v2/plugins/headers"
 	httpPlugin "github.com/spiral/roadrunner/v2/plugins/http"
@@ -58,10 +57,9 @@ func Plugins() []interface{} { //nolint:funlen
 		&amqp.Plugin{},
 		&sqs.Plugin{},
 		&beanstalk.Plugin{},
-		&ephemeral.Plugin{},
 		// =========
 
-		// kv + ws plugin
+		// kv + ws + jobs plugin
 		&memory.Plugin{},
 
 		// KV + Jobs
