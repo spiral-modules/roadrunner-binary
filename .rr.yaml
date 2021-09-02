@@ -744,6 +744,15 @@ reload:
       # Default: []
       patterns: [ ".php", ".go", ".md" ]
 
+# Boltdb local jobs driver
+#
+# This option is required to use boltdb driver
+boltdb:
+  # Permissions for hte boltdb database file
+  #
+  # This option is optional. Default: 0777
+  permissions: 0777
+
 # AMQP jobs driver
 #
 # This option is required to use AMQP driver
@@ -824,8 +833,25 @@ jobs:
     test-local:
       # Driver associated with the pipeline
       #
-      # This option is required. Possible values: amqp, ephemeral, sqs, beanstalk
+      # This option is required. Possible values: amqp, memory, sqs, beanstalk, boltdb
       driver: ephemeral
+      # Pipeline priority
+      #
+      # If the job has priority set to 0, it will inherit the pipeline's priority. Default: 10.
+      priority: 10
+      # Number of job to prefetch from the driver.
+      #
+      # Default: 100_000.
+      prefetch: 10000
+
+    # Pipeline name
+    #
+    # This option is required when defining pipelines via configuration.
+    test-local-1:
+      # Driver associated with the pipeline
+      #
+      # This option is required. Possible values: amqp, memory, sqs, beanstalk, boltdb
+      driver: boltdb
       # Pipeline priority
       #
       # If the job has priority set to 0, it will inherit the pipeline's priority. Default: 10.
@@ -944,7 +970,7 @@ jobs:
 
 
   # list of pipelines to be consumed by the server, keep empty if you want to start consuming manually
-  consume: [ "test-local", "test-local-2", "test-local-3", "test-local-4" ]
+  consume: [ "test-local", "test-local-1","test-local-2", "test-local-3", "test-local-4" ]
 
 ## RoadRunner internal container configuration (docs: https://github.com/spiral/endure).
 endure:
