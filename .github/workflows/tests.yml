@@ -150,7 +150,7 @@ jobs:
         run: docker run --rm rr:local -v
 
       - name: Scan image
-        uses: anchore/scan-action@v2 # action page: <https://github.com/anchore/scan-action>
+        uses: anchore/scan-action@v3 # action page: <https://github.com/anchore/scan-action>
         with:
           image: rr:local
           fail-build: true
