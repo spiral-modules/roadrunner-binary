@@ -7,6 +7,10 @@
 -   🐛 Fix: bug with the not-idempotent call to the `attributes.Init`.
 -   🐛 Fix: memory jobs driver behavior. Now memory driver starts consuming automatically if the user consumes the pipeline in the configuration.
 
+## 📦 Packages:
+
+-   📦 Update RR to `v2.4.1`
+
 ## v2.4.0 (02.09.2021)
 
 ## 💔 Internal BC:
