@@ -5,7 +5,7 @@ import (
 
 	"github.com/spiral/roadrunner-binary/v2/internal/cli/reset"
 
-	"github.com/spiral/roadrunner/v2/plugins/config"
+	"github.com/spiral/roadrunner-plugins/v2/config"
 	"github.com/stretchr/testify/assert"
 )
 

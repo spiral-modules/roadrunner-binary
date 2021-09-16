@@ -9,14 +9,14 @@ import (
 	"time"
 
 	internalRpc "github.com/spiral/roadrunner-binary/v2/internal/rpc"
-	"github.com/spiral/roadrunner/v2/pkg/state/job"
+	"github.com/spiral/roadrunner/v2/state/job"
 
 	tm "github.com/buger/goterm"
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 	"github.com/spiral/errors"
-	"github.com/spiral/roadrunner/v2/plugins/config"
-	"github.com/spiral/roadrunner/v2/plugins/informer"
+	"github.com/spiral/roadrunner-plugins/v2/config"
+	"github.com/spiral/roadrunner-plugins/v2/informer"
 )
 
 // NewCommand creates `workers` command.

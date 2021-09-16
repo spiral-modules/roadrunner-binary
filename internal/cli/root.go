@@ -14,7 +14,7 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/spf13/cobra"
-	"github.com/spiral/roadrunner/v2/plugins/config"
+	"github.com/spiral/roadrunner-plugins/v2/config"
 )
 
 // NewCommand creates root command.

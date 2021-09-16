@@ -10,7 +10,7 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/spiral/errors"
-	"github.com/spiral/roadrunner/v2/plugins/config"
+	"github.com/spiral/roadrunner-plugins/v2/config"
 )
 
 // NewCommand creates `serve` command.
