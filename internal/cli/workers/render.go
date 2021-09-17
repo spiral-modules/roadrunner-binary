@@ -8,8 +8,8 @@ import (
 	"github.com/dustin/go-humanize"
 	"github.com/fatih/color"
 	"github.com/olekukonko/tablewriter"
-	"github.com/spiral/roadrunner/v2/pkg/state/job"
-	"github.com/spiral/roadrunner/v2/pkg/state/process"
+	"github.com/spiral/roadrunner/v2/state/job"
+	"github.com/spiral/roadrunner/v2/state/process"
 )
 
 const (

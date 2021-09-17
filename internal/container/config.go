@@ -5,7 +5,7 @@ import (
 	"time"
 
 	endure "github.com/spiral/endure/pkg/container"
-	"github.com/spiral/roadrunner/v2/plugins/config"
+	"github.com/spiral/roadrunner-plugins/v2/config"
 )
 
 type Config struct {
