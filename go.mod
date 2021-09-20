@@ -15,7 +15,7 @@ require (
 	github.com/spiral/endure v1.0.4
 	github.com/spiral/errors v1.0.12
 	github.com/spiral/goridge/v3 v3.2.1
-	github.com/spiral/roadrunner-plugins/v2 v2.5.0-alpha.2
+	github.com/spiral/roadrunner-plugins/v2 v2.5.0-alpha.3
 	github.com/spiral/roadrunner/v2 v2.5.0-alpha.2
 	// ---------------------
 	github.com/stretchr/testify v1.7.0
@@ -47,6 +47,7 @@ require (
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
+	github.com/emicklei/proto v1.9.1 // indirect
 	github.com/facebookgo/clock v0.0.0-20150410010913-600d898af40a // indirect
 	github.com/fasthttp/websocket v1.4.3 // indirect
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
