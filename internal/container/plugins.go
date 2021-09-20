@@ -5,6 +5,7 @@ import (
 	"github.com/spiral/roadrunner-plugins/v2/beanstalk"
 	"github.com/spiral/roadrunner-plugins/v2/boltdb"
 	"github.com/spiral/roadrunner-plugins/v2/broadcast"
+	grpcPlugin "github.com/spiral/roadrunner-plugins/v2/grpc"
 	"github.com/spiral/roadrunner-plugins/v2/gzip"
 	"github.com/spiral/roadrunner-plugins/v2/headers"
 	httpPlugin "github.com/spiral/roadrunner-plugins/v2/http"
@@ -58,6 +59,8 @@ func Plugins() []interface{} { //nolint:funlen
 		&sqs.Plugin{},
 		&beanstalk.Plugin{},
 		// =========
+
+		&grpcPlugin.Plugin{},
 
 		// kv + ws + jobs plugin
 		&memory.Plugin{},

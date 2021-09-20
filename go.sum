@@ -125,6 +125,7 @@ github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f h1:lO4WD4F/r
 github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f/go.mod h1:cuUVRXasLTGF7a8hSLbxyZXjz+1KgoB3wDUb6vlszIc=
 github.com/dustin/go-humanize v1.0.0 h1:VSnTsYCnlFHaM2/igO1h6X3HA71jcobQuxemgkq4zYo=
 github.com/dustin/go-humanize v1.0.0/go.mod h1:HtrtbFcZ19U5GC7JDqmcUSB87Iq5E25KnS6fMYU6eOk=
+github.com/emicklei/proto v1.9.1 h1:MUgjFo5xlMwYv72TnF5xmmdKZ04u+dVbv6wdARv16D8=
 github.com/emicklei/proto v1.9.1/go.mod h1:rn1FgRS/FANiZdD2djyH7TMA9jdRDcYQ9IEN9yvjX0A=
 github.com/envoyproxy/go-control-plane v0.9.0/go.mod h1:YTl/9mNaCwkRvm6d1a2C3ymFceY/DCBVvsKhRF0iEA4=
 github.com/envoyproxy/go-control-plane v0.9.1-0.20191026205805-5f8ba28d4473/go.mod h1:YTl/9mNaCwkRvm6d1a2C3ymFceY/DCBVvsKhRF0iEA4=
@@ -451,8 +452,8 @@ github.com/spiral/errors v1.0.12/go.mod h1:j5UReqxZxfkwXkI9mFY87VhEXcXmSg7kAk5Ss
 github.com/spiral/goridge/v3 v3.2.1 h1:5IJofcvWYjAy+X5XevOhwf/8F0i0Bu/baPsBGiSgqzU=
 github.com/spiral/goridge/v3 v3.2.1/go.mod h1:jDHXTORSxchJYCv2jG4vtZojsa+4JJyXmfdPefOpJ3c=
 github.com/spiral/roadrunner-plugins/v2 v2.5.0-alpha.1/go.mod h1:EGW7qJMv+q+zBFUO0lL4MhYKI102tl3DKcKW7Ydnl4k=
-github.com/spiral/roadrunner-plugins/v2 v2.5.0-alpha.2 h1:MgMI34FaLwvaHly8uRn2GZYEtqPmgmJaWDGLCjk0+E8=
-github.com/spiral/roadrunner-plugins/v2 v2.5.0-alpha.2/go.mod h1:5PqFPuEx5CEBKNqYaWuYF4IWHkqk52F0IVsQbxVDf9A=
+github.com/spiral/roadrunner-plugins/v2 v2.5.0-alpha.3 h1:pdBElnA07DvfViD4OAuXn3bIm/8C56AHcxEZv7ogK5E=
+github.com/spiral/roadrunner-plugins/v2 v2.5.0-alpha.3/go.mod h1:5PqFPuEx5CEBKNqYaWuYF4IWHkqk52F0IVsQbxVDf9A=
 github.com/spiral/roadrunner/v2 v2.5.0-alpha.1/go.mod h1:NSRo5lgCpVMNnvK+u0xmFhSP4hvrUHNsBsXHTjPXwgo=
 github.com/spiral/roadrunner/v2 v2.5.0-alpha.2 h1:qSiWZYSLu8TNkvhF7p4oL5oAiA3e0VdIpgMZg5Lo/E8=
 github.com/spiral/roadrunner/v2 v2.5.0-alpha.2/go.mod h1:LO0SEqbut2l3gGLQFS+g+w/bkAeKeC1Hf1a2vYtIzSw=
