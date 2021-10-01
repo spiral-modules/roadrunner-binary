@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ windows, freebsd, darwin ] # linux, freebsd, darwin, windows
+        os: [ windows, darwin ] # linux, darwin, windows
         compiler: [ gcc ] # gcc, musl-gcc
         archiver: [ zip ] # tar, zip
         arch: [ amd64 ]   # amd64, 386
