@@ -29,3 +29,4 @@ rr.exe
 .rr-sample.yaml
 .rr-sample-bench-jobs.yaml
 .rr-sample-bench-grpc.yaml
+.rr-sample-bench-http.yaml
