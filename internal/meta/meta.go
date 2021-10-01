@@ -2,7 +2,7 @@ package meta
 
 import "strings"
 
-// next variables will be set during compilation (do NOT renaming them).
+// next variables will be set during compilation (do NOT rename them).
 var (
 	version   = "local"
 	buildTime = "development" //nolint:gochecknoglobals
