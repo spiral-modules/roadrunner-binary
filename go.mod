@@ -16,7 +16,7 @@ require (
 	github.com/spiral/errors v1.0.12
 	github.com/spiral/goridge/v3 v3.2.2-beta.1
 	github.com/spiral/roadrunner-plugins/v2 v2.5.0-beta.2
-	github.com/spiral/roadrunner/v2 v2.5.0-beta.1
+	github.com/spiral/roadrunner/v2 v2.5.0-beta.2
 	// ---------------------
 	github.com/stretchr/testify v1.7.0
 	// SPIRAL --------------
@@ -119,12 +119,12 @@ require (
 	go.uber.org/multierr v1.7.0 // indirect
 	go.uber.org/zap v1.19.1 // indirect
 	golang.org/x/crypto v0.0.0-20210921155107-089bfa567519 // indirect
-	golang.org/x/net v0.0.0-20210929193557-e81a3d93ecf6 // indirect
+	golang.org/x/net v0.0.0-20211005215030-d2e5035098b3 // indirect
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c // indirect
-	golang.org/x/sys v0.0.0-20211001092434-39dca1131b70 // indirect
+	golang.org/x/sys v0.0.0-20211004093028-2c5d950f24ef // indirect
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/time v0.0.0-20210723032227-1f47c861a9ac // indirect
-	google.golang.org/genproto v0.0.0-20210930144712-2e2e1008e8a3 // indirect
+	google.golang.org/genproto v0.0.0-20211005153810-c76a74d43a8e // indirect
 	google.golang.org/grpc v1.41.0 // indirect
 	google.golang.org/protobuf v1.27.1 // indirect
 	gopkg.in/ini.v1 v1.63.2 // indirect
