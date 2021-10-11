@@ -1,12 +1,10 @@
 # CHANGELOG
 
-## v2.5.0 (-.-.2021)
-
 ## 💔 BC:
 
--   🔨 Some drivers now use a new `config` key to handle local configuration. Involved plugins and drivers:
--   `plugins`: broadcast, kv
--   `drivers`: memory, redis, memcached, boltdb.
+- 🔨 Some drivers now use a new `config` key to handle local configuration. Involved plugins and drivers:
+- `plugins`: broadcast, kv
+- `drivers`: `memory`, `redis`, `memcached`, boltdb.
 
 ## ATTENTION!!!, this is the configuration BC release, please, update your configuration:
 
@@ -14,33 +12,33 @@
 
 ```yaml
 broadcast:
-    default:
-        driver: memory
-        interval: 1
+  default:
+    driver: memory
+    interval: 1
 ```
 
 ### New style:
 
 ```yaml
 broadcast:
-    default:
-        driver: memory
-        config: {} <--------------- NEW
+  default:
+    driver: memory
+    config: {} <--------------- NEW
 ```
 
 ```yaml
 kv:
-    memory-rr:
-        driver: memory
-        config: <--------------- NEW
-            interval: 1
+  memory-rr:
+    driver: memory
+    config: <--------------- NEW
+      interval: 1
 
 kv:
-    memcached-rr:
-        driver: memcached
-        config: <--------------- NEW
-            addr:
-                - "127.0.0.1:11211"
+  memcached-rr:
+    driver: memcached
+    config: <--------------- NEW
+      addr:
+        - "127.0.0.1:11211"
 
 broadcast:
   default:
@@ -52,18 +50,135 @@ broadcast:
 
 ## 👀 New:
 
--   ✏️ [BETA] GRPC plugin update to v2.
--   ✏️ [Roadrunner-plugins](https://github.com/spiral/roadrunner-plugins) repository. This is the new home for the roadrunner plugins with documentation, configuration samples, and common problems.
+- ✏️ **[BETA]** GRPC plugin update to v2.
+- ✏️ [Roadrunner-plugins](https://github.com/spiral/roadrunner-plugins) repository. This is the new home for the roadrunner plugins with documentation, configuration samples, and common problems.
+- ✏️ **[BETA]** Let's Encrypt support. RR now can obtain an SSL certificate/PK for your domain automatically. Here is the new configuration:
+```yaml
+    ssl:
+      # Host and port to listen on (eg.: `127.0.0.1:443`).
+      #
+      # Default: ":443"
+      address: "127.0.0.1:443"
+
+      # Use ACME certificates provider (Let's encrypt)
+      acme:
+        # Directory to use as a certificate/pk, account info storage
+        #
+        # Optional. Default: rr_cache
+        certs_dir: rr_le_certs
+
+        # User email
+        #
+        # Used to create LE account. Mandatory. Error on empty.
+        email: you-email-here@email
+
+        # Alternate port for the http challenge. Challenge traffic should be redirected to this port if overridden.
+        #
+        # Optional. Default: 80
+        alt_http_port: 80,
+
+
+        # Alternate port for the tls-alpn-01 challenge. Challenge traffic should be redirected to this port if overridden.
+        #
+        # Optional. Default: 443.
+        alt_tlsalpn_port: 443,
+
+        # Challenge types
+        #
+        # Optional. Default: http-01. Possible values: http-01, tlsalpn-01
+        challenge_type: http-01
+
+        # Use production or staging endpoints. NOTE, try to use the staging endpoint (`use_production_endpoint`: `false`) to make sure, that everything works correctly.
+        #
+        # Optional, but for production should be set to true. Default: false
+        use_production_endpoint: true
+
+        # List of your domains to obtain certificates
+        #
+        # Mandatory. Error on empty.
+        domains: [
+            "your-cool-domain.here",
+            "your-second-domain.here"
+        ]
+```
+
+- ✏️ Add a new option to the `log` plugin to configure the line ending. By default, used `\n`.
+
+**New option**:
+```yaml
+# Logs plugin settings
+logs:
+    (....)
+    # Line ending
+    #
+    # Default: "\n".
+    line_ending: "\n"
+```
+
+- ✏️ [Access log support](https://github.com/spiral/roadrunner-plugins/issues/34) at the `Info` log level.
+```yaml
+http:
+  address: 127.0.0.1:55555
+  max_request_size: 1024
+  access_logs: true <-------- Access Logs ON/OFF
+  middleware: []
+
+  pool:
+    num_workers: 2
+    max_jobs: 0
+    allocate_timeout: 60s
+    destroy_timeout: 60s
+```
+- ✏️ HTTP middleware to handle `X-Sendfile` [header](https://github.com/spiral/roadrunner-plugins/issues/9).
+```yaml
+http:
+  address: 127.0.0.1:44444
+  max_request_size: 1024
+  middleware: ["sendfile"] <----- NEW MIDDLEWARE
+
+  pool:
+    num_workers: 2
+    max_jobs: 0
+    allocate_timeout: 60s
+    destroy_timeout: 60s
+```
+
+- ✏️ Service plugin now supports env variables passing to the script/executable/binary/any:
+```yaml
+service:
+  some_service_1:
+    command: "php test_files/loop_env.php"
+    process_num: 1
+    exec_timeout: 5s # s,m,h (seconds, minutes, hours)
+    remain_after_exit: true
+    env:  <----------------- NEW
+      foo: "BAR"
+    restart_sec: 1
+```
+
+- ✏️ Server plugin can accept scripts (sh, bash, etc) in it's `command` configuration key:
+```yaml
+server:
+    command: "./script.sh OR sh script.sh" <--- UPDATED
+    relay: "pipes"
+    relay_timeout: "20s"
+```
+The script should start a worker as the last command. For the `pipes`, scripts should not contain programs, which can close `stdin`, `stdout` or `stderr`.
+
 
 ## 🩹 Fixes:
 
--   🐛 Fix: local and global configuration parsing
+- 🐛 Fix: local and global configuration parsing.
+- 🐛 Fix: bug with the `boltdb-jobs` connection left open after RPC close command.
+- 🐛 Fix: close `beanstalk` connection and release associated resources after pipeline stopped.
+- 🐛 Fix: grpc plugin fails to handle requests after calling `reset`.
 
 ## 📦 Packages:
 
--   📦 Roadrunner `v2.5.0`
--   📦 Roadrunner-plugins `v2.5.0`
--   📦 Roadrunner-temporal `v1.0.10`
+- 📦 roadrunner `v2.5.0`
+- 📦 roadrunner-plugins `v2.5.0`
+- 📦 roadrunner-temporal `v1.0.10`
+- 📦 goridge `v3.2.2`
 
 ## v2.4.1 (13.09.2021)
 
