@@ -20,7 +20,7 @@ image: ## Build docker image with app
 
 build: ## Build app binary file
 	docker run $(DOCKER_GO_RUN_ARGS) -e "CGO_ENABLED=0" "golang:$(GO_VERSION)-buster" \
-		go build -trimpath -ldflags "-s" -o ./rr ./cmd/rr
+		go build -trimpath -buildmode=pie -ldflags "-s" -o ./rr ./cmd/rr
 
 fmt: ## Run source code formatter tools
 	docker run $(DOCKER_GO_RUN_ARGS) -e "GO111MODULE=off" "golang:$(GO_VERSION)-buster" \

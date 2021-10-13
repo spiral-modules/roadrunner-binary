@@ -17,7 +17,7 @@ ENV LDFLAGS="-s \
 
 # compile binary file
 RUN set -x \
-    && CGO_ENABLED=0 go build -trimpath -ldflags "$LDFLAGS" -o ./rr ./cmd/rr \
+    && CGO_ENABLED=0 go build -buildmode=pie -trimpath -ldflags "$LDFLAGS" -o ./rr ./cmd/rr \
     && ./rr -v
 
 # Image page: <https://hub.docker.com/_/alpine>
