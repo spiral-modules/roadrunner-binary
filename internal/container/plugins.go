@@ -17,6 +17,7 @@ import (
 	"github.com/spiral/roadrunner-plugins/v2/memcached"
 	"github.com/spiral/roadrunner-plugins/v2/memory"
 	"github.com/spiral/roadrunner-plugins/v2/metrics"
+	"github.com/spiral/roadrunner-plugins/v2/nats"
 	"github.com/spiral/roadrunner-plugins/v2/redis"
 	"github.com/spiral/roadrunner-plugins/v2/reload"
 	"github.com/spiral/roadrunner-plugins/v2/resetter"
@@ -57,6 +58,7 @@ func Plugins() []interface{} { //nolint:funlen
 		&jobs.Plugin{},
 		&amqp.Plugin{},
 		&sqs.Plugin{},
+		&nats.Plugin{},
 		&beanstalk.Plugin{},
 		// =========
 
