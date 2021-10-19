@@ -1,22 +1,20 @@
 # CHANGELOG
 
-## v2.5.0 (-.10.2021)
+## v2.5.0 (20.10.2021)
 
-## 💔 BC:
+# 💔 Breaking change:
 
 - 🔨 Some drivers now use a new `config` key to handle local configuration. Involved plugins and drivers:
-- `plugins`: broadcast, kv
-- `drivers`: `memory`, `redis`, `memcached`, boltdb.
-
-## ATTENTION!!!, this is the configuration BC release, please, update your configuration:
+- `plugins`: `broadcast`, `kv`
+- `drivers`: `memory`, `redis`, `memcached`, `boltdb`.
 
 ### Old style:
 
 ```yaml
 broadcast:
-  default:
-    driver: memory
-    interval: 1
+    default:
+        driver: memory
+        interval: 1
 ```
 
 ### New style:
@@ -25,7 +23,7 @@ broadcast:
 broadcast:
   default:
     driver: memory
-    config: {} <--------------- NEW
+     config: {} <--------------- NEW
 ```
 
 ```yaml
@@ -39,8 +37,8 @@ kv:
   memcached-rr:
     driver: memcached
     config: <--------------- NEW
-      addr:
-        - "127.0.0.1:11211"
+       addr:
+         - "127.0.0.1:11211"
 
 broadcast:
   default:
@@ -104,20 +102,20 @@ broadcast:
         ]
 ```
 
-- ✏️ Add a new option to the `log` plugin to configure the line ending. By default, used `\n`.
+- ✏️ Add a new option to the `logs` plugin to configure the line ending. By default, used `\n`.
 
 **New option**:
 ```yaml
 # Logs plugin settings
 logs:
-  (....)
-  # Line ending
-  #
-  # Default: "\n".
-  line_ending: "\n"
+    (....)
+    # Line ending
+    #
+    # Default: "\n".
+    line_ending: "\n"
 ```
 
-- ✏️ [Access log support](https://github.com/spiral/roadrunner-plugins/issues/34) at the `Info` log level.
+- ✏️ HTTP [Access log support](https://github.com/spiral/roadrunner-plugins/issues/34) at the `Info` log level.
 ```yaml
 http:
   address: 127.0.0.1:55555
@@ -132,7 +130,7 @@ http:
     destroy_timeout: 60s
 ```
 - ✏️ HTTP middleware to handle `X-Sendfile` [header](https://github.com/spiral/roadrunner-plugins/issues/9).
-  Middleware reads the file in 10mb chunks. If the file size is smaller than 10mb, the middleware fits the buffer to the file size.
+  Middleware reads the file in 10MB chunks. So, for example for the 5Gb file, only 10MB of RSS will be used. If the file size is smaller than 10MB, the middleware fits the buffer to the file size.
 ```yaml
 http:
   address: 127.0.0.1:44444
@@ -146,7 +144,7 @@ http:
     destroy_timeout: 60s
 ```
 
-- ✏️ Service plugin now supports env variables passing to the script/executable/binary/any:
+- ✏️ Service plugin now supports env variables passing to the script/executable/binary/any like in the `server` plugin:
 ```yaml
 service:
   some_service_1:
@@ -196,28 +194,29 @@ jobs:
 
   consume: [ "test-1" ]
 ```
-- Driver uses NATS JetStream API and not compatible with non-js API.
+- Driver uses NATS JetStream API and is not compatible with non-js API.
 
 
 - ✏️ Response API for the NATS, RabbitMQ, SQS and Beanstalk drivers. This means, that you'll be able to respond to a specified in the response queue.
   Limitations:
-    - To send a response to the queue maintained by the RR, you should send it as a `Job` type. There is no limitation for the other queues (tubes, subjects) responses.
+    - To send a response to the queue maintained by the RR, you should send it as a `Job` type. There are no limitations for the responses into the other queues (tubes, subjects).
     - Driver uses the same endpoint (address) to send the response as specified in the configuration.
 
 ## 🩹 Fixes:
 
 - 🐛 Fix: local and global configuration parsing.
-- 🐛 Fix: bug with the `boltdb-jobs` connection left open after RPC close command.
+- 🐛 Fix: `boltdb-jobs` connection left open after RPC close command.
 - 🐛 Fix: close `beanstalk` connection and release associated resources after pipeline stopped.
 - 🐛 Fix: grpc plugin fails to handle requests after calling `reset`.
+- 🐛 Fix: superfluous response.WriteHeader call when connection is broken.
 
 ## 📦 Packages:
 
 - 📦 roadrunner `v2.5.0`
 - 📦 roadrunner-plugins `v2.5.0`
 - 📦 roadrunner-temporal `v1.0.10`
-- 📦 endure `v1.0.5`
-- 📦 goridge `v3.2.2`
+- 📦 endure `v1.0.6`
+- 📦 goridge `v3.2.3`
 
 ## v2.4.1 (13.09.2021)
 
