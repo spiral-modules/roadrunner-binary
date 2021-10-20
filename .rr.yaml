@@ -73,6 +73,11 @@ logs:
   # Default: "console"
   encoding: console
 
+  # Log line ending
+  #
+  # Default: "\n"
+  line_ending: "\n"
+
   # Output can be file (eg.: "/var/log/rr_errors.log"), "stderr" or "stdout".
   #
   # Default: "stderr"
@@ -328,35 +333,22 @@ service:
     # Default: none, required.
     command: php tests/plugins/service/test_files/loop.php
 
+    # Env variables for the process
+    #
+    # Default: empty
+    env:
+      foo: "BAR"
+      foo2: "BAR2"
+
     # Number of copies (processes) to start per command.
     #
     # Default: 1
     process_num: 1
 
-    # Allowed execute timeout.
+    # Allowed time before stop.
     #
     # Default: 0 (infinity), can be 1s, 2m, 2h (seconds, minutes, hours)
     exec_timeout: 0
-
-    # Console output
-    #
-    # Default: stderr. Available options: stderr, stdout
-    output: "stderr"
-
-    # Endings for the stderr/stdout output
-    #
-    # Default: "\n". Available options: any.
-    line_ending: "\n"
-
-    # Color for regular output
-    #
-    # Default: none. Available options: white, red, green, yellow, blue, magenta
-    color: "green"
-
-    # Color for the process errors
-    #
-    # Default: none. Available options: white, red, green, yellow, blue, magenta
-    err_color: "red"
 
     # Remain process after exit. In other words, restart process after exit with any exit code.
     #
@@ -377,35 +369,22 @@ service:
     # Default: none, required.
     command: "binary"
 
+    # Env variables for the process
+    #
+    # Default: empty
+    env:
+      foo: "BAR"
+      foo2: "BAR2"
+
     # Number of copies (processes) to start per command.
     #
     # Default: 1
     process_num: 1
 
-    # Allowed execute timeout.
+    # Allowed time before stop.
     #
     # Default: 0 (infinity), can be 1s, 2m, 2h (seconds, minutes, hours)
     exec_timeout: 0
-
-    # Console output
-    #
-    # Default: stderr. Available options: stderr, stdout
-    output: "stderr"
-
-    # Endings for the stderr/stdout output
-    #
-    # Default: "\n". Available options: any.
-    line_ending: "\n"
-
-    # Color for regular output
-    #
-    # Default: none. Available options: white, red, green, yellow, blue, magenta
-    color: "green"
-
-    # Color for the process errors
-    #
-    # Default: none. Available options: white, red, green, yellow, blue, magenta
-    err_color: "red"
 
     # Remain process after exit. In other words, restart process after exit with any exit code.
     #
@@ -424,12 +403,22 @@ http:
   # This option is required.
   address: 127.0.0.1:8080
 
+  # override http error code for the internal RR errors
+  #
+  # Default: 500
+  internal_error_code: 505
+
+  # HTTP access logs
+  #
+  # Default: false
+  access_logs: false
+
   # Maximal incoming request size in megabytes. Zero means no limit.
   #
   # Default: 0
   max_request_size: 256
 
-  # Middlewares for the http plugin, order is important. Allowed values is: "headers", "gzip", "websockets"
+  # Middlewares for the http plugin, order is important. Allowed values is: "headers", "gzip", "websockets", "sendfile"
   #
   # Default value: []
   middleware: [ "headers", "gzip" ]
@@ -877,7 +866,14 @@ reload:
       # Default: []
       patterns: [ ".php", ".go", ".md" ]
 
-# Boltdb local jobs driver
+
+# NATS jobs driver
+#
+# Default: nats://127.0.0.1:4222
+nats:
+  addr: "demo.nats.io"
+
+# Boltdb jobs driver
 #
 # This option is required to use boltdb driver
 boltdb:
@@ -964,14 +960,17 @@ jobs:
     #
     # This option is required when defining pipelines via configuration.
     test-local:
+
       # Driver associated with the pipeline
       #
       # This option is required. Possible values: amqp, memory, sqs, beanstalk, boltdb
       driver: memory
+
       # Pipeline priority
       #
       # If the job has priority set to 0, it will inherit the pipeline's priority. Default: 10.
       priority: 10
+
       # Number of job to prefetch from the driver.
       #
       # Default: 100_000.
@@ -985,10 +984,12 @@ jobs:
       #
       # This option is required. Possible values: amqp, memory, sqs, beanstalk, boltdb
       driver: boltdb
+
       # Pipeline priority
       #
       # If the job has priority set to 0, it will inherit the pipeline's priority. Default: 10.
       priority: 10
+
       # Number of job to prefetch from the driver.
       #
       # Default: 100_000.
@@ -999,43 +1000,50 @@ jobs:
       #
       # This option is required.
       drier: amqp
+
       # QoS - prefetch.
       #
       # Default: 10
       prefetch: 10
+
       # Queue name
       #
       # Default: default
       queue: test-1-queue
-      # Pipeline jobs priority, 1 - highest
+
+      # Pipeline priority
       #
-      # Default: 10
+      # If the job has priority set to 0, it will inherit the pipeline's priority. Default: 10.
       priority: 1
+
       # Exchange name
       #
       # Default: amqp.default
       exchange: default
+
       # Exchange type
       #
       # Default: direct.
       exchange_type: direct
+
       # Routing key for the queue
       #
       # Default: empty.
       routing_key: test
+
       # Declare a queue exclusive at the exchange
       #
       # Default: false
       exclusive: false
+
       # When multiple is true, this delivery and all prior unacknowledged deliveries
       # on the same channel will be acknowledged.  This is useful for batch processing
       # of deliveries
       #
       # Default:false
       multiple_ack: false
-      # When multiple is true, this delivery and all prior unacknowledged deliveries
-      # on the same channel will be acknowledged.  This is useful for batch processing
-      # of deliveries
+
+      # Use rabbitmq mechanism to requeue the job on fail
       #
       # Default: false
       requeue_on_fail: false
@@ -1045,18 +1053,22 @@ jobs:
       #
       # This option is required.
       driver: beanstalk
-      # Local configuration section
+
+      # Pipeline priority
       #
-      # This option is required to use local section, otherwise (test-local-3) global configuration will be used.
+      # Default
       priority: 11
+
       # Beanstalk internal tube priority
       #
       # Default: 1
       tube_priority: 1
+
       # Tube name
       #
       # Default: default
       tube: default-1
+
       # If no job is available before this timeout has passed, Reserve returns a ConnError recording ErrTimeout.
       #
       # Default: 5s
@@ -1067,16 +1079,24 @@ jobs:
       #
       # This option is required.
       driver: sqs
+
+      # Pipeline priority
+      #
+      # If the job has priority set to 0, it will inherit the pipeline's priority. Default: 10.
+      priority: 10
+
       # Number of jobs to prefetch from the SQS. mazon SQS never returns more messages than this value
       # (however, fewer messages might be returned). Valid values: 1 to 10.
       #
       # Default: 10
       prefetch: 10
+
       # The duration (in seconds) that the received messages are hidden from subsequent
       # retrieve requests after being retrieved by a ReceiveMessage request
       #
       # Default: 0
       visibility_timeout: 0
+
       # The duration (in seconds) for which the call waits for a message to arrive
       # in the queue before returning. If a message is available, the call returns
       # sooner than WaitTimeSeconds. If no messages are available and the wait time
@@ -1084,10 +1104,12 @@ jobs:
       #
       # Default: 0
       wait_time_seconds: 0
+
       # Queue name.
       #
       # Default: default
       queue: default
+
       # List of the AWS SQS attributes https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SetQueueAttributes.html.
       attributes:
         DelaySeconds: 0
@@ -1100,6 +1122,52 @@ jobs:
       tags:
         test: "tag"
 
+    test-local-5:
+      # Driver name
+      #
+      # This option is required
+      driver: nats
+
+      # Pipeline priority
+      #
+      # If the job has priority set to 0, it will inherit the pipeline's priority. Default: 10.
+      priority: 2
+
+      # NATS prefetch
+      #
+      # Messages to read into the channel
+      prefetch: 100
+
+      # NATS subject
+      #
+      # Default: default
+      subject: default
+
+      # NATS stream
+      #
+      # Default: default-stream
+      stream: foo
+
+      # The consumer will only start receiving messages that were created after the consumer was created
+      #
+      # Default: false (deliver all messages from the stream beginning)
+      deliver_new: true
+
+      # Consumer rate-limiter in bytes https://docs.nats.io/jetstream/concepts/consumers#ratelimit
+      #
+      # Default: 1000
+      rate_limit: 100
+
+      # Delete the stream when after pipeline stopped
+      #
+      # Default: false
+      delete_stream_on_stop: false
+
+      # Delete message from the stream after successful acknowledge
+      #
+      # Default: false
+      delete_after_ack: false
+
   # list of pipelines to be consumed by the server automatically at the start, keep empty if you want to start consuming manually
   consume:
     [
@@ -1108,6 +1176,7 @@ jobs:
         "test-local-2",
         "test-local-3",
         "test-local-4",
+        "test-local-5",
     ]
 
 grpc:
