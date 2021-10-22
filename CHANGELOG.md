@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v2.5.1 (22.10.2021)
+
+## 🩹 Fixes:
+
+- 🐛 Fix: [base64](https://github.com/spiral/roadrunner-plugins/issues/86) response instead of json in some edge cases.
+
 ## v2.5.0 (20.10.2021)
 
 # 💔 Breaking change:
