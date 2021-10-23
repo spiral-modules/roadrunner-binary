@@ -121,7 +121,7 @@ jobs:
           LDFLAGS: -s
             -X github.com/spiral/roadrunner-binary/v2/internal/meta.version=${{ steps.slug.outputs.version }}@${{ steps.slug.outputs.commit-hash-short }}
             -X github.com/spiral/roadrunner-binary/v2/internal/meta.buildTime=${{ steps.values.outputs.timestamp }}
-        run: go build -trimpath -buildmode=pie -ldflags "$LDFLAGS" -o ./rr ./cmd/rr
+        run: go build -trimpath -ldflags "$LDFLAGS" -o ./rr ./cmd/rr
 
       - name: Try to execute
         if: matrix.os == 'linux'
