@@ -1,5 +1,20 @@
 # CHANGELOG
 
+=======
+## v2.5.2 (23.10.2021)
+
+## 🩹 Fixes:
+
+- 🐛 Fix: ASLR builds causes [problems](https://github.com/spiral/roadrunner-binary/issues/120) in the docker.
+
+
+## v2.5.1 (22.10.2021)
+
+## 🩹 Fixes:
+
+- 🐛 Fix: [base64](https://github.com/spiral/roadrunner-plugins/issues/86) response instead of json in some edge cases.
+
+
 ## v2.5.0 (20.10.2021)
 
 # 💔 Breaking change:
