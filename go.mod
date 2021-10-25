@@ -15,7 +15,7 @@ require (
 	github.com/spiral/endure v1.0.6
 	github.com/spiral/errors v1.0.12
 	github.com/spiral/goridge/v3 v3.2.3
-	github.com/spiral/roadrunner-plugins/v2 v2.5.1
+	github.com/spiral/roadrunner-plugins/v2 v2.6.0-beta.1
 	github.com/spiral/roadrunner/v2 v2.5.0
 	// ---------------------
 	github.com/stretchr/testify v1.7.0
@@ -88,6 +88,7 @@ require (
 	github.com/nats-io/nats.go v1.13.0 // indirect
 	github.com/nats-io/nkeys v0.3.0 // indirect
 	github.com/nats-io/nuid v1.0.1 // indirect
+	github.com/newrelic/go-agent/v3 v3.15.0 // indirect
 	github.com/opentracing/opentracing-go v1.2.0 // indirect
 	github.com/pborman/uuid v1.2.1 // indirect
 	github.com/pelletier/go-toml v1.9.4 // indirect
