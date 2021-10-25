@@ -9,6 +9,7 @@ import (
 	httpPlugin "github.com/spiral/roadrunner-plugins/v2/http"
 	"github.com/spiral/roadrunner-plugins/v2/http/middleware/gzip"
 	"github.com/spiral/roadrunner-plugins/v2/http/middleware/headers"
+	newrelic "github.com/spiral/roadrunner-plugins/v2/http/middleware/new_relic"
 	"github.com/spiral/roadrunner-plugins/v2/http/middleware/static"
 	"github.com/spiral/roadrunner-plugins/v2/informer"
 	"github.com/spiral/roadrunner-plugins/v2/jobs"
@@ -62,6 +63,7 @@ func Plugins() []interface{} { //nolint:funlen
 		&beanstalk.Plugin{},
 		// =========
 
+		&newrelic.Plugin{},
 		&grpcPlugin.Plugin{},
 
 		// kv + ws + jobs plugin
