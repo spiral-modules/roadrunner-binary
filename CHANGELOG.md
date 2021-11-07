@@ -1,5 +1,11 @@
 # CHANGELOG
 
+# v2.5.4 (07.11.2021)
+
+## 🩹 Fixes:
+
+- 🐛 Fix: worker's channel deadlock when using [TTL](https://github.com/spiral/roadrunner/issues/853). Thanks @dstrop
+
 ## v2.5.3 (27.10.2021)
 
 ## 🩹 Fixes:
