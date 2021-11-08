@@ -16,7 +16,7 @@ require (
 	github.com/spiral/errors v1.0.12
 	github.com/spiral/goridge/v3 v3.2.3
 	github.com/spiral/roadrunner-plugins/v2 v2.6.0-beta.1
-	github.com/spiral/roadrunner/v2 v2.5.0
+	github.com/spiral/roadrunner/v2 v2.5.3
 	// ---------------------
 	github.com/stretchr/testify v1.7.0
 	// SPIRAL --------------

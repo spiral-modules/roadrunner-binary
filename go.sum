@@ -535,6 +535,8 @@ github.com/spiral/roadrunner-plugins/v2 v2.6.0-beta.1 h1:y1m0WnZIEntmpQfcY7I4xRH
 github.com/spiral/roadrunner-plugins/v2 v2.6.0-beta.1/go.mod h1:fd6RYnnQNzw8eZtHu7pJPwesJw8N+UFo2XeY+VEhbuQ=
 github.com/spiral/roadrunner/v2 v2.5.0 h1:SyqLdExFdX9HFGaiV0qeneaZTJxz9oM9D6qwu0Co1j0=
 github.com/spiral/roadrunner/v2 v2.5.0/go.mod h1:ZjmyfOy5eWRWJwb1yxQAFFhufw1bBYtbxq8F8yqZbHI=
+github.com/spiral/roadrunner/v2 v2.5.3 h1:ed2v5yISdRbP5yCh9dhF3GuTG3c3+mrnpCUidlmozW4=
+github.com/spiral/roadrunner/v2 v2.5.3/go.mod h1:ZjmyfOy5eWRWJwb1yxQAFFhufw1bBYtbxq8F8yqZbHI=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/objx v0.1.1/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/objx v0.3.0 h1:NGXK3lHquSN08v5vWalVI/L8XU9hdzE/G6xsrze47As=
