@@ -614,13 +614,13 @@ http:
       # Alternate port for the http challenge. Challenge traffic should be redirected to this port if overridden.
       #
       # Optional. Default: 80
-      alt_http_port: 80,
+      alt_http_port: 80
 
 
       # Alternate port for the tls-alpn-01 challenge. Challenge traffic should be redirected to this port if overridden.
       #
       # Optional. Default: 443.
-      alt_tlsalpn_port: 443,
+      alt_tlsalpn_port: 443
 
       # Challenge types
       #
