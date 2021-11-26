@@ -3,7 +3,8 @@
 ## v2.6.0 (-.-.2021)
 
 ## 👀 New:
-
+- ✏️ New internal message bus. Available globally. Supports wildcard subscriptions (for example: `http.*` will subscribe you to the all events coming from the `http` plugin). The subscriptions can be made from any RR plugin to any RR plugin.
+- ✏️ Now, RR will show in the returned error the bad header content in case of CRC mismatch error. More info in the [PR](https://github.com/spiral/roadrunner/pull/863).
 - ✏️ **[BETA]** Support for the New Relic observability platform. Sample of the client library might be
   found [here](https://github.com/arku31/roadrunner-newrelic). (Thanks @arku31)
   New Relic middleware is a part of the HTTP plugin, thus configuration should be inside it:
@@ -11,8 +12,8 @@
 ```yaml
 http:
   address: 127.0.0.1:15389
-  middleware: [ "new_relic" ]
-  new_relic:
+  middleware: [ "new_relic" ] <------- NEW
+  new_relic: <---------- NEW
     app_name: "app"
     license_key: "key"
   pool:
@@ -26,7 +27,7 @@ License key and application name could be set via environment variables: (leave 
 - license_key: `NEW_RELIC_LICENSE_KEY`.
 - app_name: `NEW_RELIC_APP_NAME`.
 
-To set the New Relic attributes, the PHP worker should send headers values witing the `rr_newrelic` header key.
+To set the New Relic attributes, the PHP worker should send headers values withing the `rr_newrelic` header key.
 Attributes should be separated by the `:`, for example `foo:bar`, where `foo` is a key and `bar` is a value. New Relic
 attributes sent from the worker will not appear in the HTTP response, they will be sent directly to the New Relic.
 
@@ -46,6 +47,214 @@ transaction name.
 
         $resp = $resp->withHeader('rr_newrelic', $rrNewRelic);
 ```
+
+---
+
+- ✏️ New plugin: `TCP`. The TCP plugin is used to handle raw TCP payload with a bi-directional [protocol](tcp/docs/tcp.md) between the RR server and PHP worker.
+
+PHP client library: https://github.com/spiral/roadrunner-tcp
+
+Configuration:
+```yaml
+rpc:
+  listen: tcp://127.0.0.1:6001
+
+server:
+  command: "php ../../psr-worker-tcp-cont.php"
+
+tcp:
+  servers:
+    server1:
+      addr: 127.0.0.1:7778
+      delimiter: "\r\n"
+    server2:
+      addr: 127.0.0.1:8811
+      read_buf_size: 10
+    server3:
+      addr: 127.0.0.1:8812
+      delimiter: "\r\n"
+      read_buf_size: 1
+
+  pool:
+    num_workers: 5
+    max_jobs: 0
+    allocate_timeout: 60s
+    destroy_timeout: 60s
+```
+
+---
+
+- ✏️ New HTTP middleware: `http_metrics`.
+```yaml
+http:
+  address: 127.0.0.1:15389
+  middleware: [ "http_metrics" ] <------- NEW
+  pool:
+    num_workers: 10
+    allocate_timeout: 60s
+    destroy_timeout: 60s
+```
+All old and new http metrics will be available after the middleware is activated. Be careful, this middleware may slow down your requests. New metrics:
+
+    - `rr_http_requests_queue_sum` - number of queued requests.
+    - `rr_http_no_free_workers_total` - number of the occurrences of the `NoFreeWorkers` errors.
+
+
+-----
+
+- ✏️ New file server to serve static files. It works on a different address, so it doesn't affect the HTTP performance. It uses advanced configuration specific for the static file servers. It can handle any number of directories with its own HTTP prefixes.
+  Config:
+
+```yaml
+fileserver:
+  # File server address
+  #
+  # Error on empty
+  address: 127.0.0.1:10101
+  # Etag calculation. Request body CRC32.
+  #
+  # Default: false
+  calculate_etag: true
+
+  # Weak etag calculation
+  #
+  # Default: false
+  weak: false
+
+  # Enable body streaming for the files more than 4KB
+  #
+  # Default: false
+  stream_request_body: true
+
+  serve:
+    # HTTP prefix
+    #
+    # Error on empty
+  - prefix: "/foo"
+
+    # Directory to serve
+    #
+    # Default: "."
+    root: "../../../tests"
+
+    # When set to true, the server tries minimizing CPU usage by caching compressed files
+    #
+    # Default: false
+    compress: false
+
+    # Expiration duration for inactive file handlers. Units: seconds.
+    #
+    # Default: 10, use a negative value to disable it.
+    cache_duration: 10
+
+    # The value for the Cache-Control HTTP-header. Units: seconds
+    #
+    # Default: 10 seconds
+    max_age: 10
+
+    # Enable range requests
+    # https://developer.mozilla.org/en-US/docs/Web/HTTP/Range_requests
+    #
+    # Default: false
+    bytes_range: true
+
+  - prefix: "/foo/bar"
+    root: "../../../tests"
+    compress: false
+    cache_duration: 10s
+    max_age: 10
+    bytes_range: true
+```
+
+- ✏️ `on_init` option for the `server` plugin. `on_init` code executed before the regular command and can be used to warm up the application for example. Failed `on_init` command doesn't affect the main command, so, the RR will continue to run. Thanks (@OO00O0O)
+
+Config:
+```yaml
+# Application server settings (docs: https://roadrunner.dev/docs/php-worker)
+server:
+  on_init: <----------- NEW
+    # Command to execute before the main server's command
+    #
+    # This option is required if using on_init
+    command: "any php or script here"
+
+    # Script execute timeout
+    #
+    # Default: 60s [60m, 60h], if used w/o units its means - NANOSECONDS.
+    exec_timeout: 20s
+
+    # Environment variables for the worker processes.
+    #
+    # Default: <empty map>
+    env:
+      - SOME_KEY: "SOME_VALUE"
+      - SOME_KEY2: "SOME_VALUE2"
+
+  # ..REGULAR SERVER OPTIONS...
+```
+
+---
+
+- ✏️ **[BETA]** GRPC can handle multiply proto files.
+  Config:
+```yaml
+# GRPC service configuration
+grpc:
+    # Proto files to use
+    #
+    # This option is required. At least one proto file must be specified.
+    proto:
+        - "first.proto"
+        - "second.proto"
+
+## ... OTHER REGULAR GRPC OPTIONS ...
+```
+
+---
+
+- ✏️ New `allow` configuration option for the `http.uploads` and multipart requests. The new option allows you to filter upload extensions knowing only allowed. Now, there is no need to have a looong list with all possible extensions to forbid. [FR](https://github.com/spiral/roadrunner-plugins/issues/123) (Thanks @rjd22)
+  `http.uploads.forbid` has a higher priority, so, if you have duplicates in the `http.uploads.allow` and `http.uploads.forbid` the duplicated extension will be forbidden.
+  Config:
+
+```yaml
+http:
+  address: 127.0.0.1:18903
+  max_request_size: 1024
+  middleware: ["pluginMiddleware", "pluginMiddleware2"]
+  uploads:
+    forbid: [".php", ".exe", ".bat"]
+    allow: [".html", ".aaa" ] <------------- NEW
+  trusted_subnets:
+    [
+      "10.0.0.0/8",
+      "127.0.0.0/8",
+      "172.16.0.0/12",
+      "192.168.0.0/16",
+      "::1/128",
+      "fc00::/7",
+      "fe80::/10",
+    ]
+  pool:
+    num_workers: 2
+    max_jobs: 0
+    allocate_timeout: 60s
+    destroy_timeout: 60s
+```
+
+## 🩹 Fixes:
+
+- 🐛 Fix: GRPC server will show message when started.
+- 🐛 Fix: Static plugin headers were added to all requests. [BUG](https://github.com/spiral/roadrunner-plugins/issues/115)
+- 🐛 Fix: zombie processes in the `pool.debug` mode.
+
+## 📦 Packages:
+
+- 📦 roadrunner `v2.6.0`
+- 📦 roadrunner-plugins `v2.6.0`
+- 📦 roadrunner-temporal `v1.0.11`
+- 📦 endure `v1.0.8`
+- 📦 goridge `v3.2.4`
+- 📦 temporal.io/sdk `v1.11.1`
 
 ## v2.5.3 (27.10.2021)
 
