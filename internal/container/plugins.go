@@ -27,6 +27,7 @@ import (
 	"github.com/spiral/roadrunner-plugins/v2/service"
 	"github.com/spiral/roadrunner-plugins/v2/sqs"
 	"github.com/spiral/roadrunner-plugins/v2/status"
+	"github.com/spiral/roadrunner-plugins/v2/tcp"
 	"github.com/spiral/roadrunner-plugins/v2/websockets"
 	"github.com/temporalio/roadrunner-temporal/activity"
 	temporalClient "github.com/temporalio/roadrunner-temporal/client"
@@ -94,6 +95,9 @@ func Plugins() []interface{} { //nolint:funlen
 		&status.Plugin{},
 		// gzip
 		&gzip.Plugin{},
+
+		// raw TCP connections handling
+		&tcp.Plugin{},
 
 		// temporal plugins
 		&activity.Plugin{},
