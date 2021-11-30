@@ -241,6 +241,9 @@ http:
     destroy_timeout: 60s
 ```
 
+- ✏️ Beanstalk queue reject stop RPC calls if there are jobs in the priority queue associated with the requested
+  pipeline.
+
 - ✏️ Startup message when the RR has started.
 
 ## 🩹 Fixes:
