@@ -20,7 +20,7 @@ require (
 	// ---------------------
 	github.com/stretchr/testify v1.7.0
 	// SPIRAL --------------
-	github.com/temporalio/roadrunner-temporal v1.0.11-rc.1
+	github.com/temporalio/roadrunner-temporal v1.0.11
 	// ---------------------
 	github.com/vbauerster/mpb/v5 v5.4.0
 )
