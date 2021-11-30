@@ -241,6 +241,8 @@ http:
     destroy_timeout: 60s
 ```
 
+- ✏️ Startup message when the RR has started.
+
 ## 🩹 Fixes:
 
 - 🐛 Fix: GRPC server will show message when started.
