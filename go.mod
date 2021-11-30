@@ -12,11 +12,11 @@ require (
 	github.com/olekukonko/tablewriter v0.0.5
 	github.com/spf13/cobra v1.2.1
 	// SPIRAL ------------
-	github.com/spiral/endure v1.0.8
+	github.com/spiral/endure v1.0.9
 	github.com/spiral/errors v1.0.12
 	github.com/spiral/goridge/v3 v3.2.4
 	github.com/spiral/roadrunner-plugins/v2 v2.6.0-rc.1
-	github.com/spiral/roadrunner/v2 v2.6.0-rc.1
+	github.com/spiral/roadrunner/v2 v2.6.0
 	// ---------------------
 	github.com/stretchr/testify v1.7.0
 	// SPIRAL --------------
@@ -31,16 +31,16 @@ require (
 	github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d // indirect
 	github.com/andybalholm/brotli v1.0.4 // indirect
 	github.com/aws/aws-sdk-go-v2 v1.11.1 // indirect
-	github.com/aws/aws-sdk-go-v2/config v1.10.2 // indirect
-	github.com/aws/aws-sdk-go-v2/credentials v1.6.2 // indirect
+	github.com/aws/aws-sdk-go-v2/config v1.10.3 // indirect
+	github.com/aws/aws-sdk-go-v2/credentials v1.6.3 // indirect
 	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.8.1 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/configsources v1.1.1 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.0.1 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/ini v1.3.1 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.5.1 // indirect
-	github.com/aws/aws-sdk-go-v2/service/sqs v1.12.1 // indirect
+	github.com/aws/aws-sdk-go-v2/service/sqs v1.13.0 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sso v1.6.1 // indirect
-	github.com/aws/aws-sdk-go-v2/service/sts v1.10.1 // indirect
+	github.com/aws/aws-sdk-go-v2/service/sts v1.11.0 // indirect
 	github.com/aws/smithy-go v1.9.0 // indirect
 	github.com/beanstalkd/go-beanstalk v0.1.0 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
@@ -128,10 +128,10 @@ require (
 	golang.org/x/sys v0.0.0-20211124211545-fe61309f8881 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/time v0.0.0-20211116232009-f0f3c7e86c11 // indirect
-	google.golang.org/genproto v0.0.0-20211118181313-81c1377c94b1 // indirect
+	google.golang.org/genproto v0.0.0-20211129164237-f09f9a12af12 // indirect
 	google.golang.org/grpc v1.42.0 // indirect
 	google.golang.org/protobuf v1.27.1 // indirect
-	gopkg.in/ini.v1 v1.64.0 // indirect
+	gopkg.in/ini.v1 v1.66.0 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
