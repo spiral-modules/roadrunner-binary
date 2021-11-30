@@ -244,9 +244,10 @@ http:
 - ✏️ Beanstalk queue reject stop RPC calls if there are jobs in the priority queue associated with the requested
   pipeline.
 
+- ✏️ Startup message when the RR has started.
+
 ## 🩹 Fixes:
 
-- 🐛 Fix: RR will show startup message.
 - 🐛 Fix: GRPC server will show message when started.
 - 🐛 Fix: Static plugin headers were added to all requests. [BUG](https://github.com/spiral/roadrunner-plugins/issues/115)
 - 🐛 Fix: zombie processes in the `pool.debug` mode.

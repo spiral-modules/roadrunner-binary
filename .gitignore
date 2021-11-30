@@ -30,3 +30,4 @@ rr.exe
 .rr-sample-bench-jobs.yaml
 .rr-sample-bench-grpc.yaml
 .rr-sample-bench-http.yaml
+.rr-sample-bench-all.yaml

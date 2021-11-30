@@ -7,6 +7,7 @@ import (
 	"syscall"
 
 	"github.com/spiral/roadrunner-binary/v2/internal/container"
+	"github.com/spiral/roadrunner-binary/v2/internal/meta"
 
 	"github.com/spf13/cobra"
 	"github.com/spiral/errors"
@@ -74,6 +75,8 @@ func NewCommand(cfgPlugin *config.Viper) *cobra.Command { //nolint:funlen
 				fmt.Println("exit forced")
 				os.Exit(1)
 			}()
+
+			fmt.Printf("[INFO] RoadRunner server started; version: %s, buildtime: %s\n", meta.Version(), meta.BuildTime())
 
 			for {
 				select {

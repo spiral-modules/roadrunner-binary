@@ -1,0 +1,253 @@
+rpc:
+  listen: tcp://127.0.0.1:6001
+
+server:
+  command: "php /home/valery/projects/opensource/github/roadrunner-plugins/tests/psr-worker-all.php"
+  relay: pipes
+  relay_timeout: 60s
+
+logs:
+  mode: production
+  level: error
+  encoding: console
+  output: stderr
+  err_output: stderr
+
+kv:
+  boltdb-south:
+    driver: boltdb
+    config:
+      file: "rr-kv.db"
+      permissions: 0777
+      interval: 40
+  us-central-kv:
+    driver: memcached
+    config:
+      addr: [ "localhost:11211" ]
+  fast-kv-fr:
+    driver: redis
+    config:
+      addrs:
+        - "localhost:6379"
+
+  local-memory:
+    driver: memory
+    config:
+      interval: 1
+
+http:
+  address: 127.0.0.1:47474
+  max_request_size: 256
+  middleware: [ "headers", "gzip", "sendfile" ]
+  uploads:
+    dir: "/tmp"
+    forbid: [ ".php", ".exe", ".bat", ".sh" ]
+
+  headers:
+    cors:
+      allowed_origin: "*"
+      allowed_headers: "*"
+      allowed_methods: "GET,POST,PUT,DELETE"
+      allow_credentials: true
+      exposed_headers: "Cache-Control,Content-Language,Content-Type,Expires,Last-Modified,Pragma"
+      max_age: 600
+    request:
+      input: "custom-header"
+    response:
+      X-Powered-By: "RoadRunner"
+
+  static:
+    dir: "."
+    forbid: [ "" ]
+    calculate_etag: false
+    weak: false
+    allow: [ ".txt", ".php" ]
+    request:
+      input: "custom-header"
+    response:
+      output: "output-header"
+
+  pool:
+    debug: false
+    num_workers: 0
+    max_jobs: 64
+    allocate_timeout: 60s
+    destroy_timeout: 60s
+    supervisor:
+      watch_tick: 1s
+      ttl: 60s
+      idle_ttl: 10s
+      max_worker_memory: 128
+      exec_ttl: 60s
+  fcgi:
+    address: tcp://0.0.0.0:7921
+  http2:
+    h2c: false
+    max_concurrent_streams: 128
+
+redis:
+  addrs:
+    - "localhost:6379"
+
+websockets:
+  broker: default-redis
+  allowed_origin: "*"
+  path: "/ws"
+
+broadcast:
+  default:
+    driver: memory
+    config: { }
+  default-redis:
+    driver: redis
+    config:
+      addrs:
+        - "localhost:6379"
+
+metrics:
+  address: "127.0.0.1:2112"
+  collect:
+    app_metric:
+      type: histogram
+      help: "Custom application metric"
+      labels: [ "type" ]
+      buckets: [ 0.1, 0.2, 0.3, 1.0 ]
+      objectives:
+        - 1.4: 2.3
+        - 2.0: 1.4
+
+status:
+  address: 127.0.0.1:2114
+  unavailable_status_code: 503
+
+reload:
+  interval: 1s
+  patterns: [ ".php" ]
+  services:
+    http:
+      dirs: [ "." ]
+      recursive: true
+      ignore: [ "vendor" ]
+      patterns: [ ".php", ".go", ".md" ]
+
+boltdb:
+  permissions: 0777
+
+amqp:
+  addr: amqp://guest:guest@127.0.0.1:5672/
+
+beanstalk:
+  addr: tcp://127.0.0.1:11300
+  timeout: 10s
+
+sqs:
+  key: api-key
+  secret: api-secret
+  region: us-west-1
+  session_token: test
+
+  endpoint: http://127.0.0.1:9324
+
+jobs:
+  num_pollers: 32
+  pipeline_size: 1000000
+
+  pool:
+    num_workers: 10
+    max_jobs: 0
+    allocate_timeout: 60s
+    destroy_timeout: 60s
+
+  pipelines:
+    test-local:
+      driver: memory
+      priority: 10
+      prefetch: 10000
+    test-local-1:
+      driver: boltdb
+      priority: 10
+      prefetch: 10000
+    test-local-2:
+      drier: amqp
+      prefetch: 10
+      queue: test-1-queue
+      priority: 1
+      exchange: default
+      exchange_type: direct
+      routing_key: test
+      exclusive: false
+      multiple_ack: false
+      requeue_on_fail: false
+
+    test-local-3:
+      driver: beanstalk
+      priority: 11
+      tube_priority: 1
+      tube: default-1
+      reserve_timeout: 10s
+
+    test-local-4:
+      driver: sqs
+      prefetch: 10
+      visibility_timeout: 0
+      wait_time_seconds: 0
+      queue: default
+      attributes:
+        DelaySeconds: 0
+        MaximumMessageSize: 262144
+        MessageRetentionPeriod: 345600
+        ReceiveMessageWaitTimeSeconds: 0
+        VisibilityTimeout: 30
+      tags:
+        test: "tag"
+
+  consume:
+    [
+        "test-local",
+        "test-local-1",
+        "test-local-2",
+        "test-local-3",
+        "test-local-4",
+    ]
+
+grpc:
+  listen: "tcp://localhost:9001"
+  proto: "/home/valery/projects/opensource/github/roadrunner-plugins/tests/plugins/grpc/proto/test/test.proto"
+  tls:
+    key: ""
+    cert: ""
+    root_ca: ""
+    client_auth_type: ""
+
+  max_send_msg_size: 50
+  max_recv_msg_size: 50
+  max_connection_idle: 0s
+  max_connection_age: 0s
+  max_connection_age_grace: 0s
+  max_concurrent_streams: 10
+  ping_time: 1s
+  timeout: 200s
+
+  pool:
+    num_workers: 2
+    max_jobs: 0
+    allocate_timeout: 60s
+    destroy_timeout: 60
+
+tcp:
+  servers:
+    server1:
+      addr: tcp://127.0.0.1:7777
+      delimiter: "\r\n"
+    server2:
+      addr: tcp://127.0.0.1:8889
+      read_buf_size: 10
+    server3:
+      addr: tcp://127.0.0.1:8810
+      delimiter: "\r\n"
+      read_buf_size: 1
+
+endure:
+  grace_period: 120s
+  print_graph: false
+  log_level: error
