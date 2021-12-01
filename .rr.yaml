@@ -21,6 +21,24 @@ rpc:
 
 # Application server settings (docs: https://roadrunner.dev/docs/php-worker)
 server:
+  #[SINCE 2.6]
+  on_init:
+    # Command to execute before the main server's command
+    #
+    # This option is required if using on_init
+    command: "any php or script here"
+
+    # Script execute timeout
+    #
+    # Default: 60s [60m, 60h], if used w/o units its means - NANOSECONDS.
+    exec_timeout: 20s
+
+    # Environment variables for the worker processes.
+    #
+    # Default: <empty map>
+    env:
+      - SOME_KEY: "SOME_VALUE"
+      - SOME_KEY2: "SOME_VALUE2"
   # Worker starting command, with any required arguments.
   #
   # This option is required.
@@ -129,6 +147,11 @@ temporal:
   #
   # Default: 10_000
   cache_size: 10000
+
+  # Namespace name for this client to work with
+  #
+  # Default: default
+  namespace: default
 
   # Temporal metrics
   #
@@ -418,7 +441,7 @@ http:
   # Default: 0
   max_request_size: 256
 
-  # Middlewares for the http plugin, order is important. Allowed values is: "headers", "gzip", "websockets", "sendfile"
+  # Middlewares for the http plugin, order is important. Allowed values is: "headers", "gzip", "websockets", "sendfile",  [SINCE 2.6] -> "new_relic", [SINCE 2.6] -> "http_metrics"
   #
   # Default value: []
   middleware: [ "headers", "gzip" ]
@@ -437,6 +460,18 @@ http:
         "fe80::/10",
     ]
 
+  # [SINCE 2.6] New Relic middleware
+  new_relic:
+    # Application name.
+    #
+    # Error if empty. NEW_RELIC_APP_NAME env variable should be set if the app_name key is empty. If both empty - error.
+    app_name: "app"
+
+    # Licence key
+    #
+    # Error if empty. NEW_RELIC_LICENSE_KEY env variable should be set if the license_key key is empty. If both empty - error.
+    license_key: "key"
+
   # File uploading settings.
   uploads:
     # Directory for file uploads. Empty value means to use $TEMP based on your OS.
@@ -448,6 +483,11 @@ http:
     #
     # Default: [".php", ".exe", ".bat"]
     forbid: [ ".php", ".exe", ".bat", ".sh" ]
+
+    # [SINCE 2.6] Allow files with the following extensions to upload
+    #
+    # Default: empty
+    allow: [ ".html", ".aaa" ]
 
   # Settings for "headers" middleware (docs: https://roadrunner.dev/docs/http-headers).
   headers:
@@ -1185,10 +1225,12 @@ grpc:
   # This option is required
   listen: "tcp://localhost:9001"
 
-  # Proto file to use
+  # Proto file to use, multiply files supported [SINCE 2.6]
   #
   # This option is required
-  proto: "proto/test/test.proto"
+  proto:
+    - "first.proto"
+    - "second.proto"
 
   # GRPC TLS configuration
   #
@@ -1270,6 +1312,104 @@ grpc:
     max_jobs: 0
     allocate_timeout: 60s
     destroy_timeout: 60
+
+# [SINCE 2.6] TCP plugin
+tcp:
+  # The list of TCP servers to start. There are can be any number of servers you want to allocate.
+  servers:
+
+    # Server name. Can be any string. Will be sent to the worker in the context.
+    #
+    # Default: none.
+    server1:
+
+      # Address to listen.
+      #
+      # Error if empty.
+      addr: 127.0.0.1:7778
+
+      # Data packets delimiter. Every send should end either with EOF or with the delimiter.
+      #
+      # Default: CRLF (\r\n)
+      delimiter: "\r\n"
+
+      # Chunks that RR uses to read the data. In MB. If you expect big payloads on a TCP server, to reduce `read` syscalls, would be a good practice to use a fairly big enough buffer.
+      #
+      # Default: 1MB
+      read_buf_size: 1
+    server2:
+      addr: 127.0.0.1:8811
+      read_buf_size: 10
+    server3:
+      addr: 127.0.0.1:8812
+      delimiter: "\r\n"
+      read_buf_size: 1
+
+  pool:
+    num_workers: 5
+    max_jobs: 0
+    allocate_timeout: 60s
+    destroy_timeout: 60s
+
+# [SINCE 2.6] Fileserver to serve static files.
+fileserver:
+  # File server address
+  #
+  # Error on empty
+  address: 127.0.0.1:10101
+  # Etag calculation. Request body CRC32.
+  #
+  # Default: false
+  calculate_etag: true
+
+  # Weak etag calculation
+  #
+  # Default: false
+  weak: false
+
+  # Enable body streaming for the files more than 4KB
+  #
+  # Default: false
+  stream_request_body: true
+
+  serve:
+    # HTTP prefix
+    #
+    # Error on empty
+    - prefix: "/foo"
+
+      # Directory to serve
+      #
+      # Default: "."
+      root: "../../../tests"
+
+      # When set to true, the server tries minimizing CPU usage by caching compressed files
+      #
+      # Default: false
+      compress: false
+
+      # Expiration duration for inactive file handlers. Units: seconds.
+      #
+      # Default: 10, use a negative value to disable it.
+      cache_duration: 10
+
+      # The value for the Cache-Control HTTP-header. Units: seconds
+      #
+      # Default: 10 seconds
+      max_age: 10
+
+      # Enable range requests
+      # https://developer.mozilla.org/en-US/docs/Web/HTTP/Range_requests
+      #
+      # Default: false
+      bytes_range: true
+
+    - prefix: "/foo/bar"
+      root: "../../../tests"
+      compress: false
+      cache_duration: 10s
+      max_age: 10
+      bytes_range: true
 
 ## RoadRunner internal container configuration (docs: https://github.com/spiral/endure).
 endure:
