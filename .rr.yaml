@@ -441,7 +441,7 @@ http:
   # Default: 0
   max_request_size: 256
 
-  # Middlewares for the http plugin, order is important. Allowed values is: "headers", "gzip", "websockets", "sendfile",  [SINCE 2.6] -> "new_relic", [SINCE 2.6] -> "http_metrics"
+  # Middlewares for the http plugin, order is important. Allowed values is: "headers", "gzip", "static", "websockets", "sendfile",  [SINCE 2.6] -> "new_relic", [SINCE 2.6] -> "http_metrics"
   #
   # Default value: []
   middleware: [ "headers", "gzip" ]
