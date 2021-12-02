@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v2.6.1 (2.12.2021)
+
+## 🩹 Fixes:
+
+- 🐛 Fix: logger incorrectly escaped HTML, JSON, and other special symbols.
+
 ## v2.6.0 (30.11.2021)
 
 ## 👀 New:
@@ -50,7 +56,7 @@ transaction name.
 
 ---
 
-- ✏️ New plugin: `TCP`. The TCP plugin is used to handle raw TCP payload with a bi-directional [protocol](tcp/docs/tcp.md) between the RR server and PHP worker.
+- ✏️ **[BETA]** New plugin: `TCP`. The TCP plugin is used to handle raw TCP payload with a bi-directional [protocol](tcp/docs/tcp.md) between the RR server and PHP worker.
 
 PHP client library: https://github.com/spiral/roadrunner-tcp
 
