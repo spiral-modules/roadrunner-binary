@@ -515,8 +515,9 @@ github.com/spf13/pflag v1.0.5/go.mod h1:McXfInJRrz4CZXVZOBLb0bTZqETkiAhM9Iw0y3An
 github.com/spf13/viper v1.8.1/go.mod h1:o0Pch8wJ9BVSWGQMbra6iw0oQ5oktSIBaujf1rJH9Ns=
 github.com/spf13/viper v1.9.0 h1:yR6EXjTp0y0cLN8OZg1CRZmOBdI88UcGkhgyJhu6nZk=
 github.com/spf13/viper v1.9.0/go.mod h1:+i6ajR7OX2XaiBkrcZJFK21htRk7eDeLg7+O6bhUPP4=
-github.com/spiral/endure v1.0.9 h1:rC9ZubAjESqHMzhgdDkLoRVjQW8QdbVHmarlBNaaUAc=
 github.com/spiral/endure v1.0.9/go.mod h1:M2AHi+x+YdQ4gW1rV2aDWGkT6hxJwVWpK4qRiax8Zzw=
+github.com/spiral/endure v1.0.10 h1:8WoI4LjlJP7B0qdUDMgB+K7ouir3j8eUzgnSy6iWZ1Q=
+github.com/spiral/endure v1.0.10/go.mod h1:M2AHi+x+YdQ4gW1rV2aDWGkT6hxJwVWpK4qRiax8Zzw=
 github.com/spiral/errors v1.0.12 h1:38Waf8ZL/Xvxg4HTYGmrUbvi7TCHivmuatNQZlBhQ8s=
 github.com/spiral/errors v1.0.12/go.mod h1:j5UReqxZxfkwXkI9mFY87VhEXcXmSg7kAk5Sswy1eEA=
 github.com/spiral/goridge/v3 v3.2.4 h1:Octzn0kgpQY10vQhrf0a5RlzCVW1lIEuR6/IGYp0BW4=
