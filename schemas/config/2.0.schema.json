@@ -628,7 +628,7 @@
           "default": "\r\n"
         },
         "read_buf_size": {
-          "description": "Chunks that RR uses to read the data. In MB. If you expect big payloads on a TCP server, to reduce `read` syscalls, would be a good practice to use a fairly big enough buffer"
+          "description": "Chunks that RR uses to read the data. In MB. If you expect big payloads on a TCP server, to reduce `read` syscalls, would be a good practice to use a fairly big enough buffer",
           "type": "integer",
           "minimum": 1,
           "default": 1
