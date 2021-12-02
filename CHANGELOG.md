@@ -1,10 +1,20 @@
 # CHANGELOG
 
+## v2.6.2 (3.12.2021)
+
+## 🩹 Fixes:
+
+- 🐛 Fix: Random NPE on RR start. [BUG](https://github.com/spiral/roadrunner-plugins/issues/143)
+
+---
+
 ## v2.6.1 (2.12.2021)
 
 ## 🩹 Fixes:
 
 - 🐛 Fix: logger incorrectly escaped HTML, JSON, and other special symbols.
+
+---
 
 ## v2.6.0 (30.11.2021)
 

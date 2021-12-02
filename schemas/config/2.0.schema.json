@@ -22,6 +22,39 @@
     "server": {
       "type": "object",
       "properties": {
+        "on_init": {
+          "description": "Execute command or script before RR starts allocating workers",
+          "type": "object",
+          "properties": {
+            "command": {
+              "description": "Command to execute. It can be script or binary",
+              "type": "string",
+              "examples": [
+                "php not-worker.php",
+                "sh script.sh",
+                "start script.bat"
+              ]
+            },
+            "exec_timeout": {
+              "description": "Script execute timeout",
+              "$ref": "#/definitions/Duration",
+              "default": "60s"
+            },
+            "env": {
+              "description": "Environment variables for the worker processes",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "patternProperties": {
+                  "^[a-zA-Z0-9._-]+$": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
         "command": {
           "description": "Worker starting command, with any required arguments",
           "type": "string",
@@ -153,7 +186,12 @@
             "type": "string",
             "examples": [
               "headers",
-              "gzip"
+              "gzip",
+              "static",
+              "websockets",
+              "sendfile",
+              "new_relic",
+              "http_metrics"
             ],
             "pattern": "^[0-9a-zA-Z_]+$"
           }
@@ -204,6 +242,18 @@
                 ".exe",
                 ".bat"
               ]
+            },
+            "allow": {
+              "description": "Allow files with the following extensions to upload",
+              "type": "array",
+              "items": {
+                "type": "string",
+                "examples": [
+                  ".html",
+                  ".go"
+                ]
+              },
+              "default": ""
             }
           }
         },
@@ -549,9 +599,42 @@
           "additionalProperties": false
         }
       }
+    },
+    "tcp": {
+      "type": "object",
+      "description": "Plugin to handle RAW TCP packets, available since RR 2.6.0",
+      "properties": {
+        "servers": {
+          "description": "TCP servers to allocate",
+          "type": "object",
+          "$ref": "#/definitions/TCPServers"
+        }
+      }
     }
   },
   "definitions": {
+    "TCPServers": {
+      "description": "TCP server",
+      "type": "object",
+      "properties": {
+        "addr": {
+          "description": "Address to listen",
+          "type": "string",
+          "pattern": "^tcp:\/\/[0-9a-zA-Z_.-]+:[0-9]{1,5}$"
+        },
+        "delimiter": {
+          "description": "Data packets delimiter. Every send should end either with EOF or with the delimiter",
+          "type": "string",
+          "default": "\r\n"
+        },
+        "read_buf_size": {
+          "description": "Chunks that RR uses to read the data. In MB. If you expect big payloads on a TCP server, to reduce `read` syscalls, would be a good practice to use a fairly big enough buffer",
+          "type": "integer",
+          "minimum": 1,
+          "default": 1
+        }
+      }
+    },
     "Duration": {
       "description": "Time duration",
       "anyOf": [
