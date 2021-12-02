@@ -27,7 +27,4 @@ rr.exe
 .rr-sample-bench.yaml
 .rr-with-temporal.yaml
 .rr-sample.yaml
-.rr-sample-bench-jobs.yaml
-.rr-sample-bench-grpc.yaml
-.rr-sample-bench-http.yaml
-.rr-sample-bench-all.yaml
+.rr-sample-bench-*
