@@ -606,7 +606,7 @@
       "properties": {
         "servers": {
           "description": "TCP servers to allocate",
-          "type": "array",
+          "type": "object",
           "$ref": "#/definitions/TCPServers"
         }
       }
