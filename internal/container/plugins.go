@@ -5,11 +5,13 @@ import (
 	"github.com/spiral/roadrunner-plugins/v2/beanstalk"
 	"github.com/spiral/roadrunner-plugins/v2/boltdb"
 	"github.com/spiral/roadrunner-plugins/v2/broadcast"
+	"github.com/spiral/roadrunner-plugins/v2/fileserver"
 	grpcPlugin "github.com/spiral/roadrunner-plugins/v2/grpc"
 	httpPlugin "github.com/spiral/roadrunner-plugins/v2/http"
 	"github.com/spiral/roadrunner-plugins/v2/http/middleware/gzip"
 	"github.com/spiral/roadrunner-plugins/v2/http/middleware/headers"
 	newrelic "github.com/spiral/roadrunner-plugins/v2/http/middleware/new_relic"
+	"github.com/spiral/roadrunner-plugins/v2/http/middleware/prometheus"
 	"github.com/spiral/roadrunner-plugins/v2/http/middleware/static"
 	"github.com/spiral/roadrunner-plugins/v2/informer"
 	"github.com/spiral/roadrunner-plugins/v2/jobs"
@@ -37,18 +39,18 @@ import (
 // Plugins returns active plugins for the endure container. Feel free to add or remove any plugins.
 func Plugins() []interface{} { //nolint:funlen
 	return []interface{}{
-		// logger plugin
-		&logger.ZapLogger{},
-		// metrics plugin
-		&metrics.Plugin{},
-		// http server plugin
-		&httpPlugin.Plugin{},
-		// reload plugin
-		&reload.Plugin{},
+		// bundled
 		// informer plugin (./rr workers, ./rr workers -i)
 		&informer.Plugin{},
 		// resetter plugin (./rr reset)
 		&resetter.Plugin{},
+
+		// logger plugin
+		&logger.ZapLogger{},
+		// metrics plugin
+		&metrics.Plugin{},
+		// reload plugin
+		&reload.Plugin{},
 		// rpc plugin (workers, reset)
 		&rpcPlugin.Plugin{},
 		// server plugin (NewWorker, NewWorkerPool)
@@ -64,19 +66,27 @@ func Plugins() []interface{} { //nolint:funlen
 		&beanstalk.Plugin{},
 		// =========
 
+		// http server plugin with middleware
+		&httpPlugin.Plugin{},
 		&newrelic.Plugin{},
-		&grpcPlugin.Plugin{},
+		&static.Plugin{},
+		&headers.Plugin{},
+		&status.Plugin{},
+		&gzip.Plugin{},
+		&prometheus.Plugin{},
 
+		&fileserver.Plugin{},
+		// ===================
+
+		&grpcPlugin.Plugin{},
 		// kv + ws + jobs plugin
 		&memory.Plugin{},
-
 		// KV + Jobs
 		&boltdb.Plugin{},
 
 		// broadcast via memory or redis
 		// used in conjunction with Websockets, memory and redis plugins
 		&broadcast.Plugin{},
-
 		// ======== websockets broadcast bundle
 		&websockets.Plugin{},
 		&redis.Plugin{},
@@ -86,15 +96,6 @@ func Plugins() []interface{} { //nolint:funlen
 		&kv.Plugin{},
 		&memcached.Plugin{},
 		// ==============
-
-		// plugin to serve static files
-		&static.Plugin{},
-		// headers
-		&headers.Plugin{},
-		// checker
-		&status.Plugin{},
-		// gzip
-		&gzip.Plugin{},
 
 		// raw TCP connections handling
 		&tcp.Plugin{},
