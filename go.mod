@@ -15,12 +15,12 @@ require (
 	github.com/spiral/endure v1.0.10
 	github.com/spiral/errors v1.0.12
 	github.com/spiral/goridge/v3 v3.2.4
-	github.com/spiral/roadrunner-plugins/v2 v2.6.2
+	github.com/spiral/roadrunner-plugins/v2 v2.6.3
 	github.com/spiral/roadrunner/v2 v2.6.0
 	// ---------------------
 	github.com/stretchr/testify v1.7.0
 	// SPIRAL --------------
-	github.com/temporalio/roadrunner-temporal v1.0.13
+	github.com/temporalio/roadrunner-temporal v1.0.14
 	// ---------------------
 	github.com/vbauerster/mpb/v5 v5.4.0
 )

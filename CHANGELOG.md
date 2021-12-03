@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## v2.6.3 (3.12.2021)
+
+## 👀 New:
+- ✏️ `informer.List` RPC call return all available plugins with workers instead of all available plugins. This behavior was changed because `Informer` has the dependency of every RR plugin, which led to the cycles. This is not an external API and used only internally.
+- ✏️ Beanstalk queue returned to the **[ALPHA]** stage. It's very unstable when destroying pipelines and can lead to infinite read loops when something wrong with the connection. Use with care.
+- ✏️ Go version updated to `v1.17.4`.
+
+## 🩹 Fixes:
+
+- 🐛 Fix: add missing plugins to the container: `fileserver`, `http_metrics`.
+---
+
 ## v2.6.2 (3.12.2021)
 
 ## 🩹 Fixes:
