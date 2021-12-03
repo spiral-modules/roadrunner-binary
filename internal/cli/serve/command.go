@@ -30,6 +30,7 @@ func NewCommand(cfgPlugin *config.Viper) *cobra.Command { //nolint:funlen
 
 			// set the grace period which would be same for all the plugins
 			cfgPlugin.CommonConfig = &config.General{GracefulTimeout: containerCfg.GracePeriod}
+			cfgPlugin.RRVersion = meta.Version()
 
 			// create endure container
 			endureContainer, err := container.NewContainer(*containerCfg)
