@@ -153,6 +153,16 @@ temporal:
   # Default: default
   namespace: default
 
+  # Internal temporal communication protocol, can be "proto" or "json".
+  #
+  # Default: "proto"
+  codec: proto
+
+  # Debugging level (only for "json" codec). Set 0 for nothing, 1 for "normal", and 2 for colorized messages.
+  #
+  # Default: 0
+  debug_level: 2
+
   # Temporal metrics
   #
   # Optional section
@@ -227,15 +237,6 @@ temporal:
       # Default: 0s
       exec_ttl: 60s
 
-  # Internal temporal communication protocol, can be "proto" or "json".
-  #
-  # Default: "proto"
-  codec: proto
-
-  # Debugging level (only for "json" codec). Set 0 for nothing, 1 for "normal", and 2 for colorized messages.
-  #
-  # Default: 0
-  debug_level: 2
 
 # KV plugin settings. Available drivers: boltdb, redis, memcached, memory.
 # Any number of sections can be defined here.
