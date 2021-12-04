@@ -550,17 +550,21 @@
       "properties": {
         "servers": {
           "description": "TCP servers to allocate",
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/TCPServers"
-          },
-          "additionalItems": {
-            "type": "object",
-            "$ref": "#/definitions/TCPServers"
+          "type": "object",
+          "additionalProperties": true,
+          "patternProperties": {
+            "^[A-Za-z0-9_]": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "$ref": "#/definitions/TCPServers"
+                }
+              ]
+            }
           }
         },
         "pool": {
+          "type": "object",
           "description": "PHP static workers pool",
           "$ref": "#/definitions/WorkersPool"
         }
@@ -712,7 +716,7 @@
         "addr": {
           "description": "Address to listen",
           "type": "string",
-          "pattern": "^tcp:\/\/[0-9a-zA-Z_.-]+:[0-9]{1,5}$"
+          "pattern": "^[0-9a-zA-Z_.-]+:[0-9]{1,5}$"
         },
         "delimiter": {
           "description": "Data packets delimiter. Every send should end either with EOF or with the delimiter",
