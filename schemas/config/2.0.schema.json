@@ -320,11 +320,11 @@
           "default": 0
         },
         "middleware": {
-          "description": "Middlewares for the http plugin, order is important",
+          "description": "Middleware for the http plugin, order is important",
           "type": "array",
           "items": {
             "type": "string",
-            "examples": [
+            "enum": [
               "headers",
               "gzip",
               "static",
@@ -543,6 +543,50 @@
               "examples": [
                 "127.0.0.1:443",
                 ":8443"
+              ]
+            },
+            "acme": {
+              "description": "ACME certificates provider (Let's encrypt)",
+              "type": "object",
+              "properties": {
+                "certs_dir": {
+                  "description": "Directory to use as a certificate/pk, account info storage",
+                  "type": "string",
+                  "default": "rr_cache"
+                },
+                "email": {
+                  "description": "User email, used to create LE account",
+                  "type": "string"
+                },
+                "alt_http_port": {
+                  "description": "Alternate port for the http challenge. Challenge traffic should be redirected to this port if overridden.",
+                  "type": "integer",
+                  "default": 80
+                },
+                "alt_tlsalpn_port": {
+                  "description": "Alternate port for the tls-alpn-01 challenge. Challenge traffic should be redirected to this port if overridden.",
+                  "type": "integer",
+                  "default": 443
+                },
+                "challenge_type": {
+                  "type": "string",
+                  "enum": ["http-01", "tlsalpn-01"],
+                  "description": "Challenge types",
+                  "default": "http-01"
+                },
+                "use_production_endpoint": {
+                  "description": "Use production or staging endpoint. NOTE, try to use staging endpoint to make sure, that everything works correctly.",
+                  "type": "boolean",
+                  "default": false
+                },
+                "domains": {
+                  "type": "array",
+                  "description": "List of your domains to obtain certificates"
+                }
+              },
+              "required": [
+                "domains",
+                "email"
               ]
             },
             "redirect": {
