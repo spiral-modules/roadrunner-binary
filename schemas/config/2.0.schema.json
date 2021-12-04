@@ -551,7 +551,8 @@
         "servers": {
           "description": "TCP servers to allocate",
           "type": ["object"],
-          "$ref": "#/definitions/TCPServers"
+          "$ref": "#/definitions/TCPServers",
+          "additionalItems": true
         },
         "pool": {
           "description": "PHP static workers pool",
