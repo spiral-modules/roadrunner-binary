@@ -105,6 +105,8 @@ github.com/bradfitz/gomemcache v0.0.0-20190913173617-a41fca850d0b h1:L/QXpzIa3pO
 github.com/bradfitz/gomemcache v0.0.0-20190913173617-a41fca850d0b/go.mod h1:H0wQNHz2YrLsuXOZozoeDmnHXkNCRmMW0gwFWDfEZDA=
 github.com/buger/goterm v1.0.1 h1:kSgw3jcjYUzC0Uh/eG8ULjccuz353solup27lUH8Zug=
 github.com/buger/goterm v1.0.1/go.mod h1:HiFWV3xnkolgrBV3mY8m0X0Pumt4zg4QhbdOzQtB8tE=
+github.com/buger/goterm v1.0.3 h1:7V/HeAQHrzPk/U4BvyH2g9u+xbUW9nr4yRPyG59W4fM=
+github.com/buger/goterm v1.0.3/go.mod h1:HiFWV3xnkolgrBV3mY8m0X0Pumt4zg4QhbdOzQtB8tE=
 github.com/cactus/go-statsd-client/statsd v0.0.0-20200423205355-cb0885a1018c/go.mod h1:l/bIBLeOl9eX+wxJAzxS4TveKRtAqlyDpHjhkfO0MEI=
 github.com/caddyserver/certmagic v0.15.2 h1:OMTakTsLM1ZfzMDjwvYprfUgFzpVPh3u87oxMPwmeBc=
 github.com/caddyserver/certmagic v0.15.2/go.mod h1:qhkAOthf72ufAcp3Y5jF2RaGE96oip3UbEQRIzwe3/8=
@@ -504,8 +506,9 @@ github.com/spf13/pflag v1.0.5/go.mod h1:McXfInJRrz4CZXVZOBLb0bTZqETkiAhM9Iw0y3An
 github.com/spf13/viper v1.8.1/go.mod h1:o0Pch8wJ9BVSWGQMbra6iw0oQ5oktSIBaujf1rJH9Ns=
 github.com/spf13/viper v1.9.0 h1:yR6EXjTp0y0cLN8OZg1CRZmOBdI88UcGkhgyJhu6nZk=
 github.com/spf13/viper v1.9.0/go.mod h1:+i6ajR7OX2XaiBkrcZJFK21htRk7eDeLg7+O6bhUPP4=
-github.com/spiral/endure v1.0.10 h1:8WoI4LjlJP7B0qdUDMgB+K7ouir3j8eUzgnSy6iWZ1Q=
 github.com/spiral/endure v1.0.10/go.mod h1:M2AHi+x+YdQ4gW1rV2aDWGkT6hxJwVWpK4qRiax8Zzw=
+github.com/spiral/endure v1.1.0 h1:v9CzvnQvvLyR0aiZpA04ZTIq444x0FR2PTCJAPNEO6g=
+github.com/spiral/endure v1.1.0/go.mod h1:M2AHi+x+YdQ4gW1rV2aDWGkT6hxJwVWpK4qRiax8Zzw=
 github.com/spiral/errors v1.0.12 h1:38Waf8ZL/Xvxg4HTYGmrUbvi7TCHivmuatNQZlBhQ8s=
 github.com/spiral/errors v1.0.12/go.mod h1:j5UReqxZxfkwXkI9mFY87VhEXcXmSg7kAk5Sswy1eEA=
 github.com/spiral/goridge/v3 v3.2.4 h1:Octzn0kgpQY10vQhrf0a5RlzCVW1lIEuR6/IGYp0BW4=
@@ -702,6 +705,8 @@ golang.org/x/net v0.0.0-20211112202133-69e39bad7dc2/go.mod h1:9nx3DQGgdP8bBQD5qx
 golang.org/x/net v0.0.0-20211123203042-d83791d6bcd9/go.mod h1:9nx3DQGgdP8bBQD5qxJ1jj9UTztislL4KSBs9R2vV5Y=
 golang.org/x/net v0.0.0-20211201190559-0a0e4e1bb54c h1:WtYZ93XtWSO5KlOMgPZu7hXY9WhMZpprvlm5VwvAl8c=
 golang.org/x/net v0.0.0-20211201190559-0a0e4e1bb54c/go.mod h1:9nx3DQGgdP8bBQD5qxJ1jj9UTztislL4KSBs9R2vV5Y=
+golang.org/x/net v0.0.0-20211203184738-4852103109b8 h1:PFkPt/jI9Del3hmFplBtRp8tDhSRpFu7CyRs7VmEC0M=
+golang.org/x/net v0.0.0-20211203184738-4852103109b8/go.mod h1:9nx3DQGgdP8bBQD5qxJ1jj9UTztislL4KSBs9R2vV5Y=
 golang.org/x/oauth2 v0.0.0-20180821212333-d2e6202438be/go.mod h1:N/0e6XlmueqKjAGxoOufVs8QHGRruUQn6yWY3a++T0U=
 golang.org/x/oauth2 v0.0.0-20190226205417-e64efc72b421/go.mod h1:gOpvHmFTYa4IltrdGE7lF6nIHvwfUNPOp7c8zoXwtLw=
 golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45/go.mod h1:gOpvHmFTYa4IltrdGE7lF6nIHvwfUNPOp7c8zoXwtLw=
@@ -988,6 +993,8 @@ google.golang.org/genproto v0.0.0-20211101144312-62acf1d99145/go.mod h1:5CzLGKJ6
 google.golang.org/genproto v0.0.0-20211118181313-81c1377c94b1/go.mod h1:5CzLGKJ67TSI2B9POpiiyGha0AjJvZIUgRMt1dSmuhc=
 google.golang.org/genproto v0.0.0-20211129164237-f09f9a12af12 h1:DN5b3HU13J4sMd/QjDx34U6afpaexKTDdop+26pdjdk=
 google.golang.org/genproto v0.0.0-20211129164237-f09f9a12af12/go.mod h1:5CzLGKJ67TSI2B9POpiiyGha0AjJvZIUgRMt1dSmuhc=
+google.golang.org/genproto v0.0.0-20211203200212-54befc351ae9 h1:fU3FNfL/oBU2D5DvGqiuyVqqn40DdxvaTFHq7aivA3k=
+google.golang.org/genproto v0.0.0-20211203200212-54befc351ae9/go.mod h1:5CzLGKJ67TSI2B9POpiiyGha0AjJvZIUgRMt1dSmuhc=
 google.golang.org/grpc v1.12.0/go.mod h1:yo6s7OP7yaDglbqo1J04qKzAhqBH6lvTonzMVmEdcZw=
 google.golang.org/grpc v1.19.0/go.mod h1:mqu4LbDTu4XGKhr4mRzUsmM4RtVoemTSY81AxZiDr8c=
 google.golang.org/grpc v1.20.1/go.mod h1:10oTOabMzJvdu6/UiuZezV6QK5dSlG84ov/aaiqXj38=
