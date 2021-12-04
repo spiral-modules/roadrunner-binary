@@ -714,6 +714,7 @@
             "^[A-Za-z0-9_-]$": {
               "allOf": [
                 {
+                  "description": "User defined TCP servers",
                   "type": "object",
                   "$ref": "#/definitions/TCPServers"
                 }
@@ -902,6 +903,11 @@
       "description": "Static pool with PHP workers",
       "type": "object",
       "properties": {
+        "debug": {
+          "description": "Pool debug mode. Worker will be created right before RR passes request to it",
+          "type": "boolean",
+          "default": false
+        },
         "num_workers": {
           "description": "How many worker processes will be started. Zero (or nothing) means the number of logical CPUs",
           "type": "integer",
