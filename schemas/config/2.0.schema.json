@@ -550,8 +550,11 @@
       "properties": {
         "servers": {
           "description": "TCP servers to allocate",
-          "type": ["object"],
-          "$ref": "#/definitions/TCPServers",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/TCPServers"
+          },
           "additionalItems": true
         },
         "pool": {
