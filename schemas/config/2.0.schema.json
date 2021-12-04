@@ -552,7 +552,7 @@
           "description": "TCP servers to allocate",
           "type": "array",
           "items": {
-            "type": "object",
+            "type": "array",
             "$ref": "#/definitions/TCPServers"
           },
           "additionalItems": true
