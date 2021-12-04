@@ -374,63 +374,7 @@
         },
         "pool": {
           "description": "Workers pool settings",
-          "type": "object",
-          "properties": {
-            "num_workers": {
-              "description": "How many worker processes will be started. Zero (or nothing) means the number of logical CPUs",
-              "type": "integer",
-              "minimum": 0,
-              "default": 0
-            },
-            "max_jobs": {
-              "description": "Maximal count of worker executions. Zero (or nothing) means no limit",
-              "type": "integer",
-              "minimum": 0,
-              "default": 0
-            },
-            "allocate_timeout": {
-              "description": "Timeout for worker allocation. Zero means no limit",
-              "$ref": "#/definitions/Duration",
-              "default": "60s"
-            },
-            "destroy_timeout": {
-              "description": "Timeout for worker destroying before process killing. Zero means no limit",
-              "$ref": "#/definitions/Duration",
-              "default": "60s"
-            },
-            "supervisor": {
-              "description": "Supervisor is used to control http workers",
-              "type": "object",
-              "properties": {
-                "watch_tick": {
-                  "description": "How often to check the state of the workers",
-                  "$ref": "#/definitions/Duration",
-                  "default": "1s"
-                },
-                "ttl": {
-                  "description": "Maximum time worker is allowed to live (soft limit). Zero means no limit",
-                  "$ref": "#/definitions/Duration",
-                  "default": "0s"
-                },
-                "idle_ttl": {
-                  "description": "How long worker can spend in IDLE mode after first using (soft limit). Zero means no limit",
-                  "$ref": "#/definitions/Duration",
-                  "default": "0s"
-                },
-                "max_worker_memory": {
-                  "description": "Maximal worker memory usage in megabytes (soft limit). Zero means no limit",
-                  "type": "integer",
-                  "minimum": 0,
-                  "default": 0
-                },
-                "exec_ttl": {
-                  "description": "Maximal job lifetime (hard limit). Zero means no limit",
-                  "$ref": "#/definitions/Duration",
-                  "default": "0s"
-                }
-              }
-            }
-          }
+          "$ref": "#/definitions/WorkersPool"
         },
         "ssl": {
           "description": "SSL (Secure Sockets Layer) settings",
@@ -610,9 +554,145 @@
           "$ref": "#/definitions/TCPServers"
         }
       }
+    },
+    "temporal": {
+      "description": "Workflow and activity mesh service, https://docs.temporal.io/docs/php/introduction/",
+      "type": "object",
+      "properties": {
+        "address": {
+          "description": "Address of temporal server",
+          "type": "string",
+          "default": "127.0.0.1:7233"
+        },
+        "cache_size": {
+          "description": "Sticky cache size. Sticky workflow execution is the affinity between workflow tasks of a specific workflow execution to a specific worker. The benefit of sticky execution is that the workflow does not have to reconstruct state by replaying history from the beginning. The cache is shared between workers running within same process. This must be called before any worker is started. If not called, the default size of 10K (which may change) will be used",
+          "type": "integer",
+          "default": 10000
+        },
+        "namespace": {
+          "description": "Namespace name for this client to work with",
+          "type": "string",
+          "default": "default"
+        },
+        "codec": {
+          "description": "Internal temporal communication protocol",
+          "type": "string",
+          "default": "proto",
+          "anyOf": [
+            {
+              "type": "string",
+              "examples": [
+                "proto",
+                "json"
+              ]
+            }
+          ]
+        },
+        "debug_level": {
+          "description": "Debugging level (only for json codec)",
+          "type": "integer",
+          "maxLength": 1,
+          "default": 0
+        },
+        "metrics": {
+          "description": "Temporal metrics",
+          "type": "object",
+          "default": null,
+          "properties": {
+            "address": {
+              "description": "Server metrics address",
+              "type": "string",
+              "default": "127.0.0.1:9091"
+            },
+            "type": {
+              "type": "string",
+              "description": "Metrics type",
+              "anyOf": [
+                {
+                  "type": "string",
+                  "examples": [
+                    "summary",
+                    "histogram"
+                  ]
+                }
+              ]
+            },
+            "prefix": {
+              "description": "Temporal metrics prefix",
+              "type": "string",
+              "default": null
+            }
+          }
+        },
+        "activities": {
+          "description": "Activities pool settings",
+          "type": "object",
+          "$ref": "#/definitions/WorkersPool"
+        }
+      }
     }
   },
   "definitions": {
+    "WorkersPool": {
+      "description": "Static pool with PHP workers",
+      "type": "object",
+      "properties": {
+        "num_workers": {
+          "description": "How many worker processes will be started. Zero (or nothing) means the number of logical CPUs",
+          "type": "integer",
+          "minimum": 0,
+          "default": 0
+        },
+        "max_jobs": {
+          "description": "Maximal count of worker executions. Zero (or nothing) means no limit",
+          "type": "integer",
+          "minimum": 0,
+          "default": 0
+        },
+        "allocate_timeout": {
+          "description": "Timeout for worker allocation. Zero means no limit",
+          "$ref": "#/definitions/Duration",
+          "default": "60s"
+        },
+        "destroy_timeout": {
+          "description": "Timeout for worker destroying before process killing. Zero means no limit",
+          "$ref": "#/definitions/Duration",
+          "default": "60s"
+        },
+        "supervisor": {
+          "description": "Supervisor is used to control http workers",
+          "type": "object",
+          "properties": {
+            "watch_tick": {
+              "description": "How often to check the state of the workers",
+              "$ref": "#/definitions/Duration",
+              "default": "1s"
+            },
+            "ttl": {
+              "description": "Maximum time worker is allowed to live (soft limit). Zero means no limit",
+              "$ref": "#/definitions/Duration",
+              "default": "0s"
+            },
+            "idle_ttl": {
+              "description": "How long worker can spend in IDLE mode after first using (soft limit). Zero means no limit",
+              "$ref": "#/definitions/Duration",
+              "default": "0s"
+            },
+            "max_worker_memory": {
+              "description": "Maximal worker memory usage in megabytes (soft limit). Zero means no limit",
+              "type": "integer",
+              "minimum": 0,
+              "default": 0
+            },
+            "exec_ttl": {
+              "description": "Maximal job lifetime (hard limit). Zero means no limit",
+              "$ref": "#/definitions/Duration",
+              "default": "0s"
+            }
+          }
+        }
+      }
+    },
     "TCPServers": {
       "description": "TCP server",
       "type": "object",
@@ -633,7 +713,10 @@
           "minimum": 1,
           "default": 1
         }
-      }
+      },
+      "required": [
+        "addr"
+      ]
     },
     "Duration": {
       "description": "Time duration",
