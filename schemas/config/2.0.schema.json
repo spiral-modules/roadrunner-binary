@@ -591,7 +591,8 @@
         "debug_level": {
           "description": "Debugging level (only for json codec)",
           "type": "integer",
-          "maxLength": 1,
+          "minimum": 0,
+          "maximum": 2,
           "default": 0
         },
         "metrics": {
