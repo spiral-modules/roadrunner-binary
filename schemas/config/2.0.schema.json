@@ -553,10 +553,7 @@
           "type": "object",
           "$ref": "#/definitions/TCPServers"
         }
-      },
-      "required": [
-        "addr"
-      ]
+      }
     },
     "temporal": {
       "description": "Workflow and activity mesh service, https://docs.temporal.io/docs/php/introduction/",
@@ -718,7 +715,10 @@
           "maximum": 100,
           "default": 1
         }
-      }
+      },
+      "required": [
+        "addr"
+      ]
     },
     "Duration": {
       "description": "Time duration",
