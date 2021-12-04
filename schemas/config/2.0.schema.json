@@ -709,9 +709,10 @@
         "servers": {
           "description": "TCP servers to allocate",
           "type": "object",
+          "minProperties": 1,
           "patternProperties": {
             "^[A-Za-z0-9_-]$": {
-              "anyOf": [
+              "allOf": [
                 {
                   "type": "object",
                   "$ref": "#/definitions/TCPServers"
