@@ -552,10 +552,13 @@
           "description": "TCP servers to allocate",
           "type": "array",
           "items": {
-            "type": "array",
+            "type": "object",
             "$ref": "#/definitions/TCPServers"
           },
-          "additionalItems": true
+          "additionalItems": {
+            "type": "object",
+            "$ref": "#/definitions/TCPServers"
+          }
         },
         "pool": {
           "description": "PHP static workers pool",
