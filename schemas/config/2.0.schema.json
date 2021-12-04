@@ -553,7 +553,10 @@
           "type": "object",
           "$ref": "#/definitions/TCPServers"
         }
-      }
+      },
+      "required": [
+        "addr"
+      ]
     },
     "temporal": {
       "description": "Workflow and activity mesh service, https://docs.temporal.io/docs/php/introduction/",
@@ -712,12 +715,10 @@
           "description": "Chunks that RR uses to read the data. In MB. If you expect big payloads on a TCP server, to reduce `read` syscalls, would be a good practice to use a fairly big enough buffer",
           "type": "integer",
           "minimum": 1,
+          "maximum": 100,
           "default": 1
         }
-      },
-      "required": [
-        "addr"
-      ]
+      }
     },
     "Duration": {
       "description": "Time duration",
