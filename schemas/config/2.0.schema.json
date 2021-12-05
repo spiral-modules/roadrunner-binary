@@ -570,7 +570,10 @@
                 },
                 "challenge_type": {
                   "type": "string",
-                  "enum": ["http-01", "tlsalpn-01"],
+                  "enum": [
+                    "http-01",
+                    "tlsalpn-01"
+                  ],
                   "description": "Challenge types",
                   "default": "http-01"
                 },
@@ -663,6 +666,149 @@
         "address"
       ]
     },
+    "redis": {
+      "description": "Redis section. Should be defined to use as a broadcast driver for the websockets (with no limitation to use in other plugins).",
+      "type": "object",
+      "$ref": "#/definitions/Redis"
+    },
+    "websockets": {
+      "description": "Websockets plugin, HTTP middleware",
+      "type": "object",
+      "properties": {
+        "broker": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9._-]+$",
+          "description": "Broker to use. Brokers can be set in the broadcast plugin. For example, if you use broker: default here, broadcast plugin should have default broker in its config."
+        },
+        "allowed_origin": {
+          "type": "string",
+          "description": " Allowed request origin (single value). This option is optional (allowed all by default)",
+          "default": "*"
+        },
+        "path": {
+          "type": "string",
+          "description": "http path where to handle websockets connections",
+          "default": "/ws"
+        }
+      }
+    },
+    "broadcast": {
+      "description": " Broadcast plugin. It main purpose is to broadcast published messages via all brokers. Use it in conjunction with the websockets, memory and redis plugins. LIMITATION: DO NOT use the same redis connection within different sections or messages will be duplicated. There is no limitation to use different redis connections (ie localhost:6379, localhost:6378, etc) in different sections.",
+      "type": "object",
+      "minProperties": 1,
+      "patternProperties": {
+        "^[a-zA-Z0-9._-]+$": {
+          "description": "Driver configuration sections",
+          "type": "object",
+          "properties": {
+            "driver": {
+              "description": "Driver to use. Available drivers: redis, memory. In-memory driver does not require any configuration.",
+              "type": "string",
+              "enum": [
+                "memory",
+                "redis"
+              ]
+            },
+            "config": {
+              "description": "Driver configuration",
+              "type": "object",
+              "allOf": [
+                {
+                  "description": "In-memory configuration",
+                  "type": "object",
+                  "properties": {}
+                },
+                {
+                  "type": "object",
+                  "$ref": "#/definitions/Redis"
+                }
+              ]
+            }
+          },
+          "required": [
+            "driver",
+            "config"
+          ]
+        }
+      }
+    },
+    "metrics": {
+      "description": "Application metrics in Prometheus format (docs: https://roadrunner.dev/docs/beep-beep-metrics)",
+      "type": "object",
+      "properties": {
+        "address": {
+          "description": "Prometheus client address (path /metrics added automatically).",
+          "type": "string",
+          "default": "127.0.0.1:2112"
+        },
+        "collect": {
+          "description": "Application-specific metrics (published using an RPC connection to the server)",
+          "type": "object",
+          "patternProperties": {
+            "^[a-zA-Z0-9._-]+$": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "histogram",
+                    "gauge",
+                    "counter",
+                    "summary"
+                  ]
+                },
+                "help": {
+                  "type": "string",
+                  "description": "Help message"
+                },
+                "labels": {
+                  "type": "array",
+                  "minItems": 1,
+                  "description": "Metrics labels"
+                },
+                "buckets": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  }
+                },
+                "objectives": {
+                  "title": "map[float]float",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "status": {
+      "description": "Health check endpoint (docs: https://roadrunner.dev/docs/beep-beep-health). If response code is 200 - it means at least one worker ready to serve requests. 500 - there are no workers ready to service requests.",
+      "type": "object",
+      "properties": {
+        "address": {
+          "description": "Host and port to listen on (eg.: `127.0.0.1:2114`). Use the following URL: http://127.0.0.1:2114/health?plugin=http. Multiple plugins must be separated using & - http://127.0.0.1:2114/health?plugin=http&plugin=rpc where http and rpc are active (connected) plugins.",
+          "type": "string",
+          "examples": [
+            "127.0.0.1:2114"
+          ]
+        },
+        "unavailable_status_code": {
+          "description": "Response status code if a requested plugin not ready to handle requests. Valid for both /health and /ready endpoints",
+          "type": "integer",
+          "default": 503
+        }
+      },
+      "required": [
+        "address"
+      ]
+    },
     "reload": {
       "description": "Automatically detect PHP file changes and reload connected services",
       "type": "object",
@@ -746,6 +892,371 @@
         }
       }
     },
+    "nats": {
+      "$ref": "#/definitions/NATS_J"
+    },
+    "boltdb": {
+      "$ref": "#/definitions/BoltDB_J"
+    },
+    "amqp": {
+      "description": "AMQP jobs driver",
+      "type": "object",
+      "properties": {
+        "addr": {
+          "description": "AMQP Uri to connect to the rabbitmq server https://www.rabbitmq.com/uri-spec.html",
+          "type": "string",
+          "default": "amqp://guest:guest@127.0.0.1:5672"
+        }
+      }
+    },
+    "beanstalk": {
+      "description": "Beanstalk jobs driver",
+      "type": "object",
+      "properties": {
+        "addr": {
+          "description": "Beanstalk server address",
+          "type": "string",
+          "default": "tcp://127.0.0.1:11300"
+        },
+        "timeout": {
+          "description": "Beanstalk connect timeout",
+          "type": "string",
+          "$ref": "#/definitions/Duration",
+          "default": "30s"
+        }
+      }
+    },
+    "sqs": {
+      "description": "SQS jobs driver (https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html)",
+      "type": "object",
+      "properties": {
+        "key": {
+          "description": "AccessKey ID",
+          "type": "string",
+          "default": null
+        },
+        "secret": {
+          "description": "Secret Access key",
+          "type": "string",
+          "default": null
+        },
+        "region": {
+          "description": "AWS Region",
+          "type": "string",
+          "default": null
+        },
+        "session_token": {
+          "description": "AWS Session token",
+          "type": "string",
+          "default": null
+        },
+        "endpoint": {
+          "description": "AWS SQS endpoint to connect",
+          "type": "string",
+          "default": "http://127.0.0.1:9324"
+        }
+      }
+    },
+    "jobs": {
+      "description": "JOBS plugin",
+      "type": "object",
+      "properties": {
+        "num_pollers": {
+          "description": "Number of threads which will try to obtain the job from the priority queue. Default is the number of the logical CPU cores",
+          "type": "integer",
+          "examples": [
+            10,
+            32
+          ]
+        },
+        "pipeline_size": {
+          "description": "Size of the internal priority queue, if the internal PQ reach the max number of elements, the Push operation will be blocked",
+          "type": "integer",
+          "default": 1000000
+        },
+        "consume": {
+          "description": "list of pipelines to be consumed by the server automatically at the start, keep empty if you want to start consuming manually",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "pool": {
+          "description": "JOBS workers pool",
+          "type": "object",
+          "$ref": "#/definitions/WorkersPool"
+        },
+        "pipelines": {
+          "description": "List of broker pipelines associated with the drivers. This option is not required since you can declare pipelines in the runtime. Pipeline driver should exist.",
+          "type": "object",
+          "patternProperties": {
+            "^[a-zA-Z0-9._-]+$": {
+              "type": "object",
+              "minProperties": 1,
+              "anyOf": [
+                {
+                  "properties": {
+                    "driver": {
+                      "description": "Driver associated with the pipeline",
+                      "type": "string",
+                      "enum": [
+                        "amqp",
+                        "sqs",
+                        "beanstalk",
+                        "boltdb",
+                        "memory",
+                        "nats"
+                      ]
+                    },
+                    "priority": {
+                      "description": "Pipeline priority. If the job pushed to the pipeline has priority set to 0, it will inherit the pipeline's priority",
+                      "type": "integer",
+                      "default": 10
+                    },
+                    "prefetch": {
+                      "description": "Number of job to prefetch from the driver",
+                      "type": "integer",
+                      "default": 100000
+                    },
+                    "queue": {
+                      "type": "string",
+                      "description": "Queue name",
+                      "default": "default"
+                    },
+                    "exchange": {
+                      "description": "Exchange name",
+                      "type": "string",
+                      "default": "amqp.default"
+                    },
+                    "exchange_type": {
+                      "description": "Exchange type",
+                      "type": "string",
+                      "default": "direct"
+                    },
+                    "routing_key": {
+                      "description": "Routing key for the queue",
+                      "type": "string",
+                      "default": null
+                    },
+                    "exclusive": {
+                      "description": "Declare a queue exclusive at the exchange",
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "multiple_ack": {
+                      "description": "When multiple is true, this delivery and all prior unacknowledged deliveries on the same channel will be acknowledged. This is useful for batch processing of deliveries",
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "requeue_on_fail": {
+                      "description": "Use rabbitmq mechanism to requeue the job on fail",
+                      "type": "boolean",
+                      "default": false
+                    }
+                  },
+                  "required": [
+                    "driver"
+                  ]
+                },
+                {
+                  "properties": {
+                    "driver": {
+                      "description": "Driver associated with the pipeline",
+                      "type": "string",
+                      "enum": [
+                        "amqp",
+                        "sqs",
+                        "beanstalk",
+                        "boltdb",
+                        "memory",
+                        "nats"
+                      ]
+                    },
+                    "priority": {
+                      "description": "Pipeline priority. If the job pushed to the pipeline has priority set to 0, it will inherit the pipeline's priority",
+                      "type": "integer",
+                      "default": 10
+                    },
+                    "prefetch": {
+                      "description": "Number of job to prefetch from the driver",
+                      "type": "integer",
+                      "default": 100000
+                    }
+                  },
+                  "required": [
+                    "driver"
+                  ]
+                },
+                {
+                  "properties": {
+                    "driver": {
+                      "description": "Driver associated with the pipeline",
+                      "type": "string",
+                      "enum": [
+                        "amqp",
+                        "sqs",
+                        "beanstalk",
+                        "boltdb",
+                        "memory",
+                        "nats"
+                      ]
+                    },
+                    "priority": {
+                      "description": "Pipeline priority. If the job pushed to the pipeline has priority set to 0, it will inherit the pipeline's priority",
+                      "type": "integer",
+                      "default": 10
+                    },
+                    "prefetch": {
+                      "description": "Number of job to prefetch from the driver",
+                      "type": "integer",
+                      "default": 100000
+                    },
+                    "tube_priority": {
+                      "description": "Beanstalk internal tube priority",
+                      "type": "integer",
+                      "default": 1
+                    },
+                    "tube": {
+                      "description": "Tube name",
+                      "type": "string",
+                      "default": "default"
+                    },
+                    "reserve_timeout": {
+                      "description": "If no job is available before this timeout has passed, Reserve returns a ConnError recording ErrTimeout",
+                      "$ref": "#/definitions/Duration",
+                      "default": "5s"
+                    }
+                  },
+                  "required": [
+                    "driver"
+                  ]
+                },
+                {
+                  "properties": {
+                    "driver": {
+                      "description": "Driver associated with the pipeline",
+                      "type": "string",
+                      "enum": [
+                        "amqp",
+                        "sqs",
+                        "beanstalk",
+                        "boltdb",
+                        "memory",
+                        "nats"
+                      ]
+                    },
+                    "priority": {
+                      "description": "Pipeline priority. If the job pushed to the pipeline has priority set to 0, it will inherit the pipeline's priority",
+                      "type": "integer",
+                      "default": 10
+                    },
+                    "prefetch": {
+                      "description": "Number of job to prefetch from the driver",
+                      "type": "integer",
+                      "default": 100000
+                    },
+                    "visibility_timeout": {
+                      "type": "integer",
+                      "description": "The duration (in seconds) for which the call waits for a message to arrive in the queue before returning. If a message is available, the call returns sooner than WaitTimeSeconds. If no messages are available and the wait time expires, the call returns successfully with an empty list of messages.",
+                      "default": 0
+                    },
+                    "wait_time_seconds": {
+                      "description": "The duration (in seconds) for which the call waits for a message to arrive in the queue before returning. If a message is available, the call returns sooner than WaitTimeSeconds. If no messages are available and the wait time expires, the call returns successfully with an empty list of messages",
+                      "type": "integer",
+                      "default": 0
+                    },
+                    "queue": {
+                      "description": "Queue name",
+                      "type": "string",
+                      "default": "default"
+                    },
+                    "attributes": {
+                      "title": "map[string]number",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "number"
+                        }
+                      }
+                    },
+                    "tags": {
+                      "title": "map[string]string",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "driver"
+                  ]
+                },
+                {
+                  "properties": {
+                    "driver": {
+                      "description": "Driver associated with the pipeline",
+                      "type": "string",
+                      "enum": [
+                        "amqp",
+                        "sqs",
+                        "beanstalk",
+                        "boltdb",
+                        "memory",
+                        "nats"
+                      ]
+                    },
+                    "priority": {
+                      "description": "Pipeline priority. If the job pushed to the pipeline has priority set to 0, it will inherit the pipeline's priority",
+                      "type": "integer",
+                      "default": 10
+                    },
+                    "prefetch": {
+                      "description": "Number of job to prefetch from the driver",
+                      "type": "integer",
+                      "default": 100000
+                    },
+                    "subject": {
+                      "description": "NATS subject",
+                      "type": "string",
+                      "default": "default"
+                    },
+                    "stream": {
+                      "description": "NATS stream",
+                      "type": "string",
+                      "default": "default-stream"
+                    },
+                    "deliver_new": {
+                      "description": "The consumer will only start receiving messages that were created after the consumer was created",
+                      "type": "string",
+                      "default": "default-stream"
+                    },
+                    "rate_limit": {
+                      "description": "Consumer rate-limiter in bytes https://docs.nats.io/jetstream/concepts/consumers#ratelimit",
+                      "type": "integer",
+                      "default": 1000
+                    },
+                    "delete_stream_on_stop": {
+                      "description": "Delete the stream when after pipeline was stopped",
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "delete_after_ack": {
+                      "description": "Delete message from the stream after successful acknowledge",
+                      "type": "boolean",
+                      "default": false
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
     "tcp": {
       "type": "object",
       "description": "Plugin to handle RAW TCP packets, available since RR 2.6.0",
@@ -787,7 +1298,7 @@
         "permission": {
           "description": "Access permission for the DB file.",
           "type": "integer",
-          "default": 777
+          "default": "0777"
         },
         "interval": {
           "description": "TTL keys check interval in seconds. It's safe to use 1 second here, but can be a little costly to performance",
@@ -813,7 +1324,7 @@
       "properties": {
         "addr": {
           "description": "Redis server address",
-          "type": "string",
+          "type": "array",
           "default": "localhost:6379"
         },
         "master_name": {
@@ -863,8 +1374,8 @@
           "default": 0
         },
         "pool_size": {
-          "type": "string",
-          "default": "rr.db"
+          "type": "integer",
+          "default": 0
         },
         "min_idle_conns": {
           "type": "integer",
@@ -1115,6 +1626,40 @@
         }
       },
       "additionalProperties": false
+    },
+    "Bucket": {
+      "description": "Hashmap with floats",
+      "type": "object",
+      "patternProperties": {
+        "[+-]?([0-9]*[.])?[0-9]+": {
+          "type": "number",
+          "examples": [
+            1.1
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "NATS_J": {
+      "description": "NATS jobs driver",
+      "type": "object",
+      "properties": {
+        "addr": {
+          "description": "NATS server address",
+          "type": "string",
+          "default": "demo.nats.io"
+        }
+      }
+    },
+    "BoltDB_J": {
+      "description": "Boltdb jobs driver",
+      "type": "object",
+      "properties": {
+        "permissions": {
+          "type": "integer",
+          "default": "0777"
+        }
+      }
     }
   }
 }

@@ -773,9 +773,9 @@ websockets:
 
 # Broadcast plugin. It main purpose is to broadcast published messages via all brokers
 #
-# Used in conjunction with the websockets, memory and redis plugins.
+# Use it in conjunction with the websockets, memory and redis plugins.
 # LIMITATION: DO NOT use the same redis connection within different sections or messages will be duplicated.
-# There is no limitation to use different redis connection (ie localhost:6379, localhost:6378, etc) in different sections.
+# There is no limitation to use different redis connections (ie localhost:6379, localhost:6378, etc) in different sections.
 broadcast:
   # Section name.
   #
@@ -1040,22 +1040,22 @@ jobs:
       # Driver name
       #
       # This option is required.
-      drier: amqp
+      driver: amqp
 
       # QoS - prefetch.
       #
       # Default: 10
       prefetch: 10
 
-      # Queue name
-      #
-      # Default: default
-      queue: test-1-queue
-
       # Pipeline priority
       #
       # If the job has priority set to 0, it will inherit the pipeline's priority. Default: 10.
       priority: 1
+
+      # Queue name
+      #
+      # Default: default
+      queue: test-1-queue
 
       # Exchange name
       #
@@ -1199,7 +1199,7 @@ jobs:
       # Default: 1000
       rate_limit: 100
 
-      # Delete the stream when after pipeline stopped
+      # Delete the stream when after pipeline was stopped
       #
       # Default: false
       delete_stream_on_stop: false
