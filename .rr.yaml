@@ -1255,7 +1255,7 @@ grpc:
     # Client auth type
     #
     # This option is optional. Default value: no_client_certs. Possible values: request_client_cert, require_any_client_cert, verify_client_cert_if_given, require_and_verify_client_cert, no_client_certs
-    client_auth_type: ""
+    client_auth_type: "no_client_certs"
 
   # Maximum send message size
   #
@@ -1285,7 +1285,7 @@ grpc:
 
   # MaxConnectionAgeGrace is an additive period after MaxConnectionAge after
   #	which the connection will be forcibly closed.
-  max_connection_age_grace: 0s
+  max_connection_age_grace: 0s8h
 
   # MaxConnectionAgeGrace is an additive period after MaxConnectionAge after
   #	which the connection will be forcibly closed.
