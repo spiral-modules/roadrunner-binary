@@ -1284,6 +1284,96 @@
         }
       }
     },
+    "grpc": {
+      "description": "GRPC plugin",
+      "type": "object",
+      "properties": {
+        "listen": {
+          "description": "GRPC address to listen",
+          "type": "string",
+          "$ref": "#/definitions/HostAndPortWithTCP"
+        },
+        "proto": {
+          "type": "array",
+          "description": "Proto file to use, multiply files supported [SINCE 2.6]",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tls": {
+          "description": "GRPC TLS configuration",
+          "type": "object",
+          "properties": {
+            "key": {
+              "description": "Path to the key file",
+              "type": "string",
+              "default": null
+            },
+            "cert": {
+              "description": "Path to the certificate",
+              "type": "string",
+              "default": null
+            },
+            "root_ca": {
+              "description": "Path to the CA certificate",
+              "type": "string",
+              "default": null
+            },
+            "client_auth_type": {
+              "description": "Client auth type",
+              "type": "string",
+              "default": "no_client_certs",
+              "enum": [
+                "request_client_cert",
+                "require_any_client_cert",
+                "verify_client_cert_if_given",
+                "no_client_certs"
+              ]
+            }
+          }
+        },
+        "max_send_msg_size": {
+          "type": "integer",
+          "description": "Maximum send message size",
+          "default": 50
+        },
+        "max_recv_msg_size": {
+          "description": "Maximum receive message size",
+          "default": 50,
+          "type": "integer"
+        },
+        "max_connection_idle": {
+          "description": " MaxConnectionIdle is a duration for the amount of time after which an idle connection would be closed by sending a GoAway. Idleness duration is defined since the most recent time the number of outstanding RPCs became zero or the connection establishment",
+          "$ref": "#/definitions/Duration"
+        },
+        "max_connection_age": {
+          "description": "MaxConnectionAge is a duration for the maximum amount of time a connection may exist before it will be closed by sending a GoAway. A random jitter of +/-10% will be added to MaxConnectionAge to spread out connection storms",
+          "$ref": "#/definitions/Duration"
+        },
+        "max_connection_age_grace": {
+          "description": "MaxConnectionAgeGrace is an additive period after MaxConnectionAge after which the connection will be forcibly closed",
+          "$ref": "#/definitions/Duration"
+        },
+        "max_concurrent_streams": {
+          "description": "MaxConnectionAgeGrace is an additive period after MaxConnectionAge after which the connection will be forcibly closed",
+          "type": "integer",
+          "default": 10
+        },
+        "ping_time": {
+          "description": "After a duration of this time if the server doesn't see any activity it pings the client to see if the transport is still alive. If set below 1s, a minimum value of 1s will be used instead",
+          "$ref": "#/definitions/Duration"
+        },
+        "timeout": {
+          "description": "After having pinged for keepalive check, the server waits for a duration of Timeout and if no activity is seen even after that the connection is closed",
+          "$ref": "#/definitions/Duration"
+        },
+        "pool": {
+          "description": "GRPC workers pool",
+          "type": "object",
+          "$ref": "#/definitions/WorkersPool"
+        }
+      }
+    },
     "fileserver": {
       "description": "[SINCE 2.6] File server to serve static files",
       "type": "object",
@@ -1622,6 +1712,14 @@
           "type": "integer",
           "minimum": 0
         }
+      ]
+    },
+    "HostAndPortWithTCP": {
+      "description": "Host and port with tcp:// prefix",
+      "type": "string",
+      "pattern": "^(tcp://[0-9a-zA-Z_.-]+|):[0-9]{1,5}$",
+      "examples": [
+        "tcp://127.0.0.1:443"
       ]
     },
     "HostAndPort": {
