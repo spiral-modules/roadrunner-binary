@@ -20,7 +20,7 @@ require (
 	// ---------------------
 	github.com/stretchr/testify v1.7.0
 	// SPIRAL --------------
-	github.com/temporalio/roadrunner-temporal v1.0.14
+	github.com/temporalio/roadrunner-temporal v1.0.15
 	// ---------------------
 	github.com/vbauerster/mpb/v5 v5.4.0
 )
@@ -123,9 +123,9 @@ require (
 	go.uber.org/multierr v1.7.0 // indirect
 	go.uber.org/zap v1.19.1 // indirect
 	golang.org/x/crypto v0.0.0-20211202192323-5770296d904e // indirect
-	golang.org/x/net v0.0.0-20211203184738-4852103109b8 // indirect
+	golang.org/x/net v0.0.0-20211205041911-012df41ee64c // indirect
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c // indirect
-	golang.org/x/sys v0.0.0-20211124211545-fe61309f8881 // indirect
+	golang.org/x/sys v0.0.0-20211205182925-97ca703d548d // indirect
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/time v0.0.0-20211116232009-f0f3c7e86c11 // indirect
 	google.golang.org/genproto v0.0.0-20211203200212-54befc351ae9 // indirect

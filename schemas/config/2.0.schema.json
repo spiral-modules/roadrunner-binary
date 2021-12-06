@@ -1283,6 +1283,61 @@
           "$ref": "#/definitions/WorkersPool"
         }
       }
+    },
+    "fileserver": {
+      "description": "[SINCE 2.6] File server to serve static files",
+      "type": "object",
+      "properties": {
+        "address": {},
+        "calculate_etag": {},
+        "weak": {},
+        "stream_request_body": {},
+        "serve": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "properties": {
+              "prefix": {
+                "description": "HTTP prefix",
+                "type": "string",
+                "examples": [
+                  "/foo",
+                  "/bar/baz"
+                ]
+              },
+              "root": {
+                "description": "Directory to serve",
+                "default": ".",
+                "type": "string"
+              },
+              "compress": {
+                "description": "When set to true, the server tries minimizing CPU usage by caching compressed files",
+                "type": "boolean",
+                "default": false
+              },
+              "cache_duration": {
+                "description": "Expiration duration for inactive file handlers. Units: seconds. Use negative number to disable",
+                "type": "integer",
+                "default": 10
+              },
+              "max_age": {
+                "description": "The value for the Cache-Control HTTP-header. Units: seconds",
+                "type": "integer",
+                "default": 10
+              },
+              "bytes_range": {
+                "description": "Enable range requests: https://developer.mozilla.org/en-US/docs/Web/HTTP/Range_requests",
+                "type": "boolean",
+                "default": false
+              }
+            },
+            "required": [
+              "prefix"
+            ]
+          }
+        }
+      }
     }
   },
   "definitions": {
