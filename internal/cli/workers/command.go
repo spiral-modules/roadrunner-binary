@@ -9,7 +9,7 @@ import (
 	"time"
 
 	internalRpc "github.com/spiral/roadrunner-binary/v2/internal/rpc"
-	"github.com/spiral/roadrunner/v2/state/job"
+	"github.com/spiral/roadrunner-plugins/v2/api/jobs"
 
 	tm "github.com/buger/goterm"
 	"github.com/fatih/color"
@@ -124,7 +124,7 @@ func showWorkers(plugins []string, client *rpc.Client) error {
 	}
 
 	for _, plugin := range plugins {
-		var jst []*job.State
+		var jst []*jobs.State
 
 		if err := client.Call(informerJobs, plugin, &jst); err != nil {
 			return errors.E(op, err)
