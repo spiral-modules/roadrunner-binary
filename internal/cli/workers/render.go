@@ -8,7 +8,7 @@ import (
 	"github.com/dustin/go-humanize"
 	"github.com/fatih/color"
 	"github.com/olekukonko/tablewriter"
-	"github.com/spiral/roadrunner/v2/state/job"
+	"github.com/spiral/roadrunner-plugins/v2/api/jobs"
 	"github.com/spiral/roadrunner/v2/state/process"
 )
 
@@ -66,7 +66,7 @@ func ServiceWorkerTable(writer io.Writer, workers []*process.State) *tablewriter
 }
 
 // JobsTable renders table with information about rr server jobs.
-func JobsTable(writer io.Writer, jobs []*job.State) *tablewriter.Table {
+func JobsTable(writer io.Writer, jobs []*jobs.State) *tablewriter.Table {
 	tw := tablewriter.NewWriter(writer)
 	tw.SetAutoWrapText(false)
 	tw.SetHeader([]string{"Status", "Pipeline", "Driver", "Queue", "Active", "Delayed", "Reserved"})

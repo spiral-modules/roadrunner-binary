@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## v2.6.4 (7.12.2021)
+
+## 📦 Packages:
+
+- 📦 Update endure to `v1.1.0`
+
+## 🩹 Fixes:
+- 🐛 Fix: NPE in the `http.Reset`. [BUG](https://github.com/spiral/roadrunner-plugins/issues/155)
+
+---
+
 ## v2.6.3 (3.12.2021)
 
 ## 👀 New:
