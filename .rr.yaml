@@ -1026,6 +1026,11 @@ jobs:
       # This option is required. Possible values: amqp, memory, sqs, beanstalk, boltdb
       driver: boltdb
 
+      # BoldDB file to create or DB to use
+      #
+      # Default: "rr.db"
+      file: "path/to/rr.db"
+
       # Pipeline priority
       #
       # If the job has priority set to 0, it will inherit the pipeline's priority. Default: 10.
