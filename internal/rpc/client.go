@@ -12,7 +12,7 @@ import (
 
 // NewClient creates client ONLY for internal usage (communication between our application with RR side).
 // Client will be connected to the RPC.
-func NewClient(cfgPlugin *config.Viper) (*rpc.Client, error) {
+func NewClient(cfgPlugin *config.Plugin) (*rpc.Client, error) {
 	if !cfgPlugin.Has(rpcPlugin.PluginName) {
 		return nil, errors.E("rpc service disabled")
 	}

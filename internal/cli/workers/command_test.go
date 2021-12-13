@@ -10,14 +10,14 @@ import (
 )
 
 func TestCommandProperties(t *testing.T) {
-	cmd := workers.NewCommand(&config.Viper{})
+	cmd := workers.NewCommand(&config.Plugin{})
 
 	assert.Equal(t, "workers", cmd.Use)
 	assert.NotNil(t, cmd.RunE)
 }
 
 func TestCommandFlags(t *testing.T) {
-	cmd := workers.NewCommand(&config.Viper{})
+	cmd := workers.NewCommand(&config.Plugin{})
 
 	cases := []struct {
 		giveName      string

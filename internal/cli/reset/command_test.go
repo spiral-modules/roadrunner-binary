@@ -10,7 +10,7 @@ import (
 )
 
 func TestCommandProperties(t *testing.T) {
-	cmd := reset.NewCommand(&config.Viper{})
+	cmd := reset.NewCommand(&config.Plugin{})
 
 	assert.Equal(t, "reset", cmd.Use)
 	assert.NotNil(t, cmd.RunE)

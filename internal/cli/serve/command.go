@@ -15,7 +15,7 @@ import (
 )
 
 // NewCommand creates `serve` command.
-func NewCommand(cfgPlugin *config.Viper) *cobra.Command { //nolint:funlen
+func NewCommand(cfgPlugin *config.Plugin) *cobra.Command { //nolint:funlen
 	return &cobra.Command{
 		Use:   "serve",
 		Short: "Start RoadRunner server",

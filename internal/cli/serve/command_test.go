@@ -10,7 +10,7 @@ import (
 )
 
 func TestCommandProperties(t *testing.T) {
-	cmd := serve.NewCommand(&config.Viper{})
+	cmd := serve.NewCommand(&config.Plugin{})
 
 	assert.Equal(t, "serve", cmd.Use)
 	assert.NotNil(t, cmd.RunE)
