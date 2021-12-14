@@ -20,7 +20,7 @@ require (
 	// ---------------------
 	github.com/stretchr/testify v1.7.0
 	// SPIRAL --------------
-	github.com/temporalio/roadrunner-temporal v1.0.16
+	github.com/temporalio/roadrunner-temporal v1.0.17
 	// ---------------------
 	github.com/vbauerster/mpb/v5 v5.4.0
 )
@@ -118,7 +118,7 @@ require (
 	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect
 	github.com/yusufpapurcu/wmi v1.2.2 // indirect
 	go.etcd.io/bbolt v1.3.6 // indirect
-	go.temporal.io/api v1.6.0 // indirect
+	go.temporal.io/api v1.7.0 // indirect
 	go.uber.org/atomic v1.9.0 // indirect
 	go.uber.org/multierr v1.7.0 // indirect
 	go.uber.org/zap v1.19.1 // indirect
