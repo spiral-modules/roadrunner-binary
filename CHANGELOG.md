@@ -1,13 +1,25 @@
 # CHANGELOG
 
-## v2.6.4 (7.12.2021)
+## v2.6.5 (7.12.2021)
+
+## 🩹 Fixes:
+- 🐛 Fix: wrong metrics type for the `rr_http_requests_queue`, [bug](https://github.com/spiral/roadrunner-plugins/issues/162) (reporter: @victor-sudakov)
+- 🐛 Fix: memory leak when supervised static pool used. [PR](https://github.com/spiral/roadrunner/pull/870).
 
 ## 📦 Packages:
 
 - 📦 Update endure to `v1.1.0`
 
+---
+
+## v2.6.4 (7.12.2021)
+
 ## 🩹 Fixes:
 - 🐛 Fix: NPE in the `http.Reset`. [BUG](https://github.com/spiral/roadrunner-plugins/issues/155)
+
+## 📦 Packages:
+
+- 📦 Update endure to `v1.1.0`
 
 ---
 
