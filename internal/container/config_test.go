@@ -12,7 +12,7 @@ import (
 )
 
 func TestNewConfig_SuccessfulReading(t *testing.T) {
-	cfgPlugin := &config.Viper{Type: "yaml", ReadInCfg: []byte(`
+	cfgPlugin := &config.Plugin{Type: "yaml", ReadInCfg: []byte(`
 endure:
   grace_period: 10s
   print_graph: true
@@ -32,7 +32,7 @@ endure:
 }
 
 func TestNewConfig_WithoutEndureKey(t *testing.T) {
-	cfgPlugin := &config.Viper{Type: "yaml", ReadInCfg: []byte{}}
+	cfgPlugin := &config.Plugin{Type: "yaml", ReadInCfg: []byte{}}
 	assert.NoError(t, cfgPlugin.Init())
 
 	c, err := container.NewConfig(cfgPlugin)
@@ -63,7 +63,7 @@ func TestNewConfig_LoggingLevels(t *testing.T) {
 	} {
 		tt := tt
 		t.Run(tt.giveLevel, func(t *testing.T) {
-			cfgPlugin := &config.Viper{Type: "yaml", ReadInCfg: []byte("endure:\n  log_level: " + tt.giveLevel)}
+			cfgPlugin := &config.Plugin{Type: "yaml", ReadInCfg: []byte("endure:\n  log_level: " + tt.giveLevel)}
 			assert.NoError(t, cfgPlugin.Init())
 
 			c, err := container.NewConfig(cfgPlugin)

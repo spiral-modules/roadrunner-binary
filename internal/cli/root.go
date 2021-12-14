@@ -29,7 +29,7 @@ func NewCommand(cmdName string) *cobra.Command { //nolint:funlen
 		override []string // override config values
 	)
 
-	var configPlugin = &config.Viper{} // will be overwritten on pre-run action
+	var configPlugin = &config.Plugin{} // will be overwritten on pre-run action
 
 	cmd := &cobra.Command{
 		Use:           cmdName,
@@ -63,7 +63,7 @@ func NewCommand(cmdName string) *cobra.Command { //nolint:funlen
 				_ = godotenv.Load(dotenv) // error ignored because dotenv is optional feature
 			}
 
-			cfg := &config.Viper{Path: cfgFile, Prefix: "rr", Flags: override}
+			cfg := &config.Plugin{Path: cfgFile, Prefix: "rr", Flags: override}
 			if err := cfg.Init(); err != nil {
 				return err
 			}

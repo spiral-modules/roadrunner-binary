@@ -18,7 +18,7 @@ import (
 var spinnerStyle = []string{"∙∙∙", "●∙∙", "∙●∙", "∙∙●", "∙∙∙"} //nolint:gochecknoglobals
 
 // NewCommand creates `reset` command.
-func NewCommand(cfgPlugin *config.Viper) *cobra.Command { //nolint:funlen
+func NewCommand(cfgPlugin *config.Plugin) *cobra.Command { //nolint:funlen
 	return &cobra.Command{
 		Use:   "reset",
 		Short: "Reset workers of all or specific RoadRunner service",

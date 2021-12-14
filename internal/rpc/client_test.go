@@ -11,7 +11,7 @@ import (
 )
 
 func TestNewClient_RpcServiceDisabled(t *testing.T) {
-	cfgPlugin := &config.Viper{Type: "yaml", ReadInCfg: []byte{}}
+	cfgPlugin := &config.Plugin{Type: "yaml", ReadInCfg: []byte{}}
 	assert.NoError(t, cfgPlugin.Init())
 
 	c, err := rpc.NewClient(cfgPlugin)
@@ -21,7 +21,7 @@ func TestNewClient_RpcServiceDisabled(t *testing.T) {
 }
 
 func TestNewClient_WrongRcpConfiguration(t *testing.T) {
-	cfgPlugin := &config.Viper{Type: "yaml", ReadInCfg: []byte("rpc:\n  $foo bar")}
+	cfgPlugin := &config.Plugin{Type: "yaml", ReadInCfg: []byte("rpc:\n  $foo bar")}
 	assert.NoError(t, cfgPlugin.Init())
 
 	c, err := rpc.NewClient(cfgPlugin)
@@ -32,7 +32,7 @@ func TestNewClient_WrongRcpConfiguration(t *testing.T) {
 }
 
 func TestNewClient_ConnectionError(t *testing.T) {
-	cfgPlugin := &config.Viper{Type: "yaml", ReadInCfg: []byte("rpc:\n  listen: tcp://127.0.0.1:0")}
+	cfgPlugin := &config.Plugin{Type: "yaml", ReadInCfg: []byte("rpc:\n  listen: tcp://127.0.0.1:0")}
 	assert.NoError(t, cfgPlugin.Init())
 
 	c, err := rpc.NewClient(cfgPlugin)
@@ -48,7 +48,7 @@ func TestNewClient_SuccessfullyConnected(t *testing.T) {
 
 	defer func() { assert.NoError(t, l.Close()) }()
 
-	cfgPlugin := &config.Viper{Type: "yaml", ReadInCfg: []byte("rpc:\n  listen: tcp://" + l.Addr().String())}
+	cfgPlugin := &config.Plugin{Type: "yaml", ReadInCfg: []byte("rpc:\n  listen: tcp://" + l.Addr().String())}
 	assert.NoError(t, cfgPlugin.Init())
 
 	c, err := rpc.NewClient(cfgPlugin)

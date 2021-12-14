@@ -16,7 +16,7 @@ type Config struct {
 }
 
 // NewConfig creates endure container configuration.
-func NewConfig(cfgPlugin *config.Viper) (*Config, error) {
+func NewConfig(cfgPlugin *config.Plugin) (*Config, error) {
 	const (
 		endureKey          = "endure"
 		defaultGracePeriod = time.Second * 30
