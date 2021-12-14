@@ -10,7 +10,7 @@ require (
 	github.com/kami-zh/go-capturer v0.0.0-20171211120116-e492ea43421d
 	github.com/mattn/go-runewidth v0.0.13
 	github.com/olekukonko/tablewriter v0.0.5
-	github.com/spf13/cobra v1.2.1
+	github.com/spf13/cobra v1.3.0
 	// SPIRAL ------------
 	github.com/spiral/endure v1.1.0
 	github.com/spiral/errors v1.0.12
@@ -103,7 +103,7 @@ require (
 	github.com/spf13/cast v1.4.1 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
-	github.com/spf13/viper v1.9.0 // indirect
+	github.com/spf13/viper v1.10.0 // indirect
 	github.com/spiral/sdk-go v1.11.2 // indirect
 	github.com/spiral/tcplisten v1.0.0 // indirect
 	github.com/stretchr/objx v0.3.0 // indirect
