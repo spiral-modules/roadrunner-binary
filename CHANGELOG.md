@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## v2.6.6 (7.12.2021)
+
+## 👀 New:
+
+- ✏️ Add events from the supervisor to the `server` plugin.
+-
+## 🩹 Fixes:
+- 🐛 Fix: worker exited immediately after obtaining the response. [BUG](https://github.com/spiral/roadrunner/issues/871) (reporter: @samdark).
+
+## 📦 Packages:
+
+- 📦 Update RoadRunner to `v2.6.2`
+
 ## v2.6.5 (7.12.2021)
 
 ## 🩹 Fixes:
@@ -8,7 +21,7 @@
 
 ## 📦 Packages:
 
-- 📦 Update endure to `v1.1.0`
+- 📦 Update RoadRunner to `v2.6.1`
 
 ---
 
