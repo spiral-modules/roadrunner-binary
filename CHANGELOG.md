@@ -13,6 +13,8 @@
 
 - 📦 Update RoadRunner to `v2.6.2`
 
+---
+
 ## v2.6.5 (7.12.2021)
 
 ## 🩹 Fixes:
