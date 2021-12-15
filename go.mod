@@ -16,7 +16,7 @@ require (
 	github.com/spiral/errors v1.0.12
 	github.com/spiral/goridge/v3 v3.2.4
 	github.com/spiral/roadrunner-plugins/v2 v2.7.0-alpha.1
-	github.com/spiral/roadrunner/v2 v2.6.1
+	github.com/spiral/roadrunner/v2 v2.6.2
 	// ---------------------
 	github.com/stretchr/testify v1.7.0
 	// SPIRAL --------------
@@ -126,7 +126,7 @@ require (
 	golang.org/x/crypto v0.0.0-20211202192323-5770296d904e // indirect
 	golang.org/x/net v0.0.0-20211209124913-491a49abca63 // indirect
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c // indirect
-	golang.org/x/sys v0.0.0-20211205182925-97ca703d548d // indirect
+	golang.org/x/sys v0.0.0-20211214170744-3b038e5940ed // indirect
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/time v0.0.0-20211116232009-f0f3c7e86c11 // indirect
 	google.golang.org/genproto v0.0.0-20211208223120-3a66f561d7aa // indirect
