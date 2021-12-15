@@ -1,5 +1,30 @@
 # CHANGELOG
 
+## v2.6.6 (7.12.2021)
+
+## 👀 New:
+
+- ✏️ Add events from the supervisor to the `server` plugin.
+-
+## 🩹 Fixes:
+- 🐛 Fix: worker exited immediately after obtaining the response. [BUG](https://github.com/spiral/roadrunner/issues/871) (reporter: @samdark).
+
+## 📦 Packages:
+
+- 📦 Update RoadRunner to `v2.6.2`
+
+## v2.6.5 (7.12.2021)
+
+## 🩹 Fixes:
+- 🐛 Fix: wrong metrics type for the `rr_http_requests_queue`, [bug](https://github.com/spiral/roadrunner-plugins/issues/162) (reporter: @victor-sudakov)
+- 🐛 Fix: memory leak when supervised static pool used. [PR](https://github.com/spiral/roadrunner/pull/870).
+
+## 📦 Packages:
+
+- 📦 Update RoadRunner to `v2.6.1`
+
+---
+
 ## v2.6.4 (7.12.2021)
 
 ## 📦 Packages:
