@@ -10,17 +10,17 @@ require (
 	github.com/kami-zh/go-capturer v0.0.0-20171211120116-e492ea43421d
 	github.com/mattn/go-runewidth v0.0.13
 	github.com/olekukonko/tablewriter v0.0.5
-	github.com/spf13/cobra v1.2.1
+	github.com/spf13/cobra v1.3.0
 	// SPIRAL ------------
 	github.com/spiral/endure v1.1.0
 	github.com/spiral/errors v1.0.12
 	github.com/spiral/goridge/v3 v3.2.4
-	github.com/spiral/roadrunner-plugins/v2 v2.6.5
-	github.com/spiral/roadrunner/v2 v2.6.1
+	github.com/spiral/roadrunner-plugins/v2 v2.6.7
+	github.com/spiral/roadrunner/v2 v2.6.2
 	// ---------------------
 	github.com/stretchr/testify v1.7.0
 	// SPIRAL --------------
-	github.com/temporalio/roadrunner-temporal v1.0.17
+	github.com/temporalio/roadrunner-temporal v1.0.19
 	// ---------------------
 	github.com/vbauerster/mpb/v5 v5.4.0
 )
@@ -125,7 +125,7 @@ require (
 	golang.org/x/crypto v0.0.0-20211209193657-4570a0811e8b // indirect
 	golang.org/x/net v0.0.0-20211209124913-491a49abca63 // indirect
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c // indirect
-	golang.org/x/sys v0.0.0-20211213223007-03aa0b5f6827 // indirect
+	golang.org/x/sys v0.0.0-20211214170744-3b038e5940ed // indirect
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/time v0.0.0-20211116232009-f0f3c7e86c11 // indirect
 	google.golang.org/genproto v0.0.0-20211208223120-3a66f561d7aa // indirect
