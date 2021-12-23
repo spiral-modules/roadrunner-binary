@@ -516,8 +516,8 @@ github.com/spiral/roadrunner-plugins/v2 v2.6.4/go.mod h1:bLCgZe1LTLvPDCbPpxkEsXc
 github.com/spiral/roadrunner-plugins/v2 v2.7.0-alpha.1 h1:DKCCUX1AWUCC/RJTYzzZUBdR353SAhp1V81DJuG2I8E=
 github.com/spiral/roadrunner-plugins/v2 v2.7.0-alpha.1/go.mod h1:ZDEblP3M6JzpcsSfsJlfDUZapU0BrS5MkMyUgm2alXE=
 github.com/spiral/roadrunner/v2 v2.6.0/go.mod h1:qaqdPLsUdN3K6JWE5PobGm+Kzq9olFrSoy6iX5xA6SQ=
-github.com/spiral/roadrunner/v2 v2.6.1 h1:TevojFWLkcjPRMFTscBAC6QdVSQeRVGFihtGEScw174=
-github.com/spiral/roadrunner/v2 v2.6.1/go.mod h1:SnLDMX4Ayr++M7FzwDA+ph8GsSbz6/15H76yMmAGkRM=
+github.com/spiral/roadrunner/v2 v2.6.3 h1:+bKgxJg+Tf3H9y4/FA1rkkgbXSA7qhwUoESexI94fjw=
+github.com/spiral/roadrunner/v2 v2.6.3/go.mod h1:wAymJhvEOnxV6kEa6//7vAo9x0KRNyV0rqgjP1DMVv4=
 github.com/spiral/sdk-go v1.11.2 h1:oJr9nnY36ZIyz0ITNzjO4Pu1d8XatQSLtLabMz/gtI4=
 github.com/spiral/sdk-go v1.11.2/go.mod h1:iRDEyfVAr6PgFGaOv1+o5OVG9kmgTgspBwmO0GOY1p8=
 github.com/spiral/tcplisten v1.0.0 h1:dII3R20Xslll6Uk60ac1JCn9zQwfwbt88CLrs3OryZg=
@@ -817,8 +817,9 @@ golang.org/x/sys v0.0.0-20210927094055-39ccf1dd6fa6/go.mod h1:oPkhp1MJrh7nUepCBc
 golang.org/x/sys v0.0.0-20211019181941-9d821ace8654/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 golang.org/x/sys v0.0.0-20211031064116-611d5d643895/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 golang.org/x/sys v0.0.0-20211124211545-fe61309f8881/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
-golang.org/x/sys v0.0.0-20211205182925-97ca703d548d h1:FjkYO/PPp4Wi0EAUOVLxePm7qVW4r4ctbWpURyuOD0E=
 golang.org/x/sys v0.0.0-20211205182925-97ca703d548d/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
+golang.org/x/sys v0.0.0-20211214170744-3b038e5940ed h1:d5glpD+GMms2DMbu1doSYibjbKasYNvnhq885nOnRz8=
+golang.org/x/sys v0.0.0-20211214170744-3b038e5940ed/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 golang.org/x/term v0.0.0-20201126162022-7de9c90e9dd1/go.mod h1:bj7SfCRtBDWHUb9snDiAeCFNEtKQo2Wmx5Cou7ajbmo=
 golang.org/x/text v0.0.0-20170915032832-14c0d48ead0c/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
 golang.org/x/text v0.3.0/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
