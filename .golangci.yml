@@ -11,6 +11,8 @@ output:
   format: colored-line-number # colored-line-number|line-number|json|tab|checkstyle|code-climate
 
 linters-settings:
+  wsl:
+    allow-assign-and-anything: true
   govet:
     check-shadowing: true
   golint:

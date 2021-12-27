@@ -45,7 +45,7 @@ jobs:
         with:
           version: v1.43 # without patch version
           only-new-issues: false # show only new issues if it's a pull request
-          args: --timeout=10m
+          args: --build-tags=safe --timeout=10m
 
   go-test:
     name: Unit tests
@@ -54,7 +54,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.17.4
+          go-version: 1.17.5
 
       - name: Check out code
         uses: actions/checkout@v2
@@ -92,7 +92,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v2 # action page: <https://github.com/actions/setup-go>
         with:
-          go-version: 1.17.4
+          go-version: 1.17.5
 
       - name: Check out code
         uses: actions/checkout@v2
@@ -107,11 +107,11 @@ jobs:
       - name: Install Go dependencies
         run: go mod download && go mod verify
 
-      - uses: gacts/github-slug@v1
-        id: slug
-
-      - id: values
-        run: echo "::set-output name=timestamp::`date +%FT%T%z`"
+      - name: Generate version value
+        id: values # for PR this value will be `merge@__hash__`, SO: <https://stackoverflow.com/a/59780579/2252921>
+        run: |
+          echo "::set-output name=version::`echo ${GITHUB_REF##*/}`@`echo ${GITHUB_SHA} | cut -c1-8`"
+          echo "::set-output name=timestamp::`date +%FT%T%z`"
 
       - name: Compile binary file
         env:
@@ -119,7 +119,7 @@ jobs:
           GOARCH: amd64
           CGO_ENABLED: 0
           LDFLAGS: -s
-            -X github.com/spiral/roadrunner-binary/v2/internal/meta.version=${{ steps.slug.outputs.version }}@${{ steps.slug.outputs.commit-hash-short }}
+            -X github.com/spiral/roadrunner-binary/v2/internal/meta.version=${{ steps.values.outputs.version }}
             -X github.com/spiral/roadrunner-binary/v2/internal/meta.buildTime=${{ steps.values.outputs.timestamp }}
         run: go build -trimpath -ldflags "$LDFLAGS" -o ./rr ./cmd/rr
 

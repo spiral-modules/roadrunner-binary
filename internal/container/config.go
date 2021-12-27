@@ -15,13 +15,13 @@ type Config struct {
 	LogLevel    endure.Level
 }
 
+const (
+	endureKey          = "endure"
+	defaultGracePeriod = time.Second * 30
+)
+
 // NewConfig creates endure container configuration.
 func NewConfig(cfgPlugin *config.Plugin) (*Config, error) {
-	const (
-		endureKey          = "endure"
-		defaultGracePeriod = time.Second * 30
-	)
-
 	if !cfgPlugin.Has(endureKey) {
 		return &Config{ // return config with defaults
 			GracePeriod: defaultGracePeriod,
