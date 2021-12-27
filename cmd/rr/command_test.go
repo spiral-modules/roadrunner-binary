@@ -1,41 +1,67 @@
 package main
 
 import (
+	"bytes"
+	"io"
 	"os"
 	"testing"
 
-	"github.com/kami-zh/go-capturer"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func Test_Main(t *testing.T) {
 	os.Args = []string{"", "--help"}
 	exitFn = func(code int) { assert.Equal(t, 0, code) }
 
-	output := capturer.CaptureStdout(main)
+	r, w, err := os.Pipe()
+	require.NoError(t, err)
+	os.Stdout = w
 
-	assert.Contains(t, output, "Usage:")
-	assert.Contains(t, output, "Available Commands:")
-	assert.Contains(t, output, "Flags:")
+	main()
+	_ = w.Close()
+	buf := new(bytes.Buffer)
+	_, err = io.Copy(buf, r)
+	require.NoError(t, err)
+
+	assert.Contains(t, buf.String(), "Usage:")
+	assert.Contains(t, buf.String(), "Available Commands:")
+	assert.Contains(t, buf.String(), "Flags:")
 }
 
 func Test_MainWithoutCommands(t *testing.T) {
 	os.Args = []string{""}
 	exitFn = func(code int) { assert.Equal(t, 0, code) }
 
-	output := capturer.CaptureStdout(main)
+	r, w, err := os.Pipe()
+	require.NoError(t, err)
+	os.Stdout = w
 
-	assert.Contains(t, output, "Usage:")
-	assert.Contains(t, output, "Available Commands:")
-	assert.Contains(t, output, "Flags:")
+	main()
+	_ = w.Close()
+	buf := new(bytes.Buffer)
+	_, err = io.Copy(buf, r)
+	require.NoError(t, err)
+
+	assert.Contains(t, buf.String(), "Usage:")
+	assert.Contains(t, buf.String(), "Available Commands:")
+	assert.Contains(t, buf.String(), "Flags:")
 }
 
 func Test_MainUnknownSubcommand(t *testing.T) {
 	os.Args = []string{"", "foobar"}
 	exitFn = func(code int) { assert.Equal(t, 1, code) }
 
-	output := capturer.CaptureStderr(main)
+	r, w, err := os.Pipe()
+	require.NoError(t, err)
+	os.Stderr = w
 
-	assert.Contains(t, output, "unknown command")
-	assert.Contains(t, output, "foobar")
+	main()
+	_ = w.Close()
+	buf := new(bytes.Buffer)
+	_, err = io.Copy(buf, r)
+	require.NoError(t, err)
+
+	assert.Contains(t, buf.String(), "unknown command")
+	assert.Contains(t, buf.String(), "foobar")
 }

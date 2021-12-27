@@ -8,7 +8,7 @@ import (
 	"github.com/dustin/go-humanize"
 	"github.com/fatih/color"
 	"github.com/olekukonko/tablewriter"
-	"github.com/spiral/roadrunner-plugins/v2/api/jobs"
+	"github.com/spiral/roadrunner-plugins/v2/api/v2/jobs"
 	"github.com/spiral/roadrunner/v2/state/process"
 )
 

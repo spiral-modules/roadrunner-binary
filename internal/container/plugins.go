@@ -31,9 +31,7 @@ import (
 	"github.com/spiral/roadrunner-plugins/v2/sqs"
 	"github.com/spiral/roadrunner-plugins/v2/status"
 	"github.com/spiral/roadrunner-plugins/v2/tcp"
-	"github.com/temporalio/roadrunner-temporal/activity"
-	temporalClient "github.com/temporalio/roadrunner-temporal/client"
-	"github.com/temporalio/roadrunner-temporal/workflow"
+	roadrunner_temporal "github.com/temporalio/roadrunner-temporal"
 )
 
 // Plugins returns active plugins for the endure container. Feel free to add or remove any plugins.
@@ -101,8 +99,6 @@ func Plugins() []interface{} { //nolint:funlen
 		&tcp.Plugin{},
 
 		// temporal plugins
-		&activity.Plugin{},
-		&workflow.Plugin{},
-		&temporalClient.Plugin{},
+		&roadrunner_temporal.Plugin{},
 	}
 }

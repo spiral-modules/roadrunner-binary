@@ -36,7 +36,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.17.4
+          go-version: 1.17.5
 
       - name: Check out code
         uses: actions/checkout@v2
@@ -48,14 +48,12 @@ jobs:
         run: sudo apt-get install -y musl-tools
 
       - name: Download dependencies
-        run: go mod download # `-x` means "verbose" mode
-
-      - uses: gacts/github-slug@v1
-        id: slug
+        run: go mod download
 
       - name: Generate builder values
         id: values
         run: |
+          echo "::set-output name=version::`echo ${GITHUB_REF##*/} | sed -e 's/^[vV ]*//'`"
           echo "::set-output name=timestamp::`date +%FT%T%z`"
           echo "::set-output name=binary-name::protoc-gen-php-grpc`[ ${{ matrix.os }} = 'windows' ] && echo '.exe'`"
 
@@ -74,7 +72,7 @@ jobs:
       - name: Generate distributive directory name
         id: dist-dir
         run: >
-          echo "::set-output name=name::protoc-gen-php-grpc-${{ steps.slug.outputs.version }}-$(
+          echo "::set-output name=name::roadrunner-${{ steps.values.outputs.version }}-$(
             [ ${{ matrix.os }} != '' ] && echo '${{ matrix.os }}' || echo 'unknown'
           )$(
             [ ${{ matrix.compiler }} = 'musl-gcc' ] && echo '-musl'

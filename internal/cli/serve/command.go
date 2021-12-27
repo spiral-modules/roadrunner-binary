@@ -11,11 +11,12 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/spiral/errors"
-	"github.com/spiral/roadrunner-plugins/v2/config"
+	"github.com/spiral/roadrunner-plugins/v2/api/v2/config"
+	configImpl "github.com/spiral/roadrunner-plugins/v2/config"
 )
 
 // NewCommand creates `serve` command.
-func NewCommand(cfgPlugin *config.Plugin) *cobra.Command { //nolint:funlen
+func NewCommand(cfgPlugin *configImpl.Plugin) *cobra.Command { //nolint:funlen
 	return &cobra.Command{
 		Use:   "serve",
 		Short: "Start RoadRunner server",

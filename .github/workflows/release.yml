@@ -36,7 +36,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.17.4
+          go-version: 1.17.5
 
       - name: Check out code
         uses: actions/checkout@v2
@@ -48,12 +48,10 @@ jobs:
       - name: Download dependencies
         run: go mod download # `-x` means "verbose" mode
 
-      - uses: gacts/github-slug@v1
-        id: slug
-
       - name: Generate builder values
         id: values
         run: |
+          echo "::set-output name=version::`echo ${GITHUB_REF##*/} | sed -e 's/^[vV ]*//'`"
           echo "::set-output name=timestamp::`date +%FT%T%z`"
           echo "::set-output name=binary-name::rr`[ ${{ matrix.os }} = 'windows' ] && echo '.exe'`"
 
@@ -65,7 +63,7 @@ jobs:
           CGO_ENABLED: 0
           LDFLAGS: >-
             -s
-            -X github.com/spiral/roadrunner-binary/v2/internal/meta.version=${{ steps.slug.outputs.version }}
+            -X github.com/spiral/roadrunner-binary/v2/internal/meta.version=${{ steps.values.outputs.version }}
             -X github.com/spiral/roadrunner-binary/v2/internal/meta.buildTime=${{ steps.values.outputs.timestamp }}
         run: |
           go build -trimpath -ldflags "$LDFLAGS" -o "./${{ steps.values.outputs.binary-name }}" ./cmd/rr
@@ -74,7 +72,7 @@ jobs:
       - name: Generate distributive directory name
         id: dist-dir
         run: >
-          echo "::set-output name=name::roadrunner-${{ steps.slug.outputs.version }}-$(
+          echo "::set-output name=name::roadrunner-${{ steps.values.outputs.version }}-$(
             [ ${{ matrix.os }} != '' ] && echo '${{ matrix.os }}' || echo 'unknown'
           )$(
             [ ${{ matrix.compiler }} = 'musl-gcc' ] && echo '-musl'
@@ -128,9 +126,6 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
 
-      - uses: gacts/github-slug@v1
-        id: slug
-
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1 # Action page: <https://github.com/docker/setup-qemu-action>
 
@@ -152,7 +147,9 @@ jobs:
 
       - name: Generate builder values
         id: values
-        run: echo "::set-output name=timestamp::`date +%FT%T%z`"
+        run: |
+          echo "::set-output name=version::`echo ${GITHUB_REF##*/} | sed -e 's/^[vV ]*//'`"
+          echo "::set-output name=timestamp::`date +%FT%T%z`"
 
       - name: Build image
         uses: docker/build-push-action@v2 # Action page: <https://github.com/docker/build-push-action>
@@ -162,10 +159,10 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           build-args: |
-            APP_VERSION=${{ steps.slug.outputs.version }}
+            APP_VERSION=${{ steps.values.outputs.version }}
             BUILD_TIME=${{ steps.values.outputs.timestamp }}
           tags: |
             spiralscout/roadrunner:latest
-            spiralscout/roadrunner:${{ steps.slug.outputs.version }}
+            spiralscout/roadrunner:${{ steps.values.outputs.version }}
             ghcr.io/spiral/roadrunner:latest
-            ghcr.io/spiral/roadrunner:${{ steps.slug.outputs.version }}
+            ghcr.io/spiral/roadrunner:${{ steps.values.outputs.version }}
