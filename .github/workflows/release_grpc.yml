@@ -72,7 +72,7 @@ jobs:
       - name: Generate distributive directory name
         id: dist-dir
         run: >
-          echo "::set-output name=name::roadrunner-${{ steps.values.outputs.version }}-$(
+          echo "::set-output name=name::protoc-gen-php-grpc-${{ steps.values.outputs.version }}-$(
             [ ${{ matrix.os }} != '' ] && echo '${{ matrix.os }}' || echo 'unknown'
           )$(
             [ ${{ matrix.compiler }} = 'musl-gcc' ] && echo '-musl'
