@@ -8,8 +8,8 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/roadrunner-server/api/v2/plugins/jobs"
 	internalRpc "github.com/spiral/roadrunner-binary/v2/internal/rpc"
-	"github.com/spiral/roadrunner-plugins/v2/api/v2/jobs"
 
 	tm "github.com/buger/goterm"
 	"github.com/fatih/color"
