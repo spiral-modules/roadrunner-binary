@@ -11,7 +11,6 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/spiral/errors"
-	"github.com/spiral/roadrunner-plugins/v2/api/v2/config"
 	configImpl "github.com/spiral/roadrunner-plugins/v2/config"
 )
 
@@ -30,8 +29,8 @@ func NewCommand(cfgPlugin *configImpl.Plugin) *cobra.Command { //nolint:funlen
 			}
 
 			// set the grace period which would be same for all the plugins
-			cfgPlugin.CommonConfig = &config.General{GracefulTimeout: containerCfg.GracePeriod}
-			cfgPlugin.RRVersion = meta.Version()
+			cfgPlugin.Timeout = containerCfg.GracePeriod
+			cfgPlugin.Version = meta.Version()
 
 			// create endure container
 			endureContainer, err := container.NewContainer(*containerCfg)
