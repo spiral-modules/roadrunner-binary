@@ -331,7 +331,8 @@
               "websockets",
               "sendfile",
               "new_relic",
-              "http_metrics"
+              "http_metrics",
+              "cache"
             ],
             "pattern": "^[0-9a-zA-Z_]+$"
           }
@@ -354,6 +355,43 @@
             "::1/128",
             "fc00::/7",
             "fe80::/10"
+          ]
+        },
+        "cache": {
+          "description": "RFC 7234 cache middleware",
+          "type": "object",
+          "properties": {
+            "driver": {
+              "type": "array",
+              "description": "Driver to store cached responses",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "memory"
+                ]
+              },
+              "default": "memory"
+            },
+            "cache_methods": {
+              "type": "array",
+              "description": "HTTP methods to cache",
+              "default": "GET",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "GET",
+                  "POST",
+                  "HEAD"
+                ]
+              }
+            },
+            "config": {
+              "description": "Cache driver configuration",
+              "type": "object"
+            }
+          },
+          "required": [
+            "config"
           ]
         },
         "new_relic": {
@@ -989,269 +1027,218 @@
         "pipelines": {
           "description": "List of broker pipelines associated with the drivers. This option is not required since you can declare pipelines in the runtime. Pipeline driver should exist.",
           "type": "object",
-          "patternProperties": {
-            "^[a-zA-Z0-9._-]+$": {
+          "properties": {
+            "driver": {
+              "type": "array",
+              "description": "JOBS plugin driver",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "amqp",
+                  "sqs",
+                  "beanstalk",
+                  "boltdb",
+                  "memory",
+                  "nats"
+                ]
+              }
+            },
+            "config": {
               "type": "object",
-              "minProperties": 1,
-              "anyOf": [
-                {
-                  "properties": {
-                    "driver": {
-                      "description": "Driver associated with the pipeline",
-                      "type": "string",
-                      "enum": [
-                        "amqp",
-                        "sqs",
-                        "beanstalk",
-                        "boltdb",
-                        "memory",
-                        "nats"
-                      ]
-                    },
-                    "priority": {
-                      "description": "Pipeline priority. If the job pushed to the pipeline has priority set to 0, it will inherit the pipeline's priority",
-                      "type": "integer",
-                      "default": 10
-                    },
-                    "prefetch": {
-                      "description": "Number of job to prefetch from the driver",
-                      "type": "integer",
-                      "default": 100000
-                    },
-                    "queue": {
-                      "type": "string",
-                      "description": "Queue name",
-                      "default": "default"
-                    },
-                    "exchange": {
-                      "description": "Exchange name",
-                      "type": "string",
-                      "default": "amqp.default"
-                    },
-                    "exchange_type": {
-                      "description": "Exchange type",
-                      "type": "string",
-                      "default": "direct"
-                    },
-                    "routing_key": {
-                      "description": "Routing key for the queue",
-                      "type": "string",
-                      "default": null
-                    },
-                    "exclusive": {
-                      "description": "Declare a queue exclusive at the exchange",
-                      "type": "boolean",
-                      "default": false
-                    },
-                    "multiple_ack": {
-                      "description": "When multiple is true, this delivery and all prior unacknowledged deliveries on the same channel will be acknowledged. This is useful for batch processing of deliveries",
-                      "type": "boolean",
-                      "default": false
-                    },
-                    "requeue_on_fail": {
-                      "description": "Use rabbitmq mechanism to requeue the job on fail",
-                      "type": "boolean",
-                      "default": false
-                    }
-                  },
-                  "required": [
-                    "driver"
-                  ]
-                },
-                {
-                  "properties": {
-                    "driver": {
-                      "description": "Driver associated with the pipeline",
-                      "type": "string",
-                      "enum": [
-                        "amqp",
-                        "sqs",
-                        "beanstalk",
-                        "boltdb",
-                        "memory",
-                        "nats"
-                      ]
-                    },
-                    "priority": {
-                      "description": "Pipeline priority. If the job pushed to the pipeline has priority set to 0, it will inherit the pipeline's priority",
-                      "type": "integer",
-                      "default": 10
-                    },
-                    "prefetch": {
-                      "description": "Number of job to prefetch from the driver",
-                      "type": "integer",
-                      "default": 100000
-                    }
-                  },
-                  "required": [
-                    "driver"
-                  ]
-                },
-                {
-                  "properties": {
-                    "driver": {
-                      "description": "Driver associated with the pipeline",
-                      "type": "string",
-                      "enum": [
-                        "amqp",
-                        "sqs",
-                        "beanstalk",
-                        "boltdb",
-                        "memory",
-                        "nats"
-                      ]
-                    },
-                    "priority": {
-                      "description": "Pipeline priority. If the job pushed to the pipeline has priority set to 0, it will inherit the pipeline's priority",
-                      "type": "integer",
-                      "default": 10
-                    },
-                    "prefetch": {
-                      "description": "Number of job to prefetch from the driver",
-                      "type": "integer",
-                      "default": 100000
-                    },
-                    "tube_priority": {
-                      "description": "Beanstalk internal tube priority",
-                      "type": "integer",
-                      "default": 1
-                    },
-                    "tube": {
-                      "description": "Tube name",
-                      "type": "string",
-                      "default": "default"
-                    },
-                    "reserve_timeout": {
-                      "description": "If no job is available before this timeout has passed, Reserve returns a ConnError recording ErrTimeout",
-                      "$ref": "#/definitions/Duration",
-                      "default": "5s"
-                    }
-                  },
-                  "required": [
-                    "driver"
-                  ]
-                },
-                {
-                  "properties": {
-                    "driver": {
-                      "description": "Driver associated with the pipeline",
-                      "type": "string",
-                      "enum": [
-                        "amqp",
-                        "sqs",
-                        "beanstalk",
-                        "boltdb",
-                        "memory",
-                        "nats"
-                      ]
-                    },
-                    "priority": {
-                      "description": "Pipeline priority. If the job pushed to the pipeline has priority set to 0, it will inherit the pipeline's priority",
-                      "type": "integer",
-                      "default": 10
-                    },
-                    "prefetch": {
-                      "description": "Number of job to prefetch from the driver",
-                      "type": "integer",
-                      "default": 100000
-                    },
-                    "visibility_timeout": {
-                      "type": "integer",
-                      "description": "The duration (in seconds) for which the call waits for a message to arrive in the queue before returning. If a message is available, the call returns sooner than WaitTimeSeconds. If no messages are available and the wait time expires, the call returns successfully with an empty list of messages.",
-                      "default": 0
-                    },
-                    "wait_time_seconds": {
-                      "description": "The duration (in seconds) for which the call waits for a message to arrive in the queue before returning. If a message is available, the call returns sooner than WaitTimeSeconds. If no messages are available and the wait time expires, the call returns successfully with an empty list of messages",
-                      "type": "integer",
-                      "default": 0
-                    },
-                    "queue": {
-                      "description": "Queue name",
-                      "type": "string",
-                      "default": "default"
-                    },
-                    "attributes": {
-                      "title": "map[string]number",
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "additionalProperties": {
-                          "type": "number"
+              "description": "driver configurations",
+              "patternProperties": {
+                "^[a-zA-Z0-9._-]+$": {
+                  "type": "object",
+                  "maxProperties": 1,
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "priority": {
+                          "description": "Pipeline priority. If the job pushed to the pipeline has priority set to 0, it will inherit the pipeline's priority",
+                          "type": "integer",
+                          "default": 10
+                        },
+                        "prefetch": {
+                          "description": "Number of job to prefetch from the driver",
+                          "type": "integer",
+                          "default": 100000
+                        },
+                        "queue": {
+                          "type": "string",
+                          "description": "Queue name",
+                          "default": "default"
+                        },
+                        "exchange": {
+                          "description": "Exchange name",
+                          "type": "string",
+                          "default": "amqp.default"
+                        },
+                        "exchange_type": {
+                          "description": "Exchange type",
+                          "type": "string",
+                          "default": "direct"
+                        },
+                        "routing_key": {
+                          "description": "Routing key for the queue",
+                          "type": "string",
+                          "default": null
+                        },
+                        "exclusive": {
+                          "description": "Declare a queue exclusive at the exchange",
+                          "type": "boolean",
+                          "default": false
+                        },
+                        "multiple_ack": {
+                          "description": "When multiple is true, this delivery and all prior unacknowledged deliveries on the same channel will be acknowledged. This is useful for batch processing of deliveries",
+                          "type": "boolean",
+                          "default": false
+                        },
+                        "requeue_on_fail": {
+                          "description": "Use rabbitmq mechanism to requeue the job on fail",
+                          "type": "boolean",
+                          "default": false
                         }
                       }
                     },
-                    "tags": {
-                      "title": "map[string]string",
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "additionalProperties": {
-                          "type": "string"
+                    {
+                      "properties": {
+                        "priority": {
+                          "description": "Pipeline priority. If the job pushed to the pipeline has priority set to 0, it will inherit the pipeline's priority",
+                          "type": "integer",
+                          "default": 10
+                        },
+                        "prefetch": {
+                          "description": "Number of job to prefetch from the driver",
+                          "type": "integer",
+                          "default": 100000
+                        }
+                      }
+                    },
+                    {
+                      "properties": {
+                        "priority": {
+                          "description": "Pipeline priority. If the job pushed to the pipeline has priority set to 0, it will inherit the pipeline's priority",
+                          "type": "integer",
+                          "default": 10
+                        },
+                        "prefetch": {
+                          "description": "Number of job to prefetch from the driver",
+                          "type": "integer",
+                          "default": 100000
+                        },
+                        "tube_priority": {
+                          "description": "Beanstalk internal tube priority",
+                          "type": "integer",
+                          "default": 1
+                        },
+                        "tube": {
+                          "description": "Tube name",
+                          "type": "string",
+                          "default": "default"
+                        },
+                        "reserve_timeout": {
+                          "description": "If no job is available before this timeout has passed, Reserve returns a ConnError recording ErrTimeout",
+                          "$ref": "#/definitions/Duration",
+                          "default": "5s"
+                        }
+                      }
+                    },
+                    {
+                      "properties": {
+                        "priority": {
+                          "description": "Pipeline priority. If the job pushed to the pipeline has priority set to 0, it will inherit the pipeline's priority",
+                          "type": "integer",
+                          "default": 10
+                        },
+                        "prefetch": {
+                          "description": "Number of job to prefetch from the driver",
+                          "type": "integer",
+                          "default": 100000
+                        },
+                        "visibility_timeout": {
+                          "type": "integer",
+                          "description": "The duration (in seconds) for which the call waits for a message to arrive in the queue before returning. If a message is available, the call returns sooner than WaitTimeSeconds. If no messages are available and the wait time expires, the call returns successfully with an empty list of messages.",
+                          "default": 0
+                        },
+                        "wait_time_seconds": {
+                          "description": "The duration (in seconds) for which the call waits for a message to arrive in the queue before returning. If a message is available, the call returns sooner than WaitTimeSeconds. If no messages are available and the wait time expires, the call returns successfully with an empty list of messages",
+                          "type": "integer",
+                          "default": 0
+                        },
+                        "queue": {
+                          "description": "Queue name",
+                          "type": "string",
+                          "default": "default"
+                        },
+                        "attributes": {
+                          "title": "map[string]number",
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "number"
+                            }
+                          }
+                        },
+                        "tags": {
+                          "title": "map[string]string",
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "properties": {
+                        "priority": {
+                          "description": "Pipeline priority. If the job pushed to the pipeline has priority set to 0, it will inherit the pipeline's priority",
+                          "type": "integer",
+                          "default": 10
+                        },
+                        "prefetch": {
+                          "description": "Number of job to prefetch from the driver",
+                          "type": "integer",
+                          "default": 100000
+                        },
+                        "subject": {
+                          "description": "NATS subject",
+                          "type": "string",
+                          "default": "default"
+                        },
+                        "stream": {
+                          "description": "NATS stream",
+                          "type": "string",
+                          "default": "default-stream"
+                        },
+                        "deliver_new": {
+                          "description": "The consumer will only start receiving messages that were created after the consumer was created",
+                          "type": "string",
+                          "default": "default-stream"
+                        },
+                        "rate_limit": {
+                          "description": "Consumer rate-limiter in bytes https://docs.nats.io/jetstream/concepts/consumers#ratelimit",
+                          "type": "integer",
+                          "default": 1000
+                        },
+                        "delete_stream_on_stop": {
+                          "description": "Delete the stream when after pipeline was stopped",
+                          "type": "boolean",
+                          "default": false
+                        },
+                        "delete_after_ack": {
+                          "description": "Delete message from the stream after successful acknowledge",
+                          "type": "boolean",
+                          "default": false
                         }
                       }
                     }
-                  },
-                  "required": [
-                    "driver"
                   ]
-                },
-                {
-                  "properties": {
-                    "driver": {
-                      "description": "Driver associated with the pipeline",
-                      "type": "string",
-                      "enum": [
-                        "amqp",
-                        "sqs",
-                        "beanstalk",
-                        "boltdb",
-                        "memory",
-                        "nats"
-                      ]
-                    },
-                    "priority": {
-                      "description": "Pipeline priority. If the job pushed to the pipeline has priority set to 0, it will inherit the pipeline's priority",
-                      "type": "integer",
-                      "default": 10
-                    },
-                    "prefetch": {
-                      "description": "Number of job to prefetch from the driver",
-                      "type": "integer",
-                      "default": 100000
-                    },
-                    "subject": {
-                      "description": "NATS subject",
-                      "type": "string",
-                      "default": "default"
-                    },
-                    "stream": {
-                      "description": "NATS stream",
-                      "type": "string",
-                      "default": "default-stream"
-                    },
-                    "deliver_new": {
-                      "description": "The consumer will only start receiving messages that were created after the consumer was created",
-                      "type": "string",
-                      "default": "default-stream"
-                    },
-                    "rate_limit": {
-                      "description": "Consumer rate-limiter in bytes https://docs.nats.io/jetstream/concepts/consumers#ratelimit",
-                      "type": "integer",
-                      "default": 1000
-                    },
-                    "delete_stream_on_stop": {
-                      "description": "Delete the stream when after pipeline was stopped",
-                      "type": "boolean",
-                      "default": false
-                    },
-                    "delete_after_ack": {
-                      "description": "Delete message from the stream after successful acknowledge",
-                      "type": "boolean",
-                      "default": false
-                    }
-                  }
                 }
-              ]
+              }
             }
           }
         }
