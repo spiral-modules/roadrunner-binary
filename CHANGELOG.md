@@ -1,5 +1,188 @@
 # CHANGELOG
 
+## v2.7.0 (14.01.2022)
+
+## 👀 New:
+
+- ✏️ RR `workers pool`, `worker`, `worker_watcher` now has their own log levels. `stderr/stdout` logged as before at the `info` log level. All other messages moved to the `debug` log level except a few events from the `worker_watcher` when RR can't allocate the new worker which are moved to the `warn`.
+- ✏️ Use the common logger for the whole roadrunner-sdk and roadrunner-plugins.
+- ✏️ `.rr.yaml` now support versions. You may safely use your old configurations w/o specifying versions. Configuration w/o version will be treated as `2.6`. It is safe to use configuration w/o version or with version `2.6` with RR `2.7` because RR is able to automatically transform the old configuration.
+  But if you use configuration version `2.7` you must update the `jobs` pipelines config.
+  **At this point we can guarantee, that no breaking changes will be introduced in the configuration w/o auto-convert from the older configuration version**
+  For example, if we introduce a configuration update let's say in version `2.10`, we will support automatic conversion from at least 2 previous versions w/o involving the user into the process. In the example case, versions `2.9` and `2.8` will be automatically converted. From our release cycle, you will have at least 3 months to update the configuration from version `2.8` and 2 months from `2.9`.Version located at the top of the `.rr.yaml`:
+
+**Compatibility matrix located here**: TODO
+**Configuration changelog**: TODO
+
+```yaml
+version: "2.6"
+
+# ..... PLUGINS ......
+```
+
+**Before:**
+```yaml
+  pipelines:
+    test-local:
+      driver: memory
+      priority: 10
+      prefetch: 10000
+
+    test-local-1:
+      driver: boltdb
+      priority: 10
+      file: "rr.db"
+      prefetch: 10000
+
+    test-local-2:
+      driver: amqp
+      prefetch: 10
+      priority: 1
+      queue: test-1-queue
+      exchange: default
+      exchange_type: direct
+      routing_key: test
+      exclusive: false
+      multiple_ack: false
+      requeue_on_fail: false
+
+    test-local-3:
+      driver: beanstalk
+      priority: 11
+      tube_priority: 1
+      tube: default-1
+      reserve_timeout: 10s
+
+    test-local-4:
+      driver: sqs
+      priority: 10
+      prefetch: 10
+      visibility_timeout: 0
+      wait_time_seconds: 0
+      queue: default
+      attributes:
+        DelaySeconds: 0
+        MaximumMessageSize: 262144
+        MessageRetentionPeriod: 345600
+        ReceiveMessageWaitTimeSeconds: 0
+        VisibilityTimeout: 30
+      tags:
+        test: "tag"
+
+    test-local-5:
+      driver: nats
+      priority: 2
+      prefetch: 100
+      subject: default
+      stream: foo
+      deliver_new: true
+      rate_limit: 100
+      delete_stream_on_stop: false
+      delete_after_ack: false
+```
+
+**After**:
+Now, pipelines have only `driver` key with the configuration under the `config` key. We did that to uniform configuration across all drivers (like in the `KV`).
+```yaml
+  pipelines:
+    test-local:
+      driver: memory
+
+      config: # <------------------ NEW
+        priority: 10
+        prefetch: 10000
+
+    test-local-1:
+      driver: boltdb
+
+      config: # <------------------ NEW
+        priority: 10
+        file: "test-local-1-bolt.db"
+        prefetch: 10000
+
+    test-local-2:
+      driver: amqp
+
+      config: # <------------------ NEW
+        priority: 11
+        prefetch: 100
+        queue: test-12-queue
+        exchange: default
+        exchange_type: direct
+        routing_key: test
+        exclusive: false
+        multiple_ack: false
+        requeue_on_fail: false
+
+    test-local-3:
+      driver: beanstalk
+
+      config: # <------------------ NEW
+        priority: 11
+        tube_priority: 1
+        tube: default-2
+        reserve_timeout: 10s
+
+    test-local-4:
+      driver: sqs
+
+      config: # <------------------ NEW
+        priority: 10
+        prefetch: 10
+        visibility_timeout: 0
+        wait_time_seconds: 0
+        queue: default
+
+        attributes:
+          DelaySeconds: 0
+          MaximumMessageSize: 262144
+          MessageRetentionPeriod: 345600
+          ReceiveMessageWaitTimeSeconds: 0
+          VisibilityTimeout: 30
+        tags:
+        test: "tag"
+
+    test-local-5:
+      driver: nats
+
+      config: # <------------------ NEW
+        priority: 2
+        prefetch: 100
+        subject: default
+        stream: foo
+        deliver_new: true
+        rate_limit: 100
+        delete_stream_on_stop: false
+        delete_after_ack: false
+```
+
+- ✏️ **[ALPHA]** New cache http middleware. It is still in alpha, but we started implementing the [rfc-7234](https://httpwg.org/specs/rfc7234.html) to support `Cache-Control` and caching in general. In the first alpha you may test the `max-age`, `Age` and `Authorization` support via the in-memory driver.
+
+**Configuration**:
+```yaml
+http:
+# .....
+    middleware: ["cache"]
+    cache:
+        driver: memory
+        cache_methods: ["GET", "HEAD", "POST"] # only GET in alpha
+        config: {} # empty configuration for the memory
+```
+
+- ✏️ Logger unification. Starting this version we bound our logs to the `uber/zap` log library as one of the most popular and extensible.
+- ✏️ API stabilization. All `v2` api interfaces moved to the `https://github.com/roadrunner-server/api` repository. Except logger (structure), all plugins depends only on the interfaces and don't import each other.
+- ✏️ `GRPC` plugin now is able to work with gzipped payloads. [FR](https://github.com/spiral/roadrunner-plugins/issues/191) (reporter @hetao29)
+- ✏️ `SQS` plugin now detects EC2 env and uses AWS credentials instead of static provider. [FR](https://github.com/spiral/roadrunner-plugins/issues/142) (reporter @paulermo)
+- ✏️ `Jobs` plugin now acknowledges responses with incorrectly formed responses to prevent the infinity loop (with the error message in the logs). [BUG](https://github.com/spiral/roadrunner-plugins/issues/190) (reporter @sergey-telpuk)
+- ✏️ `protoc` updated to the version `v3.19.2`.
+
+## 🩹 Fixes:
+
+- 🐛 Fix: RR may have missed the message from the `stderr` when the PHP script failed to start immediately after RR starts.
+- 🐛 Fix: 200 HTTP status code instead of 400 on readiness/health bad requests. [BUG](https://github.com/spiral/roadrunner-plugins/issues/180)
+- 🐛 Fix: `new_relic` plugin removes/modifies more headers than it should. [BUG](https://github.com/spiral/roadrunner-plugins/issues/185) (reporter: @arku31)
+
+
 ## v2.6.6 (7.12.2021)
 
 ## 👀 New:
