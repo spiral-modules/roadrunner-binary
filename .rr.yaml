@@ -442,7 +442,7 @@ http:
   # Default: 0
   max_request_size: 256
 
-  # Middlewares for the http plugin, order is important. Allowed values is: "headers", "gzip", "static", "websockets", "sendfile",  [SINCE 2.6] -> "new_relic", [SINCE 2.6] -> "http_metrics"
+  # Middlewares for the http plugin, order is important. Allowed values is: "headers", "gzip", "static", "websockets", "sendfile",  [SINCE 2.6] -> "new_relic", [SINCE 2.6] -> "http_metrics", [SINCE 2.7] -> "cache"
   #
   # Default value: []
   middleware: [ "headers", "gzip" ]
@@ -472,6 +472,24 @@ http:
     #
     # Error if empty. NEW_RELIC_LICENSE_KEY env variable should be set if the license_key key is empty. If both empty - error.
     license_key: "key"
+
+  # RFC 7234 (partially) RR Cache middleware
+  cache:
+    # Cache driver
+    #
+    # Default: memory. Available drivers: memory
+    driver: memory
+
+    # Methods to cache
+    #
+    # According to the RFC, we can cache only GET, HEAD or POST requests. Currently, only GET method supported.
+    cache_methods: ["GET", "HEAD", "POST"]
+
+    # Configuration for the driver
+    #
+    # Empty for the memory
+    config: {}
+
 
   # File uploading settings.
   uploads:
