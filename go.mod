@@ -9,22 +9,21 @@ require (
 	github.com/joho/godotenv v1.4.0
 	github.com/mattn/go-runewidth v0.0.13
 	github.com/olekukonko/tablewriter v0.0.5
+	github.com/roadrunner-server/api/v2 v2.0.0-rc.1
 	github.com/spf13/cobra v1.3.0
 	// SPIRAL ------------
 	github.com/spiral/endure v1.1.0
 	github.com/spiral/errors v1.0.12
 	github.com/spiral/goridge/v3 v3.2.4
-	github.com/spiral/roadrunner-plugins/v2 v2.7.0-rc.1
-	github.com/spiral/roadrunner/v2 v2.7.0-rc.1
+	github.com/spiral/roadrunner-plugins/v2 v2.7.0-rc.2
+	github.com/spiral/roadrunner/v2 v2.7.0-rc.2
 	// ---------------------
 	github.com/stretchr/testify v1.7.0
 	// SPIRAL --------------
-	github.com/temporalio/roadrunner-temporal v1.0.20-0.20220111182145-01512ee36945
-	// ---------------------
+	github.com/temporalio/roadrunner-temporal v1.0.20-0.20220111225601-039f58f768a8
+	// ---------------------g
 	github.com/vbauerster/mpb/v5 v5.4.0
 )
-
-require github.com/roadrunner-server/api/v2 v2.0.0-alpha.1
 
 require (
 	github.com/VividCortex/ewma v1.2.0 // indirect
@@ -71,7 +70,7 @@ require (
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
-	github.com/klauspost/compress v1.13.6 // indirect
+	github.com/klauspost/compress v1.14.1 // indirect
 	github.com/klauspost/cpuid/v2 v2.0.9 // indirect
 	github.com/libdns/libdns v0.2.1 // indirect
 	github.com/magiconair/properties v1.8.5 // indirect
@@ -116,7 +115,7 @@ require (
 	github.com/twmb/murmur3 v1.1.6 // indirect
 	github.com/uber-go/tally/v4 v4.1.1 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
-	github.com/valyala/fasthttp v1.31.0 // indirect
+	github.com/valyala/fasthttp v1.32.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
 	github.com/vmihailenco/msgpack/v5 v5.3.5 // indirect
 	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect
