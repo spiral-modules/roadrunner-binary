@@ -362,9 +362,10 @@
           "type": "object",
           "properties": {
             "driver": {
-              "type": "array",
               "description": "Driver to store cached responses",
+              "type": "string",
               "items": {
+                "maxItems": 1,
                 "type": "string",
                 "enum": [
                   "memory"
@@ -374,10 +375,10 @@
             },
             "cache_methods": {
               "type": "array",
-              "description": "HTTP methods to cache",
               "default": "GET",
               "items": {
                 "type": "string",
+                "description": "HTTP methods to cache",
                 "enum": [
                   "GET",
                   "POST",
