@@ -496,8 +496,9 @@ github.com/rabbitmq/amqp091-go v1.2.0 h1:1pHBxAsQh54R9eX/xo679fUEAfv3loMqi0pvRFO
 github.com/rabbitmq/amqp091-go v1.2.0/go.mod h1:ogQDLSOACsLPsIq0NpbtiifNZi2YOz0VTJ0kHRghqbM=
 github.com/rivo/uniseg v0.2.0 h1:S1pD9weZBuJdFmowNwbpi7BJ8TNftyUImj/0WQi72jY=
 github.com/rivo/uniseg v0.2.0/go.mod h1:J6wj4VEh+S6ZtnVlnTBMWIodfgj8LQOQFoIToxlJtxc=
-github.com/roadrunner-server/api/v2 v2.0.0-alpha.1 h1:Mb2DDUjN+oHmXCxc4D19mo0kPk0GIRkuhnB3+FDZVJk=
 github.com/roadrunner-server/api/v2 v2.0.0-alpha.1/go.mod h1:dSRE9rrPWjCsqfC/71+4p71IdQIxh1dT/mkB9vDXGKY=
+github.com/roadrunner-server/api/v2 v2.0.0-rc.1 h1:MpQimB7BumOLhyIxSyKdYQqaona7XvE2kVXTtVQgkl4=
+github.com/roadrunner-server/api/v2 v2.0.0-rc.1/go.mod h1:dLgRibV6GMnrxOfmaZONAXoSp4Ej4L1S4g/UxazoxXA=
 github.com/robfig/cron v1.2.0 h1:ZjScXvvxeQ63Dbyxy76Fj3AT3Ut0aKsyd2/tl3DTMuQ=
 github.com/robfig/cron v1.2.0/go.mod h1:JGuDeoQd7Z6yL4zQhZ3OPEVHB7fL6Ka6skscFHfmt2k=
 github.com/rogpeppe/fastuuid v1.2.0/go.mod h1:jVj6XXZzXRy/MSR5jhDC/2q6DgLz+nrA6LYCDYWNEvQ=
@@ -540,8 +541,9 @@ github.com/spiral/goridge/v3 v3.2.4/go.mod h1:a6qAtZy+FBaPj/76GweHj6SkgIr+oRVgW5
 github.com/spiral/roadrunner-plugins/v2 v2.7.0-rc.1 h1:nCBbwCWEDiwI9OcqjZspRGaMmqeUOJKKsiMIMJ2HaPE=
 github.com/spiral/roadrunner-plugins/v2 v2.7.0-rc.1/go.mod h1:9OkhjDlhTka4D8gUUEYs9uF+Qem8ZvaaB3cqZFmUP/s=
 github.com/spiral/roadrunner/v2 v2.7.0-beta.1/go.mod h1:TANh6rSpWOyRhYUV7NyaW+u8m5pdMsxelq6n8c3JtTg=
-github.com/spiral/roadrunner/v2 v2.7.0-rc.1 h1:bD59/7KSdsCQoy+gV/T5DSInTO1YcQvoWxAP/wL7Hb4=
 github.com/spiral/roadrunner/v2 v2.7.0-rc.1/go.mod h1:jNs5DhELIYkSshpsgIy2eg1e9MDlXE5/BCLFqg2AeWA=
+github.com/spiral/roadrunner/v2 v2.7.0-rc.2 h1:ZjLBQajtv0C3+bJdmGD5Rs3pVH8UIuoQkHePAXU4uYg=
+github.com/spiral/roadrunner/v2 v2.7.0-rc.2/go.mod h1:S/ash+OWnvvBR79EV+3YDk8uACC4p3Fi/MSDFqkA3Jo=
 github.com/spiral/sdk-go v1.11.2/go.mod h1:iRDEyfVAr6PgFGaOv1+o5OVG9kmgTgspBwmO0GOY1p8=
 github.com/spiral/sdk-go v1.12.0 h1:PSKXMVLwifyWhuveSdKlBJm5Grcs/0bRfp1XqXRO+QI=
 github.com/spiral/sdk-go v1.12.0/go.mod h1:Y3IKVPm7/RAca9DDuTmFFo+f3Sj+QAm/MHo08Kb3oLY=

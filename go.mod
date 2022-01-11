@@ -15,7 +15,7 @@ require (
 	github.com/spiral/errors v1.0.12
 	github.com/spiral/goridge/v3 v3.2.4
 	github.com/spiral/roadrunner-plugins/v2 v2.7.0-rc.1
-	github.com/spiral/roadrunner/v2 v2.7.0-rc.1
+	github.com/spiral/roadrunner/v2 v2.7.0-rc.2
 	// ---------------------
 	github.com/stretchr/testify v1.7.0
 	// SPIRAL --------------
@@ -24,7 +24,7 @@ require (
 	github.com/vbauerster/mpb/v5 v5.4.0
 )
 
-require github.com/roadrunner-server/api/v2 v2.0.0-alpha.1
+require github.com/roadrunner-server/api/v2 v2.0.0-rc.1
 
 require (
 	github.com/VividCortex/ewma v1.2.0 // indirect
@@ -129,7 +129,6 @@ require (
 	golang.org/x/crypto v0.0.0-20211215153901-e495a2d5b3d3 // indirect
 	golang.org/x/mod v0.5.1 // indirect
 	golang.org/x/net v0.0.0-20220111093109-d55c255bac03 // indirect
-	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c // indirect
 	golang.org/x/sys v0.0.0-20220111092808-5a964db01320 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/time v0.0.0-20211116232009-f0f3c7e86c11 // indirect
