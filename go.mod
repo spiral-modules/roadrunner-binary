@@ -11,17 +11,13 @@ require (
 	github.com/olekukonko/tablewriter v0.0.5
 	github.com/roadrunner-server/api/v2 v2.0.0-rc.1
 	github.com/spf13/cobra v1.3.0
-	// SPIRAL ------------
 	github.com/spiral/endure v1.1.0
 	github.com/spiral/errors v1.0.12
-	github.com/spiral/goridge/v3 v3.2.4
-	github.com/spiral/roadrunner-plugins/v2 v2.7.0-rc.2
-	github.com/spiral/roadrunner/v2 v2.7.0-rc.2
-	// ---------------------
+	github.com/spiral/goridge/v3 v3.2.6
+	github.com/spiral/roadrunner-plugins/v2 v2.7.0
+	github.com/spiral/roadrunner/v2 v2.7.0
 	github.com/stretchr/testify v1.7.0
-	// SPIRAL --------------
-	github.com/temporalio/roadrunner-temporal v1.0.20-0.20220111225601-039f58f768a8
-	// ---------------------g
+	github.com/temporalio/roadrunner-temporal v1.1.0
 	github.com/vbauerster/mpb/v5 v5.4.0
 )
 
