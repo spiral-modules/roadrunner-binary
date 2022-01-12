@@ -535,13 +535,15 @@ github.com/spiral/endure v1.1.0/go.mod h1:M2AHi+x+YdQ4gW1rV2aDWGkT6hxJwVWpK4qRia
 github.com/spiral/errors v1.0.12 h1:38Waf8ZL/Xvxg4HTYGmrUbvi7TCHivmuatNQZlBhQ8s=
 github.com/spiral/errors v1.0.12/go.mod h1:j5UReqxZxfkwXkI9mFY87VhEXcXmSg7kAk5Sswy1eEA=
 github.com/spiral/goridge/v3 v3.2.4/go.mod h1:a6qAtZy+FBaPj/76GweHj6SkgIr+oRVgW5p4e5vLZF4=
-github.com/spiral/goridge/v3 v3.2.6 h1:RUO02r/TX0KWAvIiqc3/i5i6v34onf0BadL5TNQpTWY=
 github.com/spiral/goridge/v3 v3.2.6/go.mod h1:a6qAtZy+FBaPj/76GweHj6SkgIr+oRVgW5p4e5vLZF4=
+github.com/spiral/goridge/v3 v3.2.7 h1:tiV1d025QwEAIr8WRo7kUQW9PhWGa405QpC3HrEjCPY=
+github.com/spiral/goridge/v3 v3.2.7/go.mod h1:a6qAtZy+FBaPj/76GweHj6SkgIr+oRVgW5p4e5vLZF4=
 github.com/spiral/roadrunner-plugins/v2 v2.7.0 h1:nOo2ymuAbegE+D12wyJj3XsTCQF2qkpPYvzLpsA0ou0=
 github.com/spiral/roadrunner-plugins/v2 v2.7.0/go.mod h1:57IrBZzvi6LyuY9N+QhNh5rDrbDTxbmObupuE7HtC50=
 github.com/spiral/roadrunner/v2 v2.7.0-rc.2/go.mod h1:S/ash+OWnvvBR79EV+3YDk8uACC4p3Fi/MSDFqkA3Jo=
-github.com/spiral/roadrunner/v2 v2.7.0 h1:3qtYE10MUV9DpDxixP/r0khY1H9YJZ/+PJ5uy/Q+nxs=
 github.com/spiral/roadrunner/v2 v2.7.0/go.mod h1:MJVb9hFHZfVigPbATmcxgmP3WQG0QvW4bUR431Vw0js=
+github.com/spiral/roadrunner/v2 v2.7.1 h1:D/i+lzZfddSwgvcAXG/2MCzBPTEB4KsPWjdGx4KsP8E=
+github.com/spiral/roadrunner/v2 v2.7.1/go.mod h1:MJOw6nV5j0nCDn6qNogiyU4+WjTZJcc6EriA2f/pn78=
 github.com/spiral/sdk-go v1.11.2/go.mod h1:iRDEyfVAr6PgFGaOv1+o5OVG9kmgTgspBwmO0GOY1p8=
 github.com/spiral/sdk-go v1.12.0 h1:PSKXMVLwifyWhuveSdKlBJm5Grcs/0bRfp1XqXRO+QI=
 github.com/spiral/sdk-go v1.12.0/go.mod h1:Y3IKVPm7/RAca9DDuTmFFo+f3Sj+QAm/MHo08Kb3oLY=
