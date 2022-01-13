@@ -13,9 +13,9 @@ require (
 	github.com/spf13/cobra v1.3.0
 	github.com/spiral/endure v1.1.0
 	github.com/spiral/errors v1.0.12
-	github.com/spiral/goridge/v3 v3.2.6
-	github.com/spiral/roadrunner-plugins/v2 v2.7.0
-	github.com/spiral/roadrunner/v2 v2.7.0
+	github.com/spiral/goridge/v3 v3.2.7
+	github.com/spiral/roadrunner-plugins/v2 v2.7.1
+	github.com/spiral/roadrunner/v2 v2.7.1
 	github.com/stretchr/testify v1.7.0
 	github.com/temporalio/roadrunner-temporal v1.1.0
 	github.com/vbauerster/mpb/v5 v5.4.0
@@ -121,7 +121,7 @@ require (
 	go.uber.org/atomic v1.9.0 // indirect
 	go.uber.org/multierr v1.7.0 // indirect
 	go.uber.org/zap v1.20.0 // indirect
-	golang.org/x/crypto v0.0.0-20211215153901-e495a2d5b3d3 // indirect
+	golang.org/x/crypto v0.0.0-20220112180741-5e0467b6c7ce // indirect
 	golang.org/x/mod v0.5.1 // indirect
 	golang.org/x/net v0.0.0-20220111093109-d55c255bac03 // indirect
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c // indirect
@@ -130,7 +130,7 @@ require (
 	golang.org/x/time v0.0.0-20211116232009-f0f3c7e86c11 // indirect
 	golang.org/x/tools v0.1.8 // indirect
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
-	google.golang.org/genproto v0.0.0-20220111164026-67b88f271998 // indirect
+	google.golang.org/genproto v0.0.0-20220112215332-a9c7c0acf9f2 // indirect
 	google.golang.org/grpc v1.43.0 // indirect
 	google.golang.org/protobuf v1.27.1 // indirect
 	gopkg.in/ini.v1 v1.66.2 // indirect
