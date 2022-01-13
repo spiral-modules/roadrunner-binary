@@ -17,7 +17,7 @@ require (
 	github.com/spiral/roadrunner-plugins/v2 v2.7.1
 	github.com/spiral/roadrunner/v2 v2.7.1
 	github.com/stretchr/testify v1.7.0
-	github.com/temporalio/roadrunner-temporal v1.1.0
+	github.com/temporalio/roadrunner-temporal v1.1.1
 	github.com/vbauerster/mpb/v5 v5.4.0
 )
 
